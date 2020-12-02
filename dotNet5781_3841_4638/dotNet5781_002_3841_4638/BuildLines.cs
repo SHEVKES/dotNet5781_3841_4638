@@ -26,11 +26,6 @@ namespace dotNet5781_002_3841_4638
             lines.AddLineToCollection(new BusLine(239, new List<BusLineStation>() { new BusLineStation(stations[28], TimeSpan.Zero), new BusLineStation(stations[29], new TimeSpan(00, 02, 20)), new BusLineStation(stations[30], new TimeSpan(00, 05, 05)), new BusLineStation(stations[31], new TimeSpan(00, 04, 18)), new BusLineStation(stations[2], new TimeSpan(00, 06, 29)) }, Areas.General));
             lines.AddLineToCollection(new BusLine(9, new List<BusLineStation>() { new BusLineStation(stations[32], TimeSpan.Zero), new BusLineStation(stations[33], new TimeSpan(00, 04, 59)), new BusLineStation(stations[34], new TimeSpan(00, 04, 54)), new BusLineStation(stations[35], new TimeSpan(00, 04, 45)), new BusLineStation(stations[11], new TimeSpan(00, 03, 20)) }, Areas.Jerusalem));
             lines.AddLineToCollection(new BusLine(13, new List<BusLineStation>() { new BusLineStation(stations[36], TimeSpan.Zero), new BusLineStation(stations[37], new TimeSpan(00, 06, 43)), new BusLineStation(stations[38], new TimeSpan(00, 05, 20)), new BusLineStation(stations[39], new TimeSpan(00, 04, 03)), new BusLineStation(stations[3], new TimeSpan(00, 02, 20)) }, Areas.Center));
-
-
-
-
-
         }
     }
 }
