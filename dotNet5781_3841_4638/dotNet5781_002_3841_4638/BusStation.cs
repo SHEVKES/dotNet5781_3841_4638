@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_002_3841_4638
 {
-    class BusStation
+   public class BusStation
     {
         static Random rand = new Random();
         private static int code = 0;

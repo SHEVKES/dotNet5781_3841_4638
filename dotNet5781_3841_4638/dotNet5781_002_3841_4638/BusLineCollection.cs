@@ -7,7 +7,7 @@ using System.Collections;
 
 namespace dotNet5781_002_3841_4638
 {
-    class BusLineCollection : IEnumerable
+   public class BusLineCollection : IEnumerable
     {
        public List<BusLine> Lines { get; set; }
        public BusLineCollection(List<BusLine> list)

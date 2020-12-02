@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_002_3841_4638
 {
-    class BusLineStation : BusStation, IComparable<BusLineStation>
+   public class BusLineStation : BusStation, IComparable<BusLineStation>
     {
         static Random rand = new Random();
         private double distance;

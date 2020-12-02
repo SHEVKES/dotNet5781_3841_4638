@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 
 namespace dotNet5781_002_3841_4638
 {
-    class BusStationException: Exception
+    public class BusStationException: Exception
     {
         public BusStationException(): base() { }
         public BusStationException(string message) : base(message) { }

@@ -10,7 +10,7 @@ using System.Collections;
 
 namespace dotNet5781_002_3841_4638
 {
-    class Program
+   class Program
     {
         static void Main(string[] args)
         {

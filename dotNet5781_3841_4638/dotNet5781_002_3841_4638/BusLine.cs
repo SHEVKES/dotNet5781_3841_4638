@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_002_3841_4638
 {
-    class BusLine: IComparable<BusLine>
+    public class BusLine: IComparable<BusLine>
     { 
         public List<BusLineStation> busStations { get; set; }
         private int busNumber;
