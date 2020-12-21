@@ -1,0 +1,53 @@
+﻿<Window x:Class="dotNet5781_03B_3841_4638.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:dotNet5781_03B_3841_4638"
+        mc:Ignorable="d"
+        Title="Welcome To Bus Line" Height="533.309" Width="717.901" Icon="bus line.jpg">
+    <Window.Resources>
+        <DataTemplate x:Key="BusTemplate"
+                  DataType="local:Bus" x:Name="bus">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                   Text="License Number: " />
+                <TextBlock Grid.Column="1"
+                   Text="{Binding Path=LicenseNumber}" />
+                <TextBlock Grid.Column="2"
+                   Text=" Total km: " />
+                <TextBlock Grid.Column="3"
+                   Text="{Binding Path=TotalKm}" Name="TBTotalKm" />
+                <Button Grid.Column="4"
+                   Content="Start driving" Click="Start_Driving_Button_Click" Name="StartDrivingButton" Background="#FF49F9FF" FontFamily="Microsoft Sans Serif" Foreground="#FF2849D6"/>
+                <Button Grid.Column="5"
+                   Content="Refuel" Click="Refuel" Name="ButtonRefuel" Background="#FF49F9FF" FontFamily="Microsoft Sans Serif" Foreground="#FF2849D6" />
+                <ProgressBar Grid.Column="6"
+                    Name="pbTread"  Visibility="Hidden" Margin="13,0,0,0" BorderThickness="1,1,150,1" />
+                <Label Grid.Column="7"
+                   Name="seconds" Visibility="Hidden" />
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <ListBox x:Name="lbBuses" ItemsSource="{Binding}" ItemTemplate="{StaticResource BusTemplate}" HorizontalAlignment="Left" Height="362" VerticalAlignment="Top" Width="713" MouseDoubleClick="lbBuses_MouseDoubleClick"/>
+        <Button x:Name="bAddBus" Content="ADD NEW BUS" HorizontalAlignment="Left" Margin="272,405,0,0" VerticalAlignment="Top" Width="165" Height="56" FontSize="22" FontFamily="Microsoft Sans Serif" FontWeight="Bold" Background="#FF80F9EE" Click="bAddBus_Click" Foreground="#FF2849D6"/>
+        <Label Content="IN TREATMENT" HorizontalAlignment="Left" Margin="29,396,0,0" VerticalAlignment="Top" Height="33" Width="104" FontFamily="Microsoft Sans Serif" FontWeight="Bold" Foreground="LightGreen"/>
+        <Label Content="REFUELING" HorizontalAlignment="Left" Margin="29,429,0,0" VerticalAlignment="Top" FontFamily="Microsoft Sans Serif" FontWeight="Bold" Width="90" Foreground="BlueViolet" RenderTransformOrigin="0.684,1.517"/>
+        <Label Content="IN DRIVING" HorizontalAlignment="Left" Margin="29,458,0,0" VerticalAlignment="Top" Height="33" Width="104" FontFamily="Microsoft Sans Serif" FontWeight="Bold" Foreground="RED"/>
+    </Grid>
+</Window>

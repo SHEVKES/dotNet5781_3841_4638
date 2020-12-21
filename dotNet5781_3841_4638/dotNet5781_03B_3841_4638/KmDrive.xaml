@@ -1,0 +1,14 @@
+﻿<Window x:Class="dotNet5781_03B_3841_4638.KmDrive"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:dotNet5781_03B_3841_4638"
+        mc:Ignorable="d"
+        Title="KmDrive" Height="282.393" Width="468.849" Icon="KM DRIVE.jpg">
+    <Grid>
+        <Label Content="Please enter the travel distance:" HorizontalAlignment="Left" Height="97" Margin="66,45,0,0" VerticalAlignment="Top" Width="338" FontSize="22" FontFamily="Microsoft Sans Serif" FontWeight="Bold"/>
+        <TextBox HorizontalAlignment="Left" Margin="87,142,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="42" Width="287" Background="#FF49F9FF" TextChanged="TextBox_TextChanged" KeyDown="Enter_Distance" PreviewKeyDown="TextBox_OnlyNumbers_PreviewKeyDown" FontSize="22" FontFamily="Microsoft Sans Serif"/>
+        <Viewbox HorizontalAlignment="Left" Height="5" Margin="366,83,-41.6,0" VerticalAlignment="Top" Width="2" Grid.RowSpan="2"/>
+    </Grid>
+</Window>
