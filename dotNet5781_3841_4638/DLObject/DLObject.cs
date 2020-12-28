@@ -217,5 +217,126 @@ namespace DL
 
         }
         #endregion
+        #region LineStation
+        public IEnumerable<DO.LineStation> GetAllLineStations()
+        {
+            throw new Exception();
+        }
+        public IEnumerable<DO.LineStation> GetAllLineStationsBy(Predicate<DO.LineStation> predicate)
+        {
+            throw new Exception();
+        }
+        public DO.LineStation GetLineStation(int lineId, int stationCode)
+        {
+            DO.LineStation lineStation = DataSource.ListLineStations.Find(l => (l.LineId == lineId && l.StationCode == stationCode));
+            if (lineStation != null)
+                return lineStation.Clone();
+            else
+                throw new Exception();
+        }
+        public void AddLineStation(DO.LineStation lineStation)
+        {
+            if (DataSource.ListLineStations.FirstOrDefault(l => (l.LineId == lineStation.LineId && l.StationCode == lineStation.StationCode)) != null)
+                throw new Exception();
+            DataSource.ListLineStations.Add(lineStation.Clone());
+        }
+        public void UpdateLineStation(DO.LineStation lineStation)
+        {
+            DO.LineStation newLineStation = DataSource.ListLineStations.Find(l => (l.LineId == lineStation.LineId && l.StationCode == lineStation.StationCode));
+            if (newLineStation != null)
+                throw new Exception();
+            DO.LineStation lineStation1 = lineStation.Clone(); //copy the line station to a new item
+            newLineStation = lineStation1; //update the line station
+        }
+        public void UpdateLineStation(int lineId, int stationCode, Action<DO.LineStation> update)
+        {
+
+        }
+        public void DeleteLineStation(int lineId, int stationCode)
+        {
+
+        }
+        #endregion
+        #region LineTrip
+        public IEnumerable<DO.LineTrip> GetAllLineTrips()
+        {
+            throw new Exception();
+        }
+        public IEnumerable<DO.LineTrip> GetAllLineTripsBy(Predicate<DO.LineTrip> predicate)
+        {
+            throw new Exception();
+        }
+        public DO.LineTrip GetLineTrip(int lineTripId)
+        {
+            DO.LineTrip lineTrip = DataSource.ListLineTrips.Find(l => l.LineTripId == lineTripId);
+            if (lineTrip != null)
+                return lineTrip.Clone();
+            else
+                throw new Exception();
+        }
+        public void AddLineTrip(DO.LineTrip lineTrip)
+        {
+            if (DataSource.ListLineTrips.FirstOrDefault(l => l.LineTripId == lineTrip.LineTripId) != null)
+                throw new Exception();
+            DataSource.ListLineTrips.Add(lineTrip.Clone());
+        }
+        public void UpdateLineTrip(DO.LineTrip lineTrip)
+        {
+            DO.LineTrip newLineTrip = DataSource.ListLineTrips.Find(l => l.LineTripId == lineTrip.LineTripId);
+            if (newLineTrip == null)
+                throw new Exception();
+            DO.LineTrip lineTrip1 = lineTrip.Clone(); //copy the line trip to a new item
+            newLineTrip = lineTrip1; //update the line trip
+        }
+        public void UpdateLineTrip(int lineTripId, Action<DO.LineTrip> update)
+        {
+
+        }
+        public void DeleteLineTrip(int lineTripId)
+        {
+
+        }
+        #endregion
+        #region User
+        public IEnumerable<DO.User> GetAllUsers()
+        {
+            throw new Exception();
+        }
+        public IEnumerable<DO.User> GetAllUsersBy(Predicate<DO.User> predicate)
+        {
+            throw new Exception();
+        }
+        public DO.User GetUser(string userName)
+        {
+            DO.User user = DataSource.ListUsers.Find(u => u.UserName == userName);
+            if (user != null)
+                return user.Clone();
+            else
+                throw new Exception();
+        }
+        public void AddUser(DO.User user)
+        {
+            if (DataSource.ListUsers.FirstOrDefault(u => u.UserName == user.UserName) != null)
+                throw new Exception();
+            DataSource.ListUsers.Add(user.Clone());
+        }
+        public void UpdateUser(DO.User user)
+        {
+            DO.User newUser = DataSource.ListUsers.Find(u => u.UserName == user.UserName);
+            if (newUser == null)
+                throw new Exception();
+            DO.User user1 = user.Clone(); //copy the user to a new item
+            newUser = user1; //update the user
+        }
+        public void UpdateUser(string userName, Action<DO.User> update)
+        {
+
+        }
+        public void DeleteUser(string userName)
+        {
+
+        }
+        #endregion
+
     }
 }

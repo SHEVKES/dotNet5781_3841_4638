@@ -59,5 +59,35 @@ namespace DLAPI
         void UpdateAdjacentStations(int stationCode1, int stationCode2, Action<AdjacentStations> update); //method that knows to updt specific fields in adjacent stations
         void DeleteAdjacentStations(int stationCode1, int stationCode2);
         #endregion
+        #region LineStation
+
+        IEnumerable<LineStation> GetAllLineStations();
+        IEnumerable<LineStation> GetAllLineStationsBy(Predicate<LineStation> predicate);
+        LineStation GetLineStation(int lineId,int stationCode);
+        void AddLineStation(LineStation lineStation);
+        void UpdateLineStation(LineStation lineStation);
+        void UpdateLineStation(int lineId,int stationCode, Action<LineStation> update); //method that knows to updt specific fields in line station
+        void DeleteLineStation(int lineId, int stationCode);
+        #endregion
+        #region LineTrip
+        IEnumerable<LineTrip> GetAllLineTrips();
+        IEnumerable<LineTrip> GetAllLineTripsBy(Predicate<LineTrip> predicate);
+        LineTrip GetLineTrip(int lineTripId);
+        void AddLineTrip(LineTrip lineTrip);
+        void UpdateLineTrip(LineTrip lineTrip);
+        void UpdateLineTrip(int lineTripId, Action<LineTrip> update); //method that knows to updt specific fields in Line Trip
+        void DeleteLineTrip(int lineTripId);
+        #endregion
+        #region User
+        IEnumerable<User> GetAllUsers();
+        IEnumerable<User> GetAllUsersBy(Predicate<User> predicate);
+        User GetUser(string userName);
+        void AddUser(User user);
+        void UpdateUser(User user);
+        void UpdateUser(string userName, Action<User> update); //method that knows to updt specific fields in User
+        void DeleteUser(string userName);
+        #endregion
+
+
     }
 }
