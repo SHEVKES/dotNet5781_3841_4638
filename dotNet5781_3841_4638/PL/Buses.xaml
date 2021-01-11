@@ -1,0 +1,60 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        xmlns:BO="clr-namespace:BO;assembly=BL" x:Class="PL.Buses"       
+        mc:Ignorable="d"
+        Title="Buses" Height="370.267" Width="762.864" Loaded="Window_Loaded">
+    <Window.Resources>
+        <CollectionViewSource x:Key="busViewSource" d:DesignSource="{d:DesignInstance {x:Type BO:Bus}, CreateList=True}"/>
+    </Window.Resources>
+    <Grid>
+        <Button Content="הוספת אוטובוס חדש" HorizontalAlignment="Left" Margin="505,170,0,0" VerticalAlignment="Top" Width="204" Height="52" Click="ButtonAdd_Click"/>
+        <ListBox x:Name="LbBuses" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="340" Margin="302,1,0,-0.2" VerticalAlignment="Top" Width="139" MouseDoubleClick="LbBuses_MouseDoubleClick"/>
+        <Button Content="עדכון אוטובוס" HorizontalAlignment="Left" Margin="504,95,0,0" VerticalAlignment="Top" Width="204" Height="52" Click="ButtonUpdate_Click"/>
+        <Button Content="מחיקת אוטובוס" HorizontalAlignment="Left" Margin="502,24,0,0" VerticalAlignment="Top" Width="204" Height="52" Click="ButtonDelete_Click"/>
+        <Grid x:Name="grid2" DataContext="{StaticResource busViewSource}" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top" Height="325" Width="254" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="9*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Label Content="Date Last Treat:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+            <DatePicker x:Name="dateLastTreatDatePicker" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="3" SelectedDate="{Binding DateLastTreat, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center"/>
+            <Label Content="From Date:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+            <DatePicker x:Name="fromDateDatePicker" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="1" SelectedDate="{Binding FromDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center"/>
+            <Label Content="Fuel Remain:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+            <TextBox x:Name="fuelRemainTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding FuelRemain, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <Label Content="Km Last Treat:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
+            <TextBox x:Name="kmLastTreatTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="4" Text="{Binding KmLastTreat, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <Label Content="License Num:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+            <TextBlock x:Name="licenseNumTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="0" Text="{Binding LicenseNum}" VerticalAlignment="Center"/>
+            <Label Content="Status:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
+            <ComboBox x:Name="statusComboBox" Grid.Column="1" HorizontalAlignment="Left" Height="Auto" ItemsSource="{Binding}" Margin="3" Grid.Row="5" VerticalAlignment="Center" Width="120">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel/>
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+            <Label Content="Total Trip:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
+            <TextBox x:Name="totalTripTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="6" Text="{Binding TotalTrip, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+        </Grid>
+        <Ellipse HorizontalAlignment="Left" Height="100" Margin="634,231,0,0" Stroke="Black" VerticalAlignment="Top" Width="96">
+            <Ellipse.Fill>
+                <ImageBrush ImageSource="לוגו מעודכן סופי 1.jpg" Stretch="UniformToFill"/>
+            </Ellipse.Fill>
+        </Ellipse>
+
+    </Grid>
+</Window>

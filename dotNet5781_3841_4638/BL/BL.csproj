@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -30,6 +30,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -41,7 +44,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="BLAPI\BLFactory.cs" />
+    <Compile Include="BLAPI\IBL.cs" />
+    <Compile Include="BLImp.cs" />
+    <Compile Include="BO\AdjacentStation.cs" />
+    <Compile Include="BO\Bus.cs" />
+    <Compile Include="BO\Enum.cs" />
+    <Compile Include="BO\Exception.cs" />
+    <Compile Include="BO\Line.cs" />
+    <Compile Include="BO\LineInStation.cs" />
+    <Compile Include="BO\LineStation.cs" />
+    <Compile Include="BO\Station.cs" />
+    <Compile Include="BO\StationInLine.cs" />
+    <Compile Include="BO\Tools.cs" />
+    <Compile Include="BO\User.cs" />
+    <Compile Include="DeepCopyUtilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -50,5 +67,6 @@
       <Name>DLAPI</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

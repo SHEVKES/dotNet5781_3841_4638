@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DO
+namespace BO
 {
-     public class Bus
+    public class Bus
     {
         public int LicenseNum { get; set; } //license number
         public DateTime FromDate { get; set; } //date of start
@@ -15,6 +15,9 @@ namespace DO
         public BusStatus Status { get; set; } //status of the bus
         public DateTime DateLastTreat { get; set; } //date of the last treatment
         public double KmLastTreat { get; set; } // total km from the last treatment
-        public bool IsDeleted { get; set; } //check if the bus has deleted
+        public override string ToString()
+        {
+            return LicenseNum.ToString();
+        }
     }
 }

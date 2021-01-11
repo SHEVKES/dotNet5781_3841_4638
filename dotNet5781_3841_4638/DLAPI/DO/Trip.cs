@@ -16,5 +16,6 @@ namespace DO
         public TimeSpan GetOnTime { get; set; }
         public int GetOffStation { get; set; } //id of the 
         public TimeSpan GetOffTime { get; set; }
+        public bool IsDeleted { get; set; } //check if the trip has deleted
     }
 }

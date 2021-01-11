@@ -13,5 +13,6 @@ namespace DO
         public TimeSpan StartAt { get; set; } //time of the start
         public TimeSpan Frequency { get; set; } //frequency
         public TimeSpan FinishAt { get; set; } //time of the end
+        public bool IsDeleted { get; set; } //check if the line trip has deleted
     }
 }

@@ -1,0 +1,30 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        xmlns:BO="clr-namespace:BO;assembly=BL" x:Class="PL.Lines"
+        mc:Ignorable="d"
+        Title="Lines" Height="450" Width="800" Loaded="Window_Loaded">
+    <Window.Resources>
+        <CollectionViewSource x:Key="stationInLineViewSource" d:DesignSource="{d:DesignInstance {x:Type BO:StationInLine}, CreateList=True}"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource stationInLineViewSource}">
+        <ListBox x:Name="LbLines" HorizontalAlignment="Left" Height="369" Margin="445,10,0,0" VerticalAlignment="Top" Width="149" ItemsSource="{Binding}" MouseDoubleClick="LbLines_MouseDoubleClick"/>
+        <DataGrid x:Name="stationInLineDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="1,7,375.6,40" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn x:Name="disabledAccessColumn1" Binding="{Binding DisabledAccess}" Header="Disabled Access" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="distanceColumn1" Binding="{Binding Distance}" Header="Distance" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="lineStationIndexColumn1" Binding="{Binding LineStationIndex}" Header="Line Station Index" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="nameColumn1" Binding="{Binding Name}" Header="Name" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="stationCodeColumn1" Binding="{Binding StationCode}" Header="Station Code" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="timeColumn1" Binding="{Binding Time}" Header="Time" Width="SizeToHeader"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="עדכון קו" HorizontalAlignment="Left" Margin="608,20,0,0" VerticalAlignment="Top" Width="171" Height="50" Click="Button_Click_Update"/>
+        <Button Content="מחיקת קו" HorizontalAlignment="Left" Margin="618,110,0,0" VerticalAlignment="Top" Width="160" Height="55"/>
+        <Button Content="הוספת קו חדש" HorizontalAlignment="Left" Margin="616,202,0,0" VerticalAlignment="Top" Width="159" Height="51"/>
+
+    </Grid>
+</Window>

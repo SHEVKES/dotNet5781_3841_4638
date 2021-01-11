@@ -20,7 +20,7 @@ namespace DLAPI
         Bus GetBus(int licenseNum);
         void AddBus(Bus bus);
         void UpdateBus(Bus bus);
-        void UpdateBus(int licenseNum, Action<Bus> update); //method that knows to updt specific fields in Bus
+        void UpdateBus(int licenseNum, Action<Bus> update); //method that knows to update specific fields in Bus
         void DeleteBus(int licenseNum);
         #endregion
         #region Station
@@ -58,6 +58,7 @@ namespace DLAPI
         void UpdateAdjacentStations(AdjacentStations adjacent);
         void UpdateAdjacentStations(int stationCode1, int stationCode2, Action<AdjacentStations> update); //method that knows to updt specific fields in adjacent stations
         void DeleteAdjacentStations(int stationCode1, int stationCode2);
+        bool IsExistAdjacentStations(int stationCode1, int stationCode2);
         #endregion
         #region LineStation
 

@@ -13,5 +13,6 @@ namespace DO
         public Area Area { get; set; } //area of the line
         public int FirstStation { get; set; } // number of the first station
         public int LastStation { get; set; } // number of the last station
+        public bool IsDeleted { get; set; } //check if the line has deleted
     }
 }

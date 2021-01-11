@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -51,7 +51,7 @@
       <Name>DLAPI</Name>
     </ProjectReference>
     <ProjectReference Include="..\DS\DS.csproj">
-      <Project>{0c58ecc0-7999-4609-a638-0bd0122e9c60}</Project>
+      <Project>{4e4f0713-039c-4dc7-b7ed-ec1437c951bb}</Project>
       <Name>DS</Name>
     </ProjectReference>
   </ItemGroup>

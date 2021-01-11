@@ -13,5 +13,6 @@ namespace DO
         public int LineStationIndex { get; set; } //the index of the station in the line
         public int PrevStationCode { get; set; } //code of the previos station
         public int NextStationCode { get; set; } //code of the next station
+        public bool IsDeleted { get; set; } //check if the line station has deleted
     }
 }
