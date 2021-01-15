@@ -30,27 +30,13 @@ namespace PL
             grid1.DataContext = bl.GetLine(line.LineId);
             areaComboBox.ItemsSource = Enum.GetValues(typeof(BO.Area));
             areaComboBox.Text = line.Area.ToString();
-            LbStationsInLine.DataContext = line.stations;
-
+            LbStationsInLine.DataContext = line.stations;         
         }
         public void RefreshListLines()
         {
             line = bl.GetLine(line.LineId);
             LbStationsInLine.DataContext = line.stations;
-        }
-        //IBL bl;
-        //BO.Line line;
-        //public LineDetails(IBL _bl, BO.Line _line)
-        //{
-        //    InitializeComponent();
-        //    bl = _bl;
-        //    line = _line;
-        //    grid1.DataContext = bl.GetLine(line.LineId);
-        //    areaComboBox.ItemsSource = Enum.GetValues(typeof(BO.Area));
-        //    LBStations.DataContext = line.Stations;
-        //    areaComboBox.Text = line.Area.ToString();
-        //}
-
+        }    
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
@@ -99,11 +85,11 @@ namespace PL
                 MessageBox.Show(ex.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
         private void Button_Click_Add(object sender, RoutedEventArgs e)
         {
             AddNewStationToLine win = new AddNewStationToLine(bl, line);
-            win.Show();
+            win.ShowDialog();
+            RefreshListLines();
         }
     }
 }

@@ -241,7 +241,7 @@ namespace BL
                 }
                 if(LnStDO.LineStationIndex != last+1) //if the station is not the last one
                 {
-                    nextStation = list[LnStDO.LineStationIndex];
+                    nextStation = list[LnStDO.LineStationIndex-1];
                     nextStation.PrevStationCode = LnStDO.StationCode;
                     LnStDO.NextStationCode = nextStation.StationCode;
                 }

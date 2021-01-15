@@ -311,7 +311,7 @@ namespace DL
         }
         public bool IsExistAdjacentStations(int stationCode1, int stationCode2)
         {
-            DO.AdjacentStations adjacent = DataSource.ListAdjacentStations.Find(a => (a.StationCode1 == stationCode1 && a.StationCode2 == stationCode2 && a.IsDeleted == false || a.StationCode1 == stationCode2 && a.StationCode2 == stationCode1 && a.IsDeleted == false));
+            DO.AdjacentStations adjacent = DataSource.ListAdjacentStations.Find(a => (a.StationCode1 == stationCode1 && a.StationCode2 == stationCode2 && a.IsDeleted == false));
             if (adjacent != null)
                 return true;
             return false;
@@ -346,12 +346,13 @@ namespace DL
         }
         public void UpdateLineStation(DO.LineStation lineStation)
         {
-            DO.LineStation newLineStation = DataSource.ListLineStations.Find(l => (l.LineId == lineStation.LineId && l.StationCode == lineStation.StationCode));
-            if (newLineStation != null)
+            DO.LineStation newLineStation = DataSource.ListLineStations.Find(l => (l.LineId == lineStation.LineId && l.StationCode == lineStation.StationCode && l.IsDeleted == false));
+            if (newLineStation == null)
                 throw new Exception();
             DO.LineStation lineStation1 = lineStation.Clone(); //copy the line station to a new item
-            DataSource.ListLineStations.Remove(lineStation);
-            newLineStation = lineStation1; //update the line station
+            DataSource.ListLineStations.Remove(newLineStation);
+            DataSource.ListLineStations.Add(lineStation);
+            //newLineStation = lineStation1; //update the line station
         }
         //DO.LineStation lStatFind = DataSource.ListLineStations.Find(lStat => (lStat.LineId == lineStation.LineId && lStat.StationCode == lineStation.StationCode && lStat.IsDeleted == false));
         //    if (lStatFind == null)
