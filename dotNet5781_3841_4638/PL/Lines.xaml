@@ -23,7 +23,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="עדכון קו" HorizontalAlignment="Left" Margin="608,20,0,0" VerticalAlignment="Top" Width="171" Height="50" Click="Button_Click_Update"/>
-        <Button Content="מחיקת קו" HorizontalAlignment="Left" Margin="618,110,0,0" VerticalAlignment="Top" Width="160" Height="55"/>
+        <Button Content="מחיקת קו" HorizontalAlignment="Left" Margin="618,110,0,0" VerticalAlignment="Top" Width="160" Height="55" Click="Button_Click_Delete"/>
         <Button Content="הוספת קו חדש" HorizontalAlignment="Left" Margin="616,202,0,0" VerticalAlignment="Top" Width="159" Height="51"/>
 
     </Grid>

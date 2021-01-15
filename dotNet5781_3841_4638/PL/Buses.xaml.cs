@@ -64,15 +64,22 @@ namespace PL
 
         private void ButtonUpdate_Click(object sender, RoutedEventArgs e)
         {
-            int licenum = int.Parse(licenseNumTextBlock.Text);
-            double fuel = double.Parse(fuelRemainTextBox.Text);
-            DateTime fromDate = DateTime.Parse(fromDateDatePicker.Text);
-            DateTime lastDate = DateTime.Parse(dateLastTreatDatePicker.Text);
-            double kmLastTreat = double.Parse(kmLastTreatTextBox.Text);
-            BO.BusStatus st = (BO.BusStatus)Enum.Parse(typeof(BO.BusStatus), statusComboBox.SelectedItem.ToString());
-            double totalKm = double.Parse(totalTripTextBox.Text);
-            BO.Bus bus = new BO.Bus() { LicenseNum = licenum, FuelRemain = fuel, FromDate = fromDate, DateLastTreat = lastDate, Status = st, TotalTrip = totalKm, KmLastTreat = kmLastTreat };
-            bl.UpdateBusDetails(bus);
+            try
+            {
+                int licenum = int.Parse(licenseNumTextBlock.Text);
+                double fuel = double.Parse(fuelRemainTextBox.Text);
+                DateTime fromDate = DateTime.Parse(fromDateDatePicker.Text);
+                DateTime lastDate = DateTime.Parse(dateLastTreatDatePicker.Text);
+                double kmLastTreat = double.Parse(kmLastTreatTextBox.Text);
+                BO.BusStatus st = (BO.BusStatus)Enum.Parse(typeof(BO.BusStatus), statusComboBox.SelectedItem.ToString());
+                double totalKm = double.Parse(totalTripTextBox.Text);
+                BO.Bus bus = new BO.Bus() { LicenseNum = licenum, FuelRemain = fuel, FromDate = fromDate, DateLastTreat = lastDate, Status = st, TotalTrip = totalKm, KmLastTreat = kmLastTreat };
+                bl.UpdateBusDetails(bus);
+            }           
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "הפעולה נכשלה", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void ButtonDelete_Click(object sender, RoutedEventArgs e)

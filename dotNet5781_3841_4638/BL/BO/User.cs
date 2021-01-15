@@ -10,5 +10,8 @@ namespace BO
     {
         public string UserName { get; set; } //user name
         public bool AdminAccess { get; set; } //access for admin
+        public string FirstName { get; set; } //first name
+        public string LastName { get; set; } //last name
+        public int Password { get; set; } //password
     }
 }

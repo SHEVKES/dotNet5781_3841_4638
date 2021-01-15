@@ -19,6 +19,7 @@ namespace BO
             //return "Station code: " + StationCode + "  Line station index: " + LineStationIndex + "  Name: " + Name;
             return string.Format("{0} {1})",
                       StationCode, Name);
+            
         }
 
     }

@@ -12,6 +12,8 @@ namespace BO
         public string Name { get; set; } // name of the station
         public string Address { get; set; } //address of station
         public bool DisabledAccess { get; set; } //access to disabled
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
         public List<LineInStation> Lines { get; set; }
         public override string ToString()
         {

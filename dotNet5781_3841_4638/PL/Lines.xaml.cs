@@ -22,6 +22,7 @@ namespace PL
     {
         IBL bl;
         List<BO.Line> lines;
+        //BO.Line line1;
         public Lines(IBL _bl)
         {
             InitializeComponent();
@@ -43,16 +44,34 @@ namespace PL
 
         private void Button_Click_Update(object sender, RoutedEventArgs e)
         {
-            UpdateLine win = new UpdateLine(bl);
+            BO.Line tempLine = LbLines.SelectedItem as BO.Line;
+            UpdateLine win = new UpdateLine(bl,tempLine);
             win.Show();
         }
 
         private void LbLines_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            BO.StationInLine line = (sender as ListBox).SelectedItem as BO.StationInLine;
+            BO.Line line = (sender as ListBox).SelectedItem as BO.Line;
             if (line == null)
                 return;
-            stationInLineDataGrid.DataContext = line;
+            stationInLineDataGrid.DataContext = line.stations;
+        }
+
+        private void Button_Click_Delete(object sender, RoutedEventArgs e)
+        {           
+            MessageBoxResult result = MessageBox.Show("?האם אתה בטוח שאתה רוצה למחוק את הקו", "...רגע", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.No)
+                return;
+            try
+            {
+                BO.Line tempLine = LbLines.SelectedItem as BO.Line;
+                bl.DeleteLine(tempLine.LineId);
+                RefreshListBoxLines();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "הפעולה נכשלה", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

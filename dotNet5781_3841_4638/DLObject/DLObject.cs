@@ -97,6 +97,7 @@ namespace DL
         public IEnumerable<DO.Station> GetAllStations()
         {
             return from item in DataSource.ListStations
+                   where item.IsDeleted == false
                    select item.Clone();
         }
         public IEnumerable<DO.Station> GetAllStationsBy(Predicate<DO.Station> predicate)
@@ -130,7 +131,10 @@ namespace DL
         }
         public void UpdateStation(int code, Action<DO.Station> update)
         {
-
+            DO.Station statFind = DataSource.ListStations.FirstOrDefault(s => s.Code == code && s.IsDeleted == false);
+            if (statFind == null)
+                throw new DO.BadStationCodeException(code, "קוד התחנה שהקשת אינו קיים במערכת");
+            update(statFind);
         }
         public void DeleteStation(int code)
         {
@@ -143,11 +147,11 @@ namespace DL
                 if (item.StationCode1 == code || item.StationCode2 == code && item.IsDeleted == false)
                     item.IsDeleted = true;
             }
-            foreach (DO.LineStation item in DataSource.ListLineStations)
-            {
-                if (item.StationCode == code && item.IsDeleted == false)
-                    item.IsDeleted = true;
-            }
+            //foreach (DO.LineStation item in DataSource.ListLineStations)
+            //{
+            //    if (item.StationCode == code && item.IsDeleted == false)
+            //        item.IsDeleted = true;
+            //}
         }
         #endregion
         #region Line
@@ -332,35 +336,13 @@ namespace DL
             if (lineStation != null)
                 return lineStation.Clone();
             else
-                throw new Exception();
+                throw new DO.BadLineStationException(lineId, stationCode, "תחנת הקו שהקשת אינה קיימת במערכת");
         }
         public void AddLineStation(DO.LineStation lineStation)
         {
             if (DataSource.ListLineStations.FirstOrDefault(l => (l.LineId == lineStation.LineId && l.StationCode == lineStation.StationCode && l.IsDeleted == false)) != null)
-                throw new Exception();
-            DO.LineStation nextStation = DataSource.ListLineStations.Find(l => (l.LineId == lineStation.LineId && l.LineStationIndex == lineStation.LineStationIndex && l.IsDeleted == false));
-            DO.LineStation temp;
-            int index;
-            while(nextStation!=null)
-            {
-                index = nextStation.LineStationIndex + 1;
-                temp = DataSource.ListLineStations.Find(l => (l.LineId == lineStation.LineId && l.LineStationIndex == index && l.IsDeleted == false));
-                ++nextStation.LineStationIndex;
-                nextStation = temp;
-            }
-            DO.LineStation PrevStation = DataSource.ListLineStations.Find(l => (l.LineId == lineStation.LineId && l.LineStationIndex == lineStation.LineStationIndex - 1 && l.IsDeleted == false));
-            nextStation = DataSource.ListLineStations.Find(l => (l.LineId == lineStation.LineId && l.LineStationIndex == lineStation.LineStationIndex + 1 && l.IsDeleted == false));
-            if(PrevStation!=null)
-            {
-                PrevStation.NextStationCode = lineStation.StationCode;
-                lineStation.PrevStationCode = PrevStation.StationCode;
-            }
-            if(nextStation!=null)
-            {
-                lineStation.NextStationCode = nextStation.StationCode;
-                nextStation.PrevStationCode = lineStation.StationCode;              
-            }
-            DataSource.ListLineStations.Add(lineStation.Clone());
+                throw new Exception();           
+            DataSource.ListLineStations.Add(lineStation.Clone());           
         }
         public void UpdateLineStation(DO.LineStation lineStation)
         {
@@ -368,15 +350,28 @@ namespace DL
             if (newLineStation != null)
                 throw new Exception();
             DO.LineStation lineStation1 = lineStation.Clone(); //copy the line station to a new item
+            DataSource.ListLineStations.Remove(lineStation);
             newLineStation = lineStation1; //update the line station
         }
+        //DO.LineStation lStatFind = DataSource.ListLineStations.Find(lStat => (lStat.LineId == lineStation.LineId && lStat.StationCode == lineStation.StationCode && lStat.IsDeleted == false));
+        //    if (lStatFind == null)
+        //        throw new DO.BadLineStationException(lineStation.LineId, lineStation.StationCode, "The station line does not exist");
+        //    DO.LineStation newLineStation = lineStation.Clone();//copy of the bus that the function got
+        //DataSource.ListLineStations.Remove(lStatFind);
+        //    DataSource.ListLineStations.Add(newLineStation);
         public void UpdateLineStation(int lineId, int stationCode, Action<DO.LineStation> update)
         {
-
+            DO.LineStation lStatFind = DataSource.ListLineStations.Find(lStat => (lStat.LineId == lineId && lStat.StationCode == stationCode && lStat.IsDeleted == false));
+            if (lStatFind == null)
+                throw new DO.BadLineStationException(lineId, stationCode, "תחנת הקו אינה קיימת במערכת");
+            update(lStatFind);
         }
         public void DeleteLineStation(int lineId, int stationCode)
         {
-
+            DO.LineStation newLineStation = DataSource.ListLineStations.Find(l => (l.LineId == lineId && l.StationCode == stationCode && l.IsDeleted == false));
+            if (newLineStation == null)
+                throw new DO.BadLineStationException(lineId, stationCode, "תחנת הקו אינה קיימת במערכת");
+            newLineStation.IsDeleted = true;
         }
         #endregion
         #region LineTrip
@@ -471,6 +466,5 @@ namespace DL
             user.IsDeleted = true;
         }
         #endregion
-
     }
 }

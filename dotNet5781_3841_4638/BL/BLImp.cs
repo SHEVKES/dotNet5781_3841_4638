@@ -202,50 +202,154 @@ namespace BL
             #endregion
 
         #region LineStation
-           public void AddLineStation(BO.LineStation lineStation)
-           {
-                DO.LineStation LnStDO = (DO.LineStation)lineStation.CopyPropertiesToNew(typeof(DO.LineStation));
-                try
+        public bool IsExistLineStation(DO.LineStation lineStation)
+        {
+            try
+            {
+                DO.LineStation newLineStation = dl.GetLineStation(lineStation.LineId, lineStation.StationCode);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public void AddLineStation(BO.LineStation lineStation)
+        {
+            DO.LineStation LnStDO = (DO.LineStation)lineStation.CopyPropertiesToNew(typeof(DO.LineStation));
+            try
+            {
+                if (IsExistLineStation(LnStDO))
+                    throw new BO.BadLineStationException(LnStDO.LineId, LnStDO.StationCode, "התחנה הינה קיימת כבר במערכת");              
+                List<DO.LineStation> list = (dl.GetAllLineStationsBy(sl => sl.LineId == LnStDO.LineId && sl.IsDeleted == false)).OrderBy(sl => sl.LineStationIndex).ToList();
+                int last = list[list.Count - 1].LineStationIndex;
+                if (LnStDO.LineStationIndex != last + 1) //if the line station is not the last one
                 {
-                    dl.AddLineStation(LnStDO);
-                    List<DO.LineStation> list = (dl.GetAllLineStationsBy(sl => sl.LineId == LnStDO.LineId && sl.IsDeleted == false)).OrderBy(sl => sl.LineStationIndex).ToList();
-                    if (lineStation.LineStationIndex != list[list.Count-1].LineStationIndex) //if the station is not the last station
+                    for (int i = LnStDO.LineStationIndex; i < last+1; i++) //Rebooting the list of line station
                     {
-                        DO.LineStation next = list[lineStation.LineStationIndex];
-                        if(!IsExistAdjacentStations(lineStation.StationCode,next.StationCode))
-                        {
-                            DO.AdjacentStations adjacentStations = new DO.AdjacentStations() { StationCode1=lineStation.StationCode,StationCode2=next.StationCode};
-                            dl.AddAdjacentStations(adjacentStations);
-                        }
+                        list[i - 1].LineStationIndex++;
                     }
-                    if(lineStation.LineStationIndex != 1) //if the station is not the first station
+                }
+                DO.LineStation prevStation;
+                DO.LineStation nextStation;
+                if(LnStDO.LineStationIndex > 1) //if the station is not the first one
+                {
+                    prevStation = list[LnStDO.LineStationIndex - 2];
+                    prevStation.NextStationCode = LnStDO.StationCode;
+                    LnStDO.PrevStationCode = prevStation.StationCode;
+
+                }
+                if(LnStDO.LineStationIndex != last+1) //if the station is not the last one
+                {
+                    nextStation = list[LnStDO.LineStationIndex];
+                    nextStation.PrevStationCode = LnStDO.StationCode;
+                    LnStDO.NextStationCode = nextStation.StationCode;
+                }
+                foreach (DO.LineStation item in list)
+                {
+                    dl.UpdateLineStation(item);
+                }
+                dl.AddLineStation(LnStDO);
+                List<DO.LineStation> list1= (dl.GetAllLineStationsBy(sl => sl.LineId == LnStDO.LineId && sl.IsDeleted == false)).OrderBy(sl => sl.LineStationIndex).ToList();               
+                if (LnStDO.LineStationIndex != list[list.Count - 1].LineStationIndex) //if the station is not the last station
+                {
+                    nextStation = list1[LnStDO.LineStationIndex];
+                    if (!IsExistAdjacentStations(LnStDO.StationCode, nextStation.StationCode))
                     {
-                        DO.LineStation prev = list[lineStation.LineStationIndex - 2];
-                        if (!IsExistAdjacentStations(lineStation.StationCode, prev.StationCode))
-                        {
-                            DO.AdjacentStations adjacentStations = new DO.AdjacentStations() { StationCode1 = prev.StationCode, StationCode2 = lineStation.StationCode };
-                            dl.AddAdjacentStations(adjacentStations);
-                        }
-                    }              
+                        DO.AdjacentStations adjacentStations = new DO.AdjacentStations() { StationCode1 = LnStDO.StationCode, StationCode2 = nextStation.StationCode };
+                        dl.AddAdjacentStations(adjacentStations);
+                    }
                 }
-                catch (Exception)
+                if (LnStDO.LineStationIndex != 1) //if the station is not the first station
                 {
+                    prevStation = list1[LnStDO.LineStationIndex - 2];
+                    if (!IsExistAdjacentStations(LnStDO.StationCode, prevStation.StationCode))
+                    {
+                        DO.AdjacentStations adjacentStations = new DO.AdjacentStations() { StationCode1 = prevStation.StationCode, StationCode2 = LnStDO.StationCode };
+                        dl.AddAdjacentStations(adjacentStations);
+                    }
+                }
+            }
+            catch (BO.BadLineStationException ex)
+            {
 
-                    throw;
-                }
-           }
-           public void DeleteLineStation(int lineId, int stationCode)
-           {
-                try
-                {
-                    dl.DeleteLineStation(lineId, stationCode);
-                }
-                catch (Exception)
-                {
+                throw new BO.BadLineStationException(ex.lineId, ex.stationCode, ex.Message);
+            }
+            catch (BO.BadAdjacentStationsException ex)
+            {
 
-                    throw;
+                throw new BO.BadAdjacentStationsException(ex.stationCode1,ex.stationCode2,ex.Message);
+            }
+        }
+        public void DeleteLineStation(int lineId, int stationCode)
+        {
+            try
+            {
+                DO.LineStation deleteStation = dl.GetLineStation(lineId, stationCode);
+                BO.Line line = GetLine(lineId);
+                if (line.stations.Count <= 2)
+                    throw new BO.BadInputException("קיימות בקו 2 תחנות או פחות, אין אפשרות למחוק את התחנה המבוקשת");
+                //------
+                if(line.stations[0].StationCode != stationCode && line.stations[line.stations.Count-1].StationCode != stationCode) //if the selected station is not the firs or the last one
+                {
+                    BO.StationInLine prevStation = line.stations[deleteStation.LineStationIndex - 2];
+                    BO.StationInLine nextStation = line.stations[deleteStation.LineStationIndex];
+                    if (!dl.IsExistAdjacentStations(prevStation.StationCode, nextStation.StationCode))
+                    {
+                        DO.AdjacentStations adjacentStations = new DO.AdjacentStations() { StationCode1 = prevStation.StationCode, StationCode2 = nextStation.StationCode, IsDeleted = false };
+                        dl.AddAdjacentStations(adjacentStations);
+                    }
                 }
-           }
+                //---------
+                List<DO.LineStation> list = (dl.GetAllLineStationsBy(sl => sl.LineId == deleteStation.LineId && sl.IsDeleted == false)).OrderBy(sl => sl.LineStationIndex).ToList();
+                DO.LineStation next;
+                if(deleteStation.LineStationIndex > 1) //the selcted station is not the first one
+                {
+                    DO.LineStation prev = list[deleteStation.LineStationIndex - 2];
+                    if (deleteStation.LineStationIndex != list[list.Count - 1].LineStationIndex) //the selected station is not the last one
+                    {
+                        next = list[deleteStation.LineStationIndex];
+                        prev.NextStationCode = next.StationCode;
+                        next.PrevStationCode = prev.StationCode;
+                    }
+                    else //the selected station is the last one
+                        prev.NextStationCode = 0;
+                }
+                else //the selcted station is the first one
+                {
+                    if(deleteStation.LineStationIndex != list[list.Count - 1].LineStationIndex) //the selected station is not the last one
+                    {
+                        next = list[deleteStation.LineStationIndex];
+                        next.PrevStationCode = 0;
+                    }
+                }
+                //-------
+                if (deleteStation.LineStationIndex != list[list.Count - 1].LineStationIndex) //if the station is not the last one
+                {
+                    for (int i = deleteStation.LineStationIndex; i < list.Count; i++) //Rebooting the list of line station
+                    {
+                        list[i - 1].LineStationIndex++;
+                    }
+                }
+                foreach (DO.LineStation item in list)
+                {
+                    dl.UpdateLineStation(item);
+                }
+                dl.DeleteLineStation(lineId, stationCode);
+            }
+            catch (DO.BadLineStationException ex)
+            {
+                throw new BO.BadLineStationException(ex.lineId, ex.stationCode, ex.Message);
+            }
+            catch (BO.BadLineIdException ex)
+            {
+                throw new BO.BadLineIdException(ex.ID, ex.Message);
+            }
+            catch (DO.BadAdjacentStationsException ex)
+            {
+                throw new BO.BadAdjacentStationsException(ex.stationCode1, ex.stationCode2);
+            }
+        }
         #endregion
 
         #region AdjacentStation
@@ -320,6 +424,26 @@ namespace BL
 
                 throw new BO.BadStationCodeException(ex.stationCode, ex.Message);
             }
+        }
+        #endregion
+
+        #region StationInLine
+        public void UpdateTimeAndDistance(BO.StationInLine first, BO.StationInLine second)
+        {
+            try
+            {
+                DO.AdjacentStations adjacent = new DO.AdjacentStations { StationCode1 = first.StationCode, StationCode2 = second.StationCode, Distance = first.Distance, Time = first.Time, IsDeleted = false };
+                dl.UpdateAdjacentStations(adjacent);
+            }
+            catch (DO.BadAdjacentStationsException ex)
+            {
+
+                throw new BO.BadAdjacentStationsException(ex.stationCode1, ex.stationCode2, ex.Message);
+            }
+            //catch
+            //{
+            //    throw new 
+            //}
         }
         #endregion
     }

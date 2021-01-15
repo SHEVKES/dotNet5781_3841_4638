@@ -6,38 +6,28 @@
         xmlns:local="clr-namespace:PL"
         xmlns:BO="clr-namespace:BO;assembly=BL" x:Class="PL.UpdateLine"
         mc:Ignorable="d"
-        Title="UpdateLine" Height="450" Width="800" Loaded="Window_Loaded">
+        Title="UpdateLine" Height="450" Width="470" Loaded="Window_Loaded">
     <Window.Resources>
         <CollectionViewSource x:Key="lineViewSource" d:DesignSource="{d:DesignInstance {x:Type BO:Line}, CreateList=True}"/>
         <CollectionViewSource x:Key="linestationsViewSource" Source="{Binding stations, Source={StaticResource lineViewSource}}"/>
         <DataTemplate x:Key="stationInLineTemplate"
                       DataType="local:stationInLine" x:Name="stationInLine">
-            <!--<Grid HorizontalAlignment="Left" Height="auto" Grid.Row="0" Margin="44,160,0,0" VerticalAlignment="Top" Width="auto">
+            <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-            </Grid>-->
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="60"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Border Margin="5" BorderBrush="Black" BorderThickness="1">
-                    <Image Source="{Binding Path=Image}" Stretch="Fill" Width="50" Height="50" />
-                </Border>
-                <StackPanel Grid.Column="1" Margin="5">
-                    <!--<StackPanel Orientation="Horizontal" TextBlock.FontWeight="Bold" >
-                        <TextBlock Text="{Binding Path=Firstname, FallbackValue=FirstName}" />
-                        <TextBlock Text="{Binding Path=Lastname, FallbackValue=LastName}" Padding="3,0,0,0"/>
-                    </StackPanel>-->
-                    <TextBlock Text="{Binding Path=StationCode, FallbackValue=StationCode}" />
-                    <TextBlock Text="{Binding Path=Name, FallbackValue=Name}" />
-                </StackPanel>
+                <TextBlock Grid.Column="0"
+             Text="{Binding}" />
+                <Button Grid.Column="1"
+             Content="שינוי" Click="UpdateTimeDis_Button_Click" />
+                <Button Grid.Column="2"
+             Content="מחיקה" Click="Delete_Station_Button_Click" />
             </Grid>
-
         </DataTemplate>
     </Window.Resources>
     <Grid DataContext="{StaticResource lineViewSource}">
@@ -64,6 +54,33 @@
             <Label Content="Line Num:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
             <TextBox x:Name="lineNumTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding LineNum, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
         </Grid>
+        <ListBox x:Name="LbStationsInLine" HorizontalAlignment="Left" ItemsSource="{Binding}" ItemTemplate="{StaticResource stationInLineTemplate}" Height="221" Margin="48,154,0,0" VerticalAlignment="Top" Width="191"/>
+        <Button Content="הוסף תחנה חדשה" HorizontalAlignment="Left" Margin="328,120,0,0" VerticalAlignment="Top" Width="111" Height="173" Click="Button_Click_Add"/>
         
     </Grid>
 </Window>
+<!--<Grid HorizontalAlignment="Left" Height="auto" Grid.Row="0" Margin="44,160,0,0" VerticalAlignment="Top" Width="auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    
+                </Grid.ColumnDefinitions>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border Margin="5" BorderBrush="Black" BorderThickness="1">
+                    <Image Source="{Binding Path=Image}" Stretch="Fill" Width="50" Height="50" />
+                </Border>
+                <StackPanel Grid.Column="1" Margin="5">
+                    <StackPanel Orientation="Horizontal" TextBlock.FontWeight="Bold" >
+                        <TextBlock Text="{Binding Path=Firstname, FallbackValue=FirstName}" />
+                        <TextBlock Text="{Binding Path=Lastname, FallbackValue=LastName}" Padding="3,0,0,0"/>
+                    </StackPanel>
+                    <TextBlock Text="{Binding Path=StationCode, FallbackValue=StationCode}" />
+                    <TextBlock Text="{Binding Path=Name, FallbackValue=Name}" />
+                </StackPanel>
+            </Grid>-->

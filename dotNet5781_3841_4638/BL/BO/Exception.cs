@@ -45,4 +45,38 @@ namespace BO
 
         public override string ToString() => base.ToString() + $", bad station code number: {stationCode}";
     }
+    public class BadAdjacentStationsException : Exception
+    {
+        public int stationCode1;
+        public int stationCode2;
+        public BadAdjacentStationsException(int _stationCode1, int _stationCode2) : base() { stationCode1 = _stationCode1; stationCode2 = _stationCode2; }
+        public BadAdjacentStationsException(int _stationCode1, int _stationCode2, string message) :
+            base(message)
+        { stationCode1 = _stationCode1; stationCode2 = _stationCode2; }
+        public BadAdjacentStationsException(int _stationCode1, int _stationCode2, string message, Exception innerException) :
+            base(message, innerException)
+        { stationCode1 = _stationCode1; stationCode2 = _stationCode2; }
+        public override string ToString()
+        {
+            return Message;
+        }
+    }
+    public class BadLineStationException : Exception
+    {
+        public int lineId;
+        public int stationCode;
+        public BadLineStationException(int _lineId, int _stationCode) : base() { lineId = _lineId; stationCode = _stationCode; }
+        public BadLineStationException(int _lineId, int _stationCode, string message) :
+            base(message)
+        { lineId = _lineId; stationCode = _stationCode; }
+        public BadLineStationException(int _lineId, int _stationCode, string message, Exception innerException) :
+            base(message, innerException)
+        { lineId = _lineId; stationCode = _stationCode; }
+
+        //public override string ToString() => base.ToString() + $", bad station code number: {userName}";
+        public override string ToString()
+        {
+            return Message;
+        }
+    }
 }
