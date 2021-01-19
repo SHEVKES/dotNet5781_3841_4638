@@ -6,12 +6,10 @@
         xmlns:local="clr-namespace:PL"
         xmlns:BO="clr-namespace:BO;assembly=BL" x:Class="PL.OpenWindow"
         mc:Ignorable="d"
-        Title="OpenWindow" Height="450" Width="800" Loaded="Window_Loaded">
-    <Window.Resources>
-        <CollectionViewSource x:Key="userViewSource" d:DesignSource="{d:DesignInstance {x:Type BO:User}, CreateList=True}"/>
-    </Window.Resources>
+        Title="OpenWindow" Height="450" Width="800" >
+
     <Grid>
-        <Grid x:Name="grid1" DataContext="{StaticResource userViewSource}" HorizontalAlignment="Left" Margin="272,164,0,0" VerticalAlignment="Top">
+        <Grid x:Name="grid1" HorizontalAlignment="Left" Margin="272,164,0,0" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
@@ -20,14 +18,15 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Content="Password:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
-            <TextBox x:Name="passwordTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding Password, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
-            <Label Content="User Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
-            <TextBox x:Name="userNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding UserName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <Label Content="Password:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+            <TextBox x:Name="passwordTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="2.6,4,0,0" Grid.Row="1" Text="{Binding Password, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Top" Width="120"/>
+            <Label Content="User Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+            <TextBox x:Name="userNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding UserName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
         </Grid>
         <Button HorizontalAlignment="Left" Margin="221,324,0,0" VerticalAlignment="Top" Width="75">
-            <Button Content="צור חשבון" Width="75"/>
+            <Button Content="צור חשבון" Width="75" Click="Button_Click_SignUp"/>
         </Button>
-        <Button Content="כניסה" HorizontalAlignment="Left" Margin="354,261,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_SignIn"/>
+        <Button Content="כניסה" HorizontalAlignment="Left" Margin="376,327,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_SignIn"/>
     </Grid>
+
 </Window>

@@ -6,16 +6,14 @@
         xmlns:local="clr-namespace:PL"
         xmlns:BO="clr-namespace:BO;assembly=BL" x:Class="PL.Buses"       
         mc:Ignorable="d"
-        Title="Buses" Height="370.267" Width="762.864" Loaded="Window_Loaded">
-    <Window.Resources>
-        <CollectionViewSource x:Key="busViewSource" d:DesignSource="{d:DesignInstance {x:Type BO:Bus}, CreateList=True}"/>
-    </Window.Resources>
+        Title="Buses" Height="370.267" Width="762.864" >
+    
     <Grid>
         <Button Content="הוספת אוטובוס חדש" HorizontalAlignment="Left" Margin="505,170,0,0" VerticalAlignment="Top" Width="204" Height="52" Click="ButtonAdd_Click"/>
         <ListBox x:Name="LbBuses" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="340" Margin="302,1,0,-0.2" VerticalAlignment="Top" Width="139" MouseDoubleClick="LbBuses_MouseDoubleClick"/>
         <Button Content="עדכון אוטובוס" HorizontalAlignment="Left" Margin="504,95,0,0" VerticalAlignment="Top" Width="204" Height="52" Click="ButtonUpdate_Click"/>
         <Button Content="מחיקת אוטובוס" HorizontalAlignment="Left" Margin="502,24,0,0" VerticalAlignment="Top" Width="204" Height="52" Click="ButtonDelete_Click"/>
-        <Grid x:Name="grid2" DataContext="{StaticResource busViewSource}" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top" Height="325" Width="254" >
+        <Grid x:Name="grid2"  HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top" Height="325" Width="254" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="7*"/>
                 <ColumnDefinition Width="9*"/>
@@ -40,7 +38,7 @@
             <Label Content="License Num:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
             <TextBlock x:Name="licenseNumTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="0" Text="{Binding LicenseNum}" VerticalAlignment="Center"/>
             <Label Content="Status:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
-            <ComboBox x:Name="statusComboBox" Grid.Column="1" HorizontalAlignment="Left" Height="Auto" ItemsSource="{Binding}" Margin="3" Grid.Row="5" VerticalAlignment="Center" Width="120">
+            <ComboBox x:Name="statusComboBox" Grid.Column="1" HorizontalAlignment="Left" Height="Auto" SelectedItem="{Binding Status}" Margin="3" Grid.Row="5" VerticalAlignment="Center" Width="120">
                 <ComboBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel/>

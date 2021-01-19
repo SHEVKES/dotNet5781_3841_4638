@@ -21,12 +21,15 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        IBL bl = BLFactory.GetBL("1");
-        public MainWindow()
+        IBL bl;
+       // IBL bl = BLFactory.GetBL("1");
+        BO.User adminUser;
+        public MainWindow(IBL _bl, BO.User user)
         {
             InitializeComponent();
+            bl = _bl;
+            adminUser = user;             
         }
-
         private void Button_Click_Buses(object sender, RoutedEventArgs e)
         {
             Buses win = new Buses(bl);
@@ -44,7 +47,5 @@ namespace PL
             Lines win = new Lines(bl);
             win.Show();
         }
-
-     
     }
 }

@@ -73,11 +73,11 @@ namespace DLAPI
         #region LineTrip
         IEnumerable<LineTrip> GetAllLineTrips();
         IEnumerable<LineTrip> GetAllLineTripsBy(Predicate<LineTrip> predicate);
-        LineTrip GetLineTrip(int lineTripId);
+        LineTrip GetLineTrip(int lineId,TimeSpan time);
         void AddLineTrip(LineTrip lineTrip);
         void UpdateLineTrip(LineTrip lineTrip);
-        void UpdateLineTrip(int lineTripId, Action<LineTrip> update); //method that knows to updt specific fields in Line Trip
-        void DeleteLineTrip(int lineTripId);
+        void UpdateLineTrip(int lineId, TimeSpan time, Action<LineTrip> update); //method that knows to updt specific fields in Line Trip
+        void DeleteLineTrip(int lineId, TimeSpan time);
         #endregion
         #region User
         IEnumerable<User> GetAllUsers();

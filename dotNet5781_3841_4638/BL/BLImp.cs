@@ -96,7 +96,6 @@ namespace BL
                 }
             }
             #endregion
-
         #region Line
             BO.Line lineDoBoAdapter(DO.Line lineDO)
             {
@@ -200,7 +199,6 @@ namespace BL
                 }
             }
             #endregion
-
         #region LineStation
         public bool IsExistLineStation(DO.LineStation lineStation)
         {
@@ -351,7 +349,6 @@ namespace BL
             }
         }
         #endregion
-
         #region AdjacentStation
         public bool IsExistAdjacentStations(int sc1, int sc2)
         {
@@ -360,7 +357,6 @@ namespace BL
             return false;
         }
         #endregion
-
         #region Station
         public BO.Station StationDoBoAdapter(DO.Station stationDO)
         {
@@ -426,7 +422,6 @@ namespace BL
             }
         }
         #endregion
-
         #region StationInLine
         public void UpdateTimeAndDistance(BO.StationInLine first, BO.StationInLine second)
         {
@@ -444,6 +439,39 @@ namespace BL
             //{
             //    throw new 
             //}
+        }
+        #endregion
+        #region User
+        public void AddUser(BO.User userBO)
+        {
+            try
+            {
+                DO.User userDO = new DO.User();
+                userBO.CopyPropertiesTo(userDO);
+                userDO.IsDeleted = false;
+                dl.AddUser(userDO);
+            }
+            catch (DO.BadUserNameException ex)
+            {
+
+                throw new BO.BadUserNameException(ex.userName, ex.Message);
+            }
+        }
+        public BO.User SignIn(string userName, string password)
+        {
+            BO.User userBO = new BO.User();
+            try
+            {               
+                DO.User userDO = dl.GetUser(userName);
+                if (password != userDO.Password)
+                    throw new BO.BadUserNameException(userName, "שם המשתמש או הסיסמא שהקשת שגויים");
+                userDO.CopyPropertiesTo(userBO);               
+            }
+            catch (DO.BadUserNameException ex)
+            {
+                throw new BO.BadUserNameException(ex.userName, ex.Message);
+            }
+            return userBO;
         }
         #endregion
     }

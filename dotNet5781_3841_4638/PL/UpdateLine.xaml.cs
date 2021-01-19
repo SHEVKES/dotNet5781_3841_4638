@@ -37,13 +37,13 @@ namespace PL
             line = bl.GetLine(line.LineId);
             LbStationsInLine.DataContext = line.stations;
         }    
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
+        //private void Window_Loaded(object sender, RoutedEventArgs e)
+        //{
 
-            System.Windows.Data.CollectionViewSource lineViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("lineViewSource")));
-            // Load data by setting the CollectionViewSource.Source property:
-            // lineViewSource.Source = [generic data source]
-        }
+        //    System.Windows.Data.CollectionViewSource lineViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("lineViewSource")));
+        //    // Load data by setting the CollectionViewSource.Source property:
+        //    // lineViewSource.Source = [generic data source]
+        //}
         private void UpdateTimeDis_Button_Click(object sender, RoutedEventArgs e)
         {
             BO.StationInLine select = (sender as Button).DataContext as BO.StationInLine;

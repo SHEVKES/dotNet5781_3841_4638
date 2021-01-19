@@ -22,7 +22,7 @@ namespace PL
     {
         IBL bl;
         List<BO.Station> stations;
-        List<BO.LineInStation> lines;
+        //List<BO.LineInStation> lines;
         public Stations(IBL _bl)
         {
             InitializeComponent();
@@ -33,17 +33,18 @@ namespace PL
         {
             stations = bl.GetAllStations().ToList();
             LbStation.DataContext = stations;
+            //linesDataGrid.DataContext=stations.
             //lines=bl.get
 
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
+        //private void Window_Loaded(object sender, RoutedEventArgs e)
+        //{
 
-            System.Windows.Data.CollectionViewSource stationViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("stationViewSource")));
-            // Load data by setting the CollectionViewSource.Source property:
-            // stationViewSource.Source = [generic data source]
-        }
+        //    System.Windows.Data.CollectionViewSource stationViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("stationViewSource")));
+        //    // Load data by setting the CollectionViewSource.Source property:
+        //    // stationViewSource.Source = [generic data source]
+        //}
 
         private void LbStation_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -72,7 +73,7 @@ namespace PL
                     //    if (item.Code == code)
                     //        stations.Remove(item);
                     //}
-                    // RefreshListBoxStations();
+                     RefreshListBoxStations();
                 }
             }
             catch (Exception ex)
@@ -93,7 +94,7 @@ namespace PL
                 double latitude = double.Parse(latitudeTextBlock.Text);
                 BO.Station stat = new BO.Station() { Address = address, Code = code, Latitude = latitude, Longitude = longitude, Name = name, DisabledAccess = disAccess };
                 bl.UpdateStation(stat);
-               // RefreshListBoxStations();
+                RefreshListBoxStations();
             }
             catch (Exception ex)
             {
@@ -104,7 +105,8 @@ namespace PL
         private void Button_Click_Add(object sender, RoutedEventArgs e)
         {
             AddNewStation win = new AddNewStation(bl);
-            win.Show();
+            win.ShowDialog();
+            RefreshListBoxStations();
         }
     }
 }

@@ -6,10 +6,9 @@
         xmlns:local="clr-namespace:PL"
         xmlns:BO="clr-namespace:BO;assembly=BL" x:Class="PL.UpdateLine"
         mc:Ignorable="d"
-        Title="UpdateLine" Height="450" Width="470" Loaded="Window_Loaded">
+        Title="UpdateLine" Height="450" Width="470" >
     <Window.Resources>
-        <CollectionViewSource x:Key="lineViewSource" d:DesignSource="{d:DesignInstance {x:Type BO:Line}, CreateList=True}"/>
-        <CollectionViewSource x:Key="linestationsViewSource" Source="{Binding stations, Source={StaticResource lineViewSource}}"/>
+        
         <DataTemplate x:Key="stationInLineTemplate"
                       DataType="local:stationInLine" x:Name="stationInLine">
             <Grid>
@@ -30,7 +29,7 @@
             </Grid>
         </DataTemplate>
     </Window.Resources>
-    <Grid DataContext="{StaticResource lineViewSource}">
+    <Grid >
         <Grid x:Name="grid1" HorizontalAlignment="Left" Margin="40,27,0,0" VerticalAlignment="Top" Height="102" Width="210">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -42,7 +41,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label Content="Area:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
-            <ComboBox x:Name="areaComboBox" Grid.Column="1" DisplayMemberPath="Area" HorizontalAlignment="Left" Height="Auto" ItemsSource="{Binding}" Margin="3" Grid.Row="0" VerticalAlignment="Center" Width="120">
+            <ComboBox x:Name="areaComboBox" Grid.Column="1"  HorizontalAlignment="Left" Height="Auto" SelectedItem="{Binding Area}" Margin="3" Grid.Row="0" VerticalAlignment="Center" Width="120">
                 <ComboBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel/>

@@ -26,17 +26,16 @@ namespace PL
         {
             InitializeComponent();
             statusComboBox.ItemsSource = Enum.GetValues(typeof(BO.BusStatus));
-            statusComboBox.SelectedIndex = 0;          
+            //statusComboBox.SelectedIndex = 0;            
             bl = _bl;
         }
+        //private void Window_Loaded(object sender, RoutedEventArgs e)
+        //{
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-            System.Windows.Data.CollectionViewSource busViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("busViewSource")));
-            // Load data by setting the CollectionViewSource.Source property:
-            // busViewSource.Source = [generic data source]
-        }
+        //    System.Windows.Data.CollectionViewSource busViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("busViewSource")));
+        //    // Load data by setting the CollectionViewSource.Source property:
+        //    // busViewSource.Source = [generic data source]
+        //}
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -51,6 +50,7 @@ namespace PL
                 double totalKm = double.Parse(totalTripTextBox.Text);
                 BO.Bus bus = new BO.Bus() { LicenseNum = licenum, FuelRemain = fuel, FromDate = fromDate, DateLastTreat = lastDate, Status = st, TotalTrip = totalKm, KmLastTreat = kmLastTreat };
                 bl.AddBus(bus);
+
                 //Buses(bl);
                 //Buses win;
                 Close();
@@ -63,8 +63,6 @@ namespace PL
             {
                 MessageBox.Show(ex.Message, "הפעולה נכשלה", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
-
-      
+        }  
     }
 }

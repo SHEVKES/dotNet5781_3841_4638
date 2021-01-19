@@ -22,11 +22,13 @@ namespace PL
     {
         IBL bl;
         List<BO.Line> lines;
+
         //BO.Line line1;
         public Lines(IBL _bl)
         {
             InitializeComponent();
             bl = _bl;
+            stationInLineDataGrid.IsReadOnly = true;
             RefreshListBoxLines();
         }
         public void RefreshListBoxLines()
@@ -34,21 +36,19 @@ namespace PL
             lines = bl.GetAllLines().ToList();
             LbLines.DataContext = lines;
         }
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
+        //private void Window_Loaded(object sender, RoutedEventArgs e)
+        //{
 
-            System.Windows.Data.CollectionViewSource stationInLineViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("stationInLineViewSource")));
-            // Load data by setting the CollectionViewSource.Source property:
-            // stationInLineViewSource.Source = [generic data source]
-        }
-
+        //    System.Windows.Data.CollectionViewSource stationInLineViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("stationInLineViewSource")));
+        //    // Load data by setting the CollectionViewSource.Source property:
+        //    // stationInLineViewSource.Source = [generic data source]
+        //}
         private void Button_Click_Update(object sender, RoutedEventArgs e)
         {
             BO.Line tempLine = LbLines.SelectedItem as BO.Line;
             UpdateLine win = new UpdateLine(bl,tempLine);
             win.Show();
         }
-
         private void LbLines_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             BO.Line line = (sender as ListBox).SelectedItem as BO.Line;
@@ -56,7 +56,6 @@ namespace PL
                 return;
             stationInLineDataGrid.DataContext = line.stations;
         }
-
         private void Button_Click_Delete(object sender, RoutedEventArgs e)
         {           
             MessageBoxResult result = MessageBox.Show("?האם אתה בטוח שאתה רוצה למחוק את הקו", "...רגע", MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -72,6 +71,12 @@ namespace PL
             {
                 MessageBox.Show(ex.Message, "הפעולה נכשלה", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+        private void Button_Click_Add(object sender, RoutedEventArgs e)
+        {
+            AddNewLine win = new AddNewLine(bl);
+            win.ShowDialog();
+            RefreshListBoxLines();
         }
     }
 }

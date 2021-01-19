@@ -36,13 +36,13 @@ namespace PL
             buses = bl.GetAllBuses().ToList();
             LbBuses.DataContext = buses;
         }
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
+        //private void Window_Loaded(object sender, RoutedEventArgs e)
+        //{
 
-            System.Windows.Data.CollectionViewSource busViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("busViewSource")));
-            // Load data by setting the CollectionViewSource.Source property:
-            // busViewSource.Source = [generic data source]
-        }
+        //    System.Windows.Data.CollectionViewSource busViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("busViewSource")));
+        //    // Load data by setting the CollectionViewSource.Source property:
+        //    // busViewSource.Source = [generic data source]
+        //}
 
         private void LbBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -52,14 +52,15 @@ namespace PL
                 return;
             grid2.DataContext = b;
             statusComboBox.ItemsSource = Enum.GetValues(typeof(BO.BusStatus));
-            statusComboBox.SelectedIndex = 0;
+            //statusComboBox.SelectedIndex = 0;
             statusComboBox.Text = b.Status.ToString();
         }
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
             AddNewBus win = new AddNewBus(bl);
-            win.Show();
+            win.ShowDialog();
+            RefreshListBoxBuses();
         }
 
         private void ButtonUpdate_Click(object sender, RoutedEventArgs e)

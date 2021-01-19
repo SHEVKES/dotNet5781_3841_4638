@@ -16,16 +16,16 @@ using BLAPI;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for OpenWindow.xaml
+    /// Interaction logic for SignUp.xaml
     /// </summary>
-    public partial class OpenWindow : Window
+    public partial class SignUp : Window
     {
-        IBL bl = BLFactory.GetBL("1");
-        //IBL bl;
-        public OpenWindow()
+        IBL bl;
+        //BO.User NewUser;
+        public SignUp(IBL _bl)
         {
             InitializeComponent();
-            //bl = _bl;
+            bl = _bl;
         }
 
         //private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -36,33 +36,24 @@ namespace PL
         //    // userViewSource.Source = [generic data source]
         //}
 
-        private void Button_Click_SignIn(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                string firstName = firstNameTextBox.Text;
+                string lastName = lastNameTextBox.Text;
                 string userName = userNameTextBox.Text;
                 string password = passwordTextBox.Text;
-                BO.User user = bl.SignIn(userName, password);
-                if (user.AdminAccess)
-                {
-                    MainWindow win = new MainWindow(bl, user);
-                    win.ShowDialog();
-                }
-                else
-                {
-                    MainWindowUser win = new MainWindowUser(bl, user);
-                    win.ShowDialog();
-                }
+                bool adminAccess = (adminAccessCheckBox.IsChecked == true);
+                BO.User newUser = new BO.User() { FirstName = firstName, LastName = lastName, UserName = userName, Password = password, AdminAccess = adminAccess };
+                bl.AddUser(newUser);
+                MessageBox.Show("שם המשתמש התווסף בהצלחה למערכת", "מזל טוב", MessageBoxButton.OK, MessageBoxImage.Information);
+                Close();
             }
-            catch (BO.BadUserNameException)
+            catch (BO.BadUserNameException ex)
             {
-                MessageBox.Show("שם המשתמש או הסיסמא שהקשת אינו תקין", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message + ":" + ex.userName, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
-        private void Button_Click_SignUp(object sender, RoutedEventArgs e)
-        {
-            SignUp win = new SignUp(bl);
-            win.ShowDialog();
         }
     }
 }

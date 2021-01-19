@@ -28,11 +28,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS", "DS\DS.csproj", "{4E4F0713-039C-4DC7-B7ED-EC1437C951BB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F0F928D2-1C9F-4330-99DB-5C9A324E91A3}"
-	ProjectSection(SolutionItems) = preProject
-		Config.xml = Config.xml
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PL", "PL\PL.csproj", "{9CB6B238-37E7-47FE-90E2-4B5DD3444337}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLXML", "DLXML\DLXML.csproj", "{0337FDE5-3DD0-4D37-B05F-04173A4FF80D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -92,6 +91,10 @@ Global
 		{9CB6B238-37E7-47FE-90E2-4B5DD3444337}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CB6B238-37E7-47FE-90E2-4B5DD3444337}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CB6B238-37E7-47FE-90E2-4B5DD3444337}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0337FDE5-3DD0-4D37-B05F-04173A4FF80D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0337FDE5-3DD0-4D37-B05F-04173A4FF80D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0337FDE5-3DD0-4D37-B05F-04173A4FF80D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0337FDE5-3DD0-4D37-B05F-04173A4FF80D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

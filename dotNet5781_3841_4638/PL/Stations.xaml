@@ -6,12 +6,9 @@
         xmlns:local="clr-namespace:PL"
         xmlns:BO="clr-namespace:BO;assembly=BL" x:Class="PL.Stations"
         mc:Ignorable="d"
-        Title="Stations" Height="450" Width="800" Loaded="Window_Loaded">
-    <Window.Resources>
-        <CollectionViewSource x:Key="stationViewSource" d:DesignSource="{d:DesignInstance {x:Type BO:Station}, CreateList=True}"/>
-        <CollectionViewSource x:Key="stationLinesViewSource" Source="{Binding Lines, Source={StaticResource stationViewSource}}"/>
-    </Window.Resources>
-    <Grid DataContext="{StaticResource stationViewSource}">
+        Title="Stations" Height="450" Width="800" >
+   
+    <Grid >
         <ListBox x:Name="LbStation" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="379" Margin="320,20,0,0" VerticalAlignment="Top" Width="197" MouseDoubleClick="LbStation_MouseDoubleClick"/>
         <Grid x:Name="grid1" HorizontalAlignment="Left" Margin="54,22,0,0" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
@@ -39,7 +36,7 @@
             <Label Content="Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
             <TextBox x:Name="nameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="5" Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
         </Grid>
-        <DataGrid x:Name="linesDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource stationLinesViewSource}}" Margin="48,230,511.6,50" RowDetailsVisibilityMode="VisibleWhenSelected" RenderTransformOrigin="0.5,0.5">
+        <DataGrid x:Name="linesDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="48,230,511.6,50" RowDetailsVisibilityMode="VisibleWhenSelected" RenderTransformOrigin="0.5,0.5">
             <DataGrid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>

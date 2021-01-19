@@ -27,13 +27,13 @@ namespace PL
             bl = _bl;
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
+        //private void Window_Loaded(object sender, RoutedEventArgs e)
+        //{
 
-            System.Windows.Data.CollectionViewSource stationViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("stationViewSource")));
-            // Load data by setting the CollectionViewSource.Source property:
-            // stationViewSource.Source = [generic data source]
-        }
+        //    System.Windows.Data.CollectionViewSource stationViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("stationViewSource")));
+        //    // Load data by setting the CollectionViewSource.Source property:
+        //    // stationViewSource.Source = [generic data source]
+        //}
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

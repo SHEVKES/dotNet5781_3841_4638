@@ -79,4 +79,14 @@ namespace BO
             return Message;
         }
     }
+    public class BadUserNameException : Exception
+    {
+        public string userName;
+        public BadUserNameException(string name) : base() => userName = name;
+        public BadUserNameException(string name, string message) :
+            base(message) => userName = name;
+        public BadUserNameException(string name, string message, Exception innerException) :
+            base(message, innerException) => userName = name;
+        public override string ToString() => base.ToString() + $", bad user name: {userName}";
+    }
 }

@@ -44,5 +44,9 @@ namespace BLAPI
         #region StationInLine
         void UpdateTimeAndDistance(BO.StationInLine first, BO.StationInLine second);
         #endregion
+        #region User
+        void AddUser(BO.User userBO);
+        BO.User SignIn(string userName, string password);
+        #endregion
     }
 }

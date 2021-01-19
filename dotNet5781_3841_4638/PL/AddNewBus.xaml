@@ -6,11 +6,9 @@
         xmlns:local="clr-namespace:PL"
         xmlns:BO="clr-namespace:BO;assembly=BL" x:Class="PL.AddNewBus"
         mc:Ignorable="d"
-        Title="AddNewBus" Height="450" Width="318.421" Loaded="Window_Loaded">
-    <Window.Resources>
-        <CollectionViewSource x:Key="busViewSource" d:DesignSource="{d:DesignInstance {x:Type BO:Bus}, CreateList=True}"/>
-    </Window.Resources>
-    <Grid DataContext="{StaticResource busViewSource}">
+        Title="AddNewBus" Height="450" Width="318.421">
+    
+    <Grid >
         <Grid x:Name="grid1" HorizontalAlignment="Left" Margin="30,20,0,0" VerticalAlignment="Top" Height="289" Width="256">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="53*"/>
@@ -36,7 +34,7 @@
             <Label Content="License Num:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
             <TextBox x:Name="licenseNumTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding LicenseNum, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" />
             <Label Content="Status:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
-            <ComboBox x:Name="statusComboBox" Grid.Column="1" DisplayMemberPath="Status" HorizontalAlignment="Left" Height="Auto" ItemsSource="{Binding}" Margin="3" Grid.Row="5" VerticalAlignment="Center" Width="120">
+            <ComboBox x:Name="statusComboBox" Grid.Column="1"  HorizontalAlignment="Left" Height="Auto" SelectedItem="{Binding Status}" Margin="3" Grid.Row="5" VerticalAlignment="Center" Width="120">
                 <ComboBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel/>

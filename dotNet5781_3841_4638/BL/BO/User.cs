@@ -12,6 +12,6 @@ namespace BO
         public bool AdminAccess { get; set; } //access for admin
         public string FirstName { get; set; } //first name
         public string LastName { get; set; } //last name
-        public int Password { get; set; } //password
+        public string Password { get; set; } //password
     }
 }

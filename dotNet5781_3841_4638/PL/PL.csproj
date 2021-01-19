@@ -59,6 +59,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddNewLine.xaml.cs">
+      <DependentUpon>AddNewLine.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddNewStation.xaml.cs">
       <DependentUpon>AddNewStation.xaml</DependentUpon>
     </Compile>
@@ -68,8 +71,14 @@
     <Compile Include="Lines.xaml.cs">
       <DependentUpon>Lines.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainWindowUser.xaml.cs">
+      <DependentUpon>MainWindowUser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="OpenWindow.xaml.cs">
       <DependentUpon>OpenWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SignUp.xaml.cs">
+      <DependentUpon>SignUp.xaml</DependentUpon>
     </Compile>
     <Compile Include="Stations.xaml.cs">
       <DependentUpon>Stations.xaml</DependentUpon>
@@ -83,6 +92,10 @@
     <Page Include="AddNewBus.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AddNewLine.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddNewStation.xaml">
       <SubType>Designer</SubType>
@@ -118,7 +131,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MainWindowUser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="OpenWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SignUp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

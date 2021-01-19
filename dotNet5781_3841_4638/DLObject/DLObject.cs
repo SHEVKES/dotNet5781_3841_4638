@@ -268,6 +268,7 @@ namespace DL
         public IEnumerable<DO.AdjacentStations> GetAllAdjacentStations()
         {
             return from item in DataSource.ListAdjacentStations
+                   where item.IsDeleted == false
                    select item.Clone();
         }
         public IEnumerable<DO.AdjacentStations> GetAllAdjacentStationsBy(Predicate<DO.AdjacentStations> predicate)
@@ -281,32 +282,35 @@ namespace DL
             DO.AdjacentStations adjacent = DataSource.ListAdjacentStations.Find(a => (a.StationCode1 == stationCode1 && a.StationCode2 == stationCode2 && a.IsDeleted == false || a.StationCode1 == stationCode2 && a.StationCode2 == stationCode1 && a.IsDeleted == false));
             if (adjacent != null)
                 return adjacent.Clone();
-            else
-                throw new Exception();
+            throw new DO.BadAdjacentStationsException(stationCode1, stationCode2, "התחנות העוקבות אינן קיימות במערכת");
         }
         public void AddAdjacentStations(DO.AdjacentStations adjacent)
         {
             if (DataSource.ListAdjacentStations.FirstOrDefault(a => (a.StationCode1 == adjacent.StationCode1 && a.StationCode2 == adjacent.StationCode2 && a.IsDeleted == false || a.StationCode1 == adjacent.StationCode2 && a.StationCode2 == adjacent.StationCode1 && a.IsDeleted == false)) != null)
-                throw new Exception();
+                throw new DO.BadAdjacentStationsException(adjacent.StationCode1, adjacent.StationCode2, "התחנות העוקבות שהקשת קיימות כבר במערכת");
             DataSource.ListAdjacentStations.Add(adjacent.Clone());
         }
         public void UpdateAdjacentStations(DO.AdjacentStations adjacent)
         {
             DO.AdjacentStations newAdjacent = DataSource.ListAdjacentStations.Find(a => (a.StationCode1 == adjacent.StationCode1 && a.StationCode2 == adjacent.StationCode2 && a.IsDeleted == false || a.StationCode1 == adjacent.StationCode2 && a.StationCode2 == adjacent.StationCode1 && a.IsDeleted == false));
             if (newAdjacent != null)
-                throw new Exception();
+                throw new DO.BadAdjacentStationsException(adjacent.StationCode1,adjacent.StationCode2, "התחנות העוקבות אינן קיימות במערכת");
             DO.AdjacentStations adjacent1 = adjacent.Clone(); //copy the adjacent stations to a new item
-            newAdjacent = adjacent1; //update the adjacent stations
+            newAdjacent.IsDeleted = true;
+            DataSource.ListAdjacentStations.Add(adjacent1); 
         }
         public void UpdateAdjacentStations(int stationCode1, int stationCode2, Action<DO.AdjacentStations> update)
         {
-
+            DO.AdjacentStations adjFind = DataSource.ListAdjacentStations.Find(adj => (adj.StationCode1 == stationCode1 && adj.StationCode2 == stationCode2 && adj.IsDeleted == false));
+            if (adjFind == null)
+                throw new DO.BadAdjacentStationsException(stationCode1, stationCode2, "התחנות העוקבות אינן קיימות במערכת");
+            update(adjFind);
         }
         public void DeleteAdjacentStations(int stationCode1, int stationCode2)
         {
             DO.AdjacentStations adjacent = DataSource.ListAdjacentStations.Find(a => (a.StationCode1 == stationCode1 && a.StationCode2 == stationCode2 && a.IsDeleted == false || a.StationCode1 == stationCode2 && a.StationCode2 == stationCode1 && a.IsDeleted == false));
             if (adjacent == null)
-                throw new Exception();
+                throw new DO.BadAdjacentStationsException(stationCode1, stationCode2, "התחנות העוקבות אינן קיימות במערכת");
             adjacent.IsDeleted = true;
         }
         public bool IsExistAdjacentStations(int stationCode1, int stationCode2)
@@ -341,37 +345,31 @@ namespace DL
         public void AddLineStation(DO.LineStation lineStation)
         {
             if (DataSource.ListLineStations.FirstOrDefault(l => (l.LineId == lineStation.LineId && l.StationCode == lineStation.StationCode && l.IsDeleted == false)) != null)
-                throw new Exception();           
+                throw new DO.BadLineStationException(lineStation.LineId, lineStation.StationCode, "תחנת הקו שהקשת קיימת כבר במערכת");          
             DataSource.ListLineStations.Add(lineStation.Clone());           
         }
         public void UpdateLineStation(DO.LineStation lineStation)
         {
             DO.LineStation newLineStation = DataSource.ListLineStations.Find(l => (l.LineId == lineStation.LineId && l.StationCode == lineStation.StationCode && l.IsDeleted == false));
             if (newLineStation == null)
-                throw new Exception();
+                throw new DO.BadLineStationException(lineStation.LineId, lineStation.StationCode, "תחנת הקו שהקשת אינה קיימת במערכת");
             DO.LineStation lineStation1 = lineStation.Clone(); //copy the line station to a new item
             DataSource.ListLineStations.Remove(newLineStation);
             DataSource.ListLineStations.Add(lineStation);
             //newLineStation = lineStation1; //update the line station
-        }
-        //DO.LineStation lStatFind = DataSource.ListLineStations.Find(lStat => (lStat.LineId == lineStation.LineId && lStat.StationCode == lineStation.StationCode && lStat.IsDeleted == false));
-        //    if (lStatFind == null)
-        //        throw new DO.BadLineStationException(lineStation.LineId, lineStation.StationCode, "The station line does not exist");
-        //    DO.LineStation newLineStation = lineStation.Clone();//copy of the bus that the function got
-        //DataSource.ListLineStations.Remove(lStatFind);
-        //    DataSource.ListLineStations.Add(newLineStation);
+        }    
         public void UpdateLineStation(int lineId, int stationCode, Action<DO.LineStation> update)
         {
             DO.LineStation lStatFind = DataSource.ListLineStations.Find(lStat => (lStat.LineId == lineId && lStat.StationCode == stationCode && lStat.IsDeleted == false));
             if (lStatFind == null)
-                throw new DO.BadLineStationException(lineId, stationCode, "תחנת הקו אינה קיימת במערכת");
+                throw new DO.BadLineStationException(lineId, stationCode, "תחנת הקו שהקשת אינה קיימת במערכת");
             update(lStatFind);
         }
         public void DeleteLineStation(int lineId, int stationCode)
         {
             DO.LineStation newLineStation = DataSource.ListLineStations.Find(l => (l.LineId == lineId && l.StationCode == stationCode && l.IsDeleted == false));
             if (newLineStation == null)
-                throw new DO.BadLineStationException(lineId, stationCode, "תחנת הקו אינה קיימת במערכת");
+                throw new DO.BadLineStationException(lineId, stationCode, "תחנת הקו שהקשת אינה קיימת במערכת");
             newLineStation.IsDeleted = true;
         }
         #endregion
@@ -387,9 +385,9 @@ namespace DL
                    where predicate(item)
                    select item.Clone();
         }
-        public DO.LineTrip GetLineTrip(int lineTripId)
+        public DO.LineTrip GetLineTrip(int lineId,TimeSpan time)
         {
-            DO.LineTrip lineTrip = DataSource.ListLineTrips.Find(l => l.LineTripId == lineTripId && l.IsDeleted == false);
+            DO.LineTrip lineTrip = DataSource.ListLineTrips.Find(l => l.LineId == lineId && l.IsDeleted == false);
             if (lineTrip != null)
                 return lineTrip.Clone();
             else
@@ -397,25 +395,28 @@ namespace DL
         }
         public void AddLineTrip(DO.LineTrip lineTrip)
         {
-            if (DataSource.ListLineTrips.FirstOrDefault(l => l.LineTripId == lineTrip.LineTripId && l.IsDeleted == false) != null)
+            if (DataSource.ListLineTrips.FirstOrDefault(l => l.LineId == lineTrip.LineId && l.IsDeleted == false) != null)
                 throw new Exception();
             DataSource.ListLineTrips.Add(lineTrip.Clone());
         }
         public void UpdateLineTrip(DO.LineTrip lineTrip)
         {
-            DO.LineTrip newLineTrip = DataSource.ListLineTrips.Find(l => l.LineTripId == lineTrip.LineTripId && l.IsDeleted == false);
+            DO.LineTrip newLineTrip = DataSource.ListLineTrips.Find(l => l.LineId == lineTrip.LineId && l.IsDeleted == false);
             if (newLineTrip == null)
                 throw new Exception();
             DO.LineTrip lineTrip1 = lineTrip.Clone(); //copy the line trip to a new item
             newLineTrip = lineTrip1; //update the line trip
         }
-        public void UpdateLineTrip(int lineTripId, Action<DO.LineTrip> update)
+        public void UpdateLineTrip(int lineId, TimeSpan time, Action<DO.LineTrip> update)
         {
-
+            DO.LineTrip lTripFind = DataSource.ListLineTrips.Find(l => l.LineId == lineId && l.StartAt == time && l.IsDeleted == false);
+            if (lTripFind == null)
+                throw new DO.BadLineTripException(lineId, time, "נסיעת הקו אינה קיימת במערכת");
+            update(lTripFind);
         }
-        public void DeleteLineTrip(int lineTripId)
+        public void DeleteLineTrip(int lineId, TimeSpan time)
         {
-            DO.LineTrip lineTrip = DataSource.ListLineTrips.Find(l => l.LineTripId == lineTripId && l.IsDeleted == false);
+            DO.LineTrip lineTrip = DataSource.ListLineTrips.Find(l => l.LineId == lineId && l.IsDeleted == false);
             if (lineTrip == null)
                 throw new Exception();
             lineTrip.IsDeleted = true;
@@ -439,31 +440,34 @@ namespace DL
             if (user != null)
                 return user.Clone();
             else
-                throw new Exception();
+                throw new DO.BadUserNameException(userName,"שם המשתמש שהקשת אינו קיים במערכת");
         }
         public void AddUser(DO.User user)
         {
             if (DataSource.ListUsers.FirstOrDefault(u => u.UserName == user.UserName && u.IsDeleted == false) != null)
-                throw new Exception();
+                throw new DO.BadUserNameException(user.UserName, "שם המשתמש שהקשת כבר קיים במערכת");
             DataSource.ListUsers.Add(user.Clone());
         }
         public void UpdateUser(DO.User user)
         {
             DO.User newUser = DataSource.ListUsers.Find(u => u.UserName == user.UserName && u.IsDeleted == false);
             if (newUser == null)
-                throw new Exception();
+                throw new DO.BadUserNameException(user.UserName, "שם המשתמש שהקשת אינו קיים במערכת");
             DO.User user1 = user.Clone(); //copy the user to a new item
             newUser = user1; //update the user
         }
         public void UpdateUser(string userName, Action<DO.User> update)
         {
-
+            DO.User userFind = DataSource.ListUsers.Find(u => u.UserName == userName && u.IsDeleted == false);
+            if (userFind == null)
+                throw new DO.BadUserNameException(userName, "שם המשתמש שהקשת אינו קיים במערכת");
+            update(userFind);
         }
         public void DeleteUser(string userName)
         {
             DO.User user = DataSource.ListUsers.Find(u => u.UserName == userName && u.IsDeleted == false);
             if (user == null)
-                throw new Exception();
+                throw new DO.BadUserNameException(userName, "שם המשתמש שהקשת אינו קיים במערכת");
             user.IsDeleted = true;
         }
         #endregion
