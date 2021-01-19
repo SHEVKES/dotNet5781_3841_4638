@@ -4,6 +4,19 @@
              xmlns:local="clr-namespace:PL"
              StartupUri="OpenWindow.xaml">
     <Application.Resources>
-         
+        <!--<Style x:Key="MyTextStyle" TargetType="Control"><Setter Property="HorizontalAlignment" Value="Center" /><Setter Property="FontFamily" Value="Comic Sans MS"/><Setter Property="FontSize" Value="14"/></Style>
+-->
+        <Style x:Key="ourButton" TargetType="Button" >
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Width" Value="202" />
+            <Setter Property=" Height" Value="66" />
+            <Setter Property="Background" Value="{x:Null}"/>
+            <Setter Property=" Foreground" Value="#FF060606" />
+            <Setter Property="FontFamily" Value="Cooper Black" />
+            <Setter Property=" FontSize" Value="16" />
+            <Setter Property=" FontWeight" Value="Bold" />
+            <Setter Property="BorderBrush" Value="#FFFC0505" />
+            <Setter Property="BorderThickness" Value="3" />
+        </Style>
     </Application.Resources>
 </Application>

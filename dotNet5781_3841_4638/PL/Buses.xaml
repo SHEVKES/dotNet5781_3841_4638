@@ -7,12 +7,12 @@
         xmlns:BO="clr-namespace:BO;assembly=BL" x:Class="PL.Buses"       
         mc:Ignorable="d"
         Title="Buses" Height="370.267" Width="762.864" >
-    
+
     <Grid>
         <Button Content="הוספת אוטובוס חדש" HorizontalAlignment="Left" Margin="505,170,0,0" VerticalAlignment="Top" Width="204" Height="52" Click="ButtonAdd_Click"/>
         <ListBox x:Name="LbBuses" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="340" Margin="302,1,0,-0.2" VerticalAlignment="Top" Width="139" MouseDoubleClick="LbBuses_MouseDoubleClick"/>
         <Button Content="עדכון אוטובוס" HorizontalAlignment="Left" Margin="504,95,0,0" VerticalAlignment="Top" Width="204" Height="52" Click="ButtonUpdate_Click"/>
-        <Button Content="מחיקת אוטובוס" HorizontalAlignment="Left" Margin="502,24,0,0" VerticalAlignment="Top" Width="204" Height="52" Click="ButtonDelete_Click"/>
+        <Button Content="מחיקת אוטובוס"  Margin="504,24,0,0" VerticalAlignment="Top"  Click="ButtonDelete_Click"    />
         <Grid x:Name="grid2"  HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top" Height="325" Width="254" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="7*"/>
@@ -48,7 +48,7 @@
             <Label Content="Total Trip:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
             <TextBox x:Name="totalTripTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="6" Text="{Binding TotalTrip, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
         </Grid>
-        <Ellipse HorizontalAlignment="Left" Height="100" Margin="634,231,0,0" Stroke="Black" VerticalAlignment="Top" Width="96">
+        <Ellipse HorizontalAlignment="Left" Height="100" Margin="658,237,0,0" Stroke="Black" VerticalAlignment="Top" Width="96">
             <Ellipse.Fill>
                 <ImageBrush ImageSource="לוגו מעודכן סופי 1.jpg" Stretch="UniformToFill"/>
             </Ellipse.Fill>
