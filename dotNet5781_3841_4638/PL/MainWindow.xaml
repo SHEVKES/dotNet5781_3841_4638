@@ -8,8 +8,28 @@
         mc:Ignorable="d"
         Title="admin menu" Height="450" Width="800" >
     <Grid>
-        <Button Content="אוטובוסים" HorizontalAlignment="Left" Margin="564,31,0,0" VerticalAlignment="Top" Width="220" Height="67" Click="Button_Click_Buses"/>
-        <Button Content="תחנות" HorizontalAlignment="Left" Margin="564,147,0,0" VerticalAlignment="Top" Width="220" Height="81" Click="Button_Click_Stations"/>
-        <Button Content="קווים" HorizontalAlignment="Left" Margin="564,281,0,0" VerticalAlignment="Top" Width="220" Height="71" Click="Button_Click_Lines"/>
+        <Grid HorizontalAlignment="Left" Height="421" Margin="0,0,0,-1" VerticalAlignment="Top" Width="266.5">
+            <Grid.Background>
+                <ImageBrush ImageSource="1שלט.jpg" Opacity="0.45"/>
+            </Grid.Background>
+            <Button Content="קווים" HorizontalAlignment="Left" Margin="33,155,0,0" VerticalAlignment="Top" Click="Button_Click_Lines"/>
+        </Grid>
+        <Grid HorizontalAlignment="Left" Height="421" Margin="265,-1,0,0" VerticalAlignment="Top" Width="266.5">
+            <Grid.Background>
+                <ImageBrush ImageSource="תחנת אוטובוס.jpg" Opacity="0.45"/>
+            </Grid.Background>
+            <Button Content="תחנות" HorizontalAlignment="Left"  VerticalAlignment="Top"  Click="Button_Click_Stations" Margin="19,155,0,0"/>
+        </Grid>
+        <Grid HorizontalAlignment="Left" Height="421" Margin="529,-1,0,0" VerticalAlignment="Top" Width="266.5">
+            <Grid.Background>
+                <ImageBrush ImageSource="מושבי אוטובוס.jpg" Opacity="0.45"/>
+            </Grid.Background>
+            <Button Content="אוטובוסים" HorizontalAlignment="Left"  VerticalAlignment="Top"  Click="Button_Click_Buses" Margin="24,155,0,0"/>
+            <Ellipse HorizontalAlignment="Left" Margin="166,331,0,0" Stroke="Black" VerticalAlignment="Top">
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="לוגו מעודכן סופי 1.jpg" Stretch="UniformToFill"/>
+                </Ellipse.Fill>
+            </Ellipse>
+        </Grid>
     </Grid>
 </Window>

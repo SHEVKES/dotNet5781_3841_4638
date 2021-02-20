@@ -6,11 +6,13 @@
         xmlns:local="clr-namespace:PL"
         xmlns:BO="clr-namespace:BO;assembly=BL" x:Class="PL.SignUp"
         mc:Ignorable="d"
-        Title="SignUp" Height="450" Width="800" >
-    
-    <Grid>
+        Title="SignUp" Height="450" Width="334.634" >
 
-        <Grid x:Name="grid1" VerticalAlignment="Top" Margin="159,111,0,0" HorizontalAlignment="Left"  Height="167" Width="202">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="לוגו מעודכן סופי 1.jpg" Opacity="0.20" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <Grid x:Name="grid1" VerticalAlignment="Top" Margin="51,102,0,0" HorizontalAlignment="Left"  Height="166" Width="229">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -33,7 +35,7 @@
             <Label VerticalAlignment="Center" Grid.Row="4" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="User Name:"/>
             <TextBox x:Name="userNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding UserName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="4" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
         </Grid>
-        <Button Content="הרשמה" HorizontalAlignment="Left" Margin="169,314,0,0" VerticalAlignment="Top" Width="194" Height="66" RenderTransformOrigin="0.411,0.507" Click="Button_Click"/>
+        <Button Content="הרשמה" HorizontalAlignment="Left" Margin="77,323,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.411,0.507" Click="Button_Click"/>
 
     </Grid>
 </Window>

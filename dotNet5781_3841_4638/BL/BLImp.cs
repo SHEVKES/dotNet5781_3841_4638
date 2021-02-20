@@ -143,34 +143,66 @@ namespace BL
                 }
                 return lineDoBoAdapter(lineDO);
             }
-            public void AddLine(BO.Line line)
+            public void AddLine(BO.Line lineBo)
+        {
+            DO.Line lineDo = new DO.Line();//the DO.Line
+            lineBo.CopyPropertiesTo(lineDo);
+            lineDo.FirstStation = lineBo.stations[0].StationCode;//code of the first station
+            lineDo.LastStation = lineBo.stations[lineBo.stations.Count - 1].StationCode;//code of the last station
+            //בודק אם יש קו עם אותו מספר עם או תחנה סופית באותו איזור
+            List<DO.Line> ltemp = dl.GetAllLinesBy(s => s.LineNum == lineDo.LineNum && s.LastStation == lineDo.LastStation && s.Area == lineDo.Area).ToList();
+            if (ltemp.Count() != 0)
+                throw new BO.BadInputException($"There is already a line with the number {lineDo.LineNum} in {lineDo.Area} with last station {lineDo.LastStation}");
+            dl.AddLine(lineDo);//add line
+            //עידכונים של תחנות עוקבות ותחנות קו
+            lineDo.LineId = dl.GetAllLinesBy(s => s.LineNum == lineDo.LineNum && s.Area == lineDo.Area).FirstOrDefault().LineId;
+            int sc1 = lineBo.stations[0].StationCode;//station Code of the first station
+            int sc2 = lineBo.stations[1].StationCode;//station Code of the last station
+            lineDo.FirstStation = sc1;
+            lineDo.LastStation = sc2;
+            try
             {
-                DO.Line lineDO = new DO.Line();
-                line.CopyPropertiesTo(lineDO);
-                lineDO.LineId = DO.Config.LineId++;
-                int sCode1 = line.stations[0].StationCode; //code of the first station
-                int sCode2 = line.stations[1].StationCode; //code of the second station
-                lineDO.FirstStation = sCode1;
-                lineDO.LastStation = sCode2;
-                try
+                if (!dl.IsExistAdjacentStations(sc1, sc2))//add to adjcenct stations if its not exists
                 {
-                    if (!dl.IsExistAdjacentStations(sCode1, sCode2))
-                    {
-                        DO.AdjacentStations adjacent = new DO.AdjacentStations { StationCode1 = sCode1, StationCode2 = sCode2, Distance = line.stations[0].Distance, Time = line.stations[0].Time, IsDeleted = false };
-                        dl.AddAdjacentStations(adjacent);
-                    }
-                    dl.AddLine(lineDO);
-                    DO.LineStation line1 = new DO.LineStation { LineId = lineDO.LineId, StationCode = sCode1, LineStationIndex = line.stations[0].LineStationIndex, IsDeleted = false };
-                    DO.LineStation line2 = new DO.LineStation { LineId = lineDO.LineId, StationCode = sCode2, LineStationIndex = line.stations[1].LineStationIndex, IsDeleted = false };
-                    dl.AddLineStation(line1);
-                    dl.AddLineStation(line2);
+                    DO.AdjacentStations adj = new DO.AdjacentStations() { StationCode1 = sc1, StationCode2 = sc2, Distance = lineBo.stations[0].Distance, Time = lineBo.stations[0].Time };
+                    dl.AddAdjacentStations(adj);
                 }
-                catch (DO.BadLineIdException ex)
-                {
-
-                    throw new BO.BadLineIdException(ex.ID, ex.Message);
-                }
+                DO.LineStation first = new DO.LineStation() { LineId = lineDo.LineId, StationCode = sc1, LineStationIndex = lineBo.stations[0].LineStationIndex, IsDeleted = false, PrevStationCode = 0, NextStationCode = sc2 };
+                DO.LineStation last = new DO.LineStation() { LineId = lineDo.LineId, StationCode = sc2, LineStationIndex = lineBo.stations[1].LineStationIndex, IsDeleted = false, PrevStationCode = sc1, NextStationCode = 0 };
+                dl.AddLineStation(first);//add first line station
+                dl.AddLineStation(last);//add last line ststion
             }
+            catch (DO.BadTripIdException ex)
+            {
+                throw new BO.BadLineIdException(ex.ID, ex.Message);
+
+                //DO.Line lineDO = new DO.Line();
+                //line.CopyPropertiesTo(lineDO);
+                ////lineDO.LineId = DO.Config.LineId++;
+                //int sCode1 = line.stations[0].StationCode; //code of the first station
+                //int sCode2 = line.stations[1].StationCode; //code of the second station
+                //lineDO.FirstStation = sCode1;
+                //lineDO.LastStation = sCode2;
+                //try
+                //{
+                //    if (!dl.IsExistAdjacentStations(sCode1, sCode2))
+                //    {
+                //        DO.AdjacentStations adjacent = new DO.AdjacentStations { StationCode1 = sCode1, StationCode2 = sCode2, Distance = line.stations[0].Distance, Time = line.stations[0].Time, IsDeleted = false };
+                //        dl.AddAdjacentStations(adjacent);
+                //    }
+                //    dl.AddLine(lineDO);
+                //    DO.LineStation line1 = new DO.LineStation { LineId = lineDO.LineId, StationCode = sCode1, LineStationIndex = line.stations[0].LineStationIndex, IsDeleted = false };
+                //    DO.LineStation line2 = new DO.LineStation { LineId = lineDO.LineId, StationCode = sCode2, LineStationIndex = line.stations[1].LineStationIndex, IsDeleted = false };
+                //    dl.AddLineStation(line1);
+                //    dl.AddLineStation(line2);
+                //}
+                //catch (DO.BadLineIdException ex)
+                //{
+
+                //    throw new BO.BadLineIdException(ex.ID, ex.Message);
+                //}
+            }
+        }
             public void UpdateLineDetails(BO.Line line)
             {
                 DO.Line lineDO = new DO.Line();

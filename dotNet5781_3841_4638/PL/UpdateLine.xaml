@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:PL"
         xmlns:BO="clr-namespace:BO;assembly=BL" x:Class="PL.UpdateLine"
         mc:Ignorable="d"
-        Title="UpdateLine" Height="450" Width="470" >
+        Title="UpdateLine" Height="519.6" Width="332" >
     <Window.Resources>
-        
+
         <DataTemplate x:Key="stationInLineTemplate"
                       DataType="local:stationInLine" x:Name="stationInLine">
             <Grid>
@@ -29,7 +29,10 @@
             </Grid>
         </DataTemplate>
     </Window.Resources>
-    <Grid >
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="לוגו מעודכן סופי 1.jpg" Opacity="0.20" Stretch="UniformToFill"/>
+        </Grid.Background>
         <Grid x:Name="grid1" HorizontalAlignment="Left" Margin="40,27,0,0" VerticalAlignment="Top" Height="102" Width="210">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -40,22 +43,22 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Content="Area:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
-            <ComboBox x:Name="areaComboBox" Grid.Column="1"  HorizontalAlignment="Left" Height="Auto" SelectedItem="{Binding Area}" Margin="3" Grid.Row="0" VerticalAlignment="Center" Width="120">
+            <Label Content="אזור" Grid.Column="1" HorizontalAlignment="Left" Margin="50.8,3,-2.4,3.4" Grid.Row="2" VerticalAlignment="Center"/>
+            <ComboBox x:Name="areaComboBox" Grid.Column="0"  HorizontalAlignment="Left" Height="Auto" SelectedItem="{Binding Area}" Margin="3" Grid.Row="2" VerticalAlignment="Center" Width="120">
                 <ComboBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel/>
                     </ItemsPanelTemplate>
                 </ComboBox.ItemsPanel>
             </ComboBox>
-            <Label Content="Line Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
-            <TextBox x:Name="lineIdTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding LineId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
-            <Label Content="Line Num:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
-            <TextBox x:Name="lineNumTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding LineNum, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <Label Content="מזהה קו" Grid.Column="1" HorizontalAlignment="Left" Margin="30.8,3.2,-4,8" Grid.Row="1" VerticalAlignment="Center"/>
+            <TextBox x:Name="lineIdTextBox" Grid.Column="0" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding LineId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <Label Content="מספר קו" Grid.Column="1" HorizontalAlignment="Left" Margin="28.8,0,-22,11.8" Grid.Row="0" VerticalAlignment="Bottom"/>
+            <TextBox x:Name="lineNumTextBox" Grid.Column="0" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding LineNum, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
         </Grid>
         <ListBox x:Name="LbStationsInLine" HorizontalAlignment="Left" ItemsSource="{Binding}" ItemTemplate="{StaticResource stationInLineTemplate}" Height="221" Margin="48,154,0,0" VerticalAlignment="Top" Width="191"/>
-        <Button Content="הוסף תחנה חדשה" HorizontalAlignment="Left" Margin="328,120,0,0" VerticalAlignment="Top" Width="111" Height="173" Click="Button_Click_Add"/>
-        
+        <Button Content="הוסף תחנה חדשה" HorizontalAlignment="Left" Margin="49,400,0,0" VerticalAlignment="Top"  Click="Button_Click_Add"/>
+
     </Grid>
 </Window>
 <!--<Grid HorizontalAlignment="Left" Height="auto" Grid.Row="0" Margin="44,160,0,0" VerticalAlignment="Top" Width="auto">

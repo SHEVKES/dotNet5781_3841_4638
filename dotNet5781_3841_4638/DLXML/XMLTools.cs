@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -31,7 +31,6 @@ namespace DL
             catch (Exception ex)
             {
                 throw new DO.XMLFileLoadCreateException(filePath, $"fail to create xml file: {filePath}", ex);
-                //throw new Exception();
             }
         }
 
@@ -53,7 +52,6 @@ namespace DL
             catch (Exception ex)
             {
                 throw new DO.XMLFileLoadCreateException(filePath, $"fail to load xml file: {filePath}", ex);
-                //throw new Exception();
             }
         }
         #endregion
@@ -71,7 +69,6 @@ namespace DL
             catch (Exception ex)
             {
                 throw new DO.XMLFileLoadCreateException(filePath, $"fail to create xml file: {filePath}", ex);
-                //throw new Exception();
             }
         }
         public static List<T> LoadListFromXMLSerializer<T>(string filePath)
@@ -93,7 +90,6 @@ namespace DL
             catch (Exception ex)
             {
                 throw new DO.XMLFileLoadCreateException(filePath, $"fail to load xml file: {filePath}", ex);
-                //throw new Exception();
             }
         }
         #endregion
@@ -124,7 +120,6 @@ namespace DL
             catch (Exception ex)
             {
                 throw new DO.XMLFileLoadCreateException(filePath, $"fail to create xml file: {filePath}", ex);
-                //throw new Exception();
             }
 
         }

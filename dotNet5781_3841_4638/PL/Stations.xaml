@@ -6,11 +6,15 @@
         xmlns:local="clr-namespace:PL"
         xmlns:BO="clr-namespace:BO;assembly=BL" x:Class="PL.Stations"
         mc:Ignorable="d"
-        Title="Stations" Height="450" Width="800" >
-   
+        Title="Stations" Height="450" Width="834.8" >
+
     <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="567*"/>
+            <ColumnDefinition Width="262*"/>
+        </Grid.ColumnDefinitions>
         <ListBox x:Name="LbStation" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="379" Margin="320,20,0,0" VerticalAlignment="Top" Width="197" MouseDoubleClick="LbStation_MouseDoubleClick"/>
-        <Grid x:Name="grid1" HorizontalAlignment="Left" Margin="54,22,0,0" VerticalAlignment="Top">
+        <Grid x:Name="grid1" HorizontalAlignment="Left" Margin="54,22,0,0" VerticalAlignment="Top" Height="182" Width="198">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
@@ -23,20 +27,20 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Content="Address:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
-            <TextBox x:Name="addressTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding Address, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
-            <Label Content="Code:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
-            <TextBlock x:Name="codeTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="1" Text="{Binding Code}" VerticalAlignment="Center"/>
-            <Label Content="Disabled Access:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
-            <CheckBox x:Name="disabledAccessCheckBox" Content="" Grid.Column="1" HorizontalAlignment="Left" IsChecked="{Binding DisabledAccess, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
-            <Label Content="Latitude:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
-            <TextBlock x:Name="latitudeTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="3" Text="{Binding Latitude}" VerticalAlignment="Center"/>
-            <Label Content="Longitude:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
-            <TextBlock x:Name="longitudeTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="4" Text="{Binding Longitude}" VerticalAlignment="Center"/>
-            <Label Content="Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
-            <TextBox x:Name="nameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="5" Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <Label Content="כתובת" Grid.Column="1" HorizontalAlignment="Left" Margin="28.6,3.2,-2.6,3.2" Grid.Row="2" VerticalAlignment="Center"/>
+            <TextBox x:Name="addressTextBox" Grid.Column="0" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding Address, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <Label Content="קוד תחנה" Grid.Column="1" HorizontalAlignment="Left" Margin="12.6,3,-2.6,3.4" Grid.Row="0" VerticalAlignment="Center"/>
+            <TextBlock x:Name="codeTextBlock" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" Text="{Binding Code}" VerticalAlignment="Center"/>
+            <Label Content="גישת נכים" Grid.Column="1" HorizontalAlignment="Left" Margin="8.6,3,-2.6,3.4" Grid.Row="5" VerticalAlignment="Center"/>
+            <CheckBox x:Name="disabledAccessCheckBox" Content="" Grid.Column="0" HorizontalAlignment="Left" IsChecked="{Binding DisabledAccess, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
+            <Label Content="קוי רוחב" Grid.Column="1" HorizontalAlignment="Left" Margin="20.6,2.8,-2.6,3.6" Grid.Row="3" VerticalAlignment="Center"/>
+            <TextBlock x:Name="latitudeTextBlock" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" Text="{Binding Latitude}" VerticalAlignment="Center"/>
+            <Label Content="קוי אורך" Grid.Column="1" HorizontalAlignment="Left" Margin="20.6,3.4,-2.6,3" Grid.Row="4" VerticalAlignment="Center"/>
+            <TextBlock x:Name="longitudeTextBlock" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" Text="{Binding Longitude}" VerticalAlignment="Center"/>
+            <Label Content="שם תחנה" Grid.Column="1" HorizontalAlignment="Left" Margin="12.6,3.6,-2.6,2.8" Grid.Row="1" VerticalAlignment="Center"/>
+            <TextBox x:Name="nameTextBox" Grid.Column="0" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
         </Grid>
-        <DataGrid x:Name="linesDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="48,230,511.6,50" RowDetailsVisibilityMode="VisibleWhenSelected" RenderTransformOrigin="0.5,0.5">
+        <DataGrid x:Name="linesDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="48,230,278.2,50" RowDetailsVisibilityMode="VisibleWhenSelected" RenderTransformOrigin="0.5,0.5">
             <DataGrid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -51,9 +55,14 @@
                 <DataGridTextColumn x:Name="lineStationIndexColumn" Binding="{Binding LineStationIndex}" Header="Line Station Index" Width="SizeToHeader"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="הוספת תחנה חדשה" HorizontalAlignment="Left" Margin="609,50,0,0" VerticalAlignment="Top" Width="148" Height="45" Click="Button_Click_Add"/>
-        <Button Content="עדכון תחנה" HorizontalAlignment="Left" Margin="598,123,0,0" VerticalAlignment="Top" Width="164" Height="56" Click="Button_Click_Update"/>
-        <Button Content="מחיקת תחנה" HorizontalAlignment="Left" Margin="588,209,0,0" VerticalAlignment="Top" Width="176" Height="81" Click="Button_Click_Delete"/>
+        <Button Content="הוספת תחנה חדשה" HorizontalAlignment="Left" Margin="10.8,52,0,0" VerticalAlignment="Top"  Click="Button_Click_Add" Grid.Column="1"/>
+        <Button Content="עדכון תחנה" HorizontalAlignment="Left" Margin="11.8,129,0,0" VerticalAlignment="Top"  Click="Button_Click_Update" Grid.Column="1"/>
+        <Button Content="מחיקת תחנה" HorizontalAlignment="Left" Margin="11.8,208,0,0" VerticalAlignment="Top"  Click="Button_Click_Delete" Grid.Column="1"/>
+        <Ellipse Grid.Column="1" HorizontalAlignment="Left" Margin="157.8,330,0,0" Stroke="Black" VerticalAlignment="Top">
+            <Ellipse.Fill>
+                <ImageBrush ImageSource="לוגו מעודכן סופי 1.jpg" Stretch="UniformToFill"/>
+            </Ellipse.Fill>
+        </Ellipse>
 
     </Grid>
 </Window>

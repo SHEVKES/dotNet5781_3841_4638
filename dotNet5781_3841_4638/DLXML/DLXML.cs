@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using DLAPI;
 using DO;
+using System.IO;
+using DS;
 
 namespace DL
 {
@@ -19,14 +21,14 @@ namespace DL
             //if (!File.Exists(stationsPath))
             //    DL.XMLTools.SaveListToXMLSerializer<DO.Station>(DS.DataSource.ListStations, stationsPath);
 
-            ////if (!File.Exists(linesPath))
-            ////    DL.XMLTools.SaveListToXMLSerializer<DO.Line>(DS.DataSource.ListLines, linesPath);
+            //if (!File.Exists(linesPath))
+            //   DL.XMLTools.SaveListToXMLSerializer<DO.Line>(DS.DataSource.ListLines, linesPath);
 
             //if (!File.Exists(adjacentStationsPath))
             //    DL.XMLTools.SaveListToXMLSerializer<DO.AdjacentStations>(DS.DataSource.ListAdjacentStations, adjacentStationsPath);
 
-            ////if (!File.Exists(lineStationsPath))
-            ////    DL.XMLTools.SaveListToXMLSerializer<DO.LineStation>(DS.DataSource.ListLineStations, lineStationsPath);
+            //if (!File.Exists(lineStationsPath))
+            //    DL.XMLTools.SaveListToXMLSerializer<DO.LineStation>(DS.DataSource.ListLineStations, lineStationsPath);
 
             //if (!File.Exists(busesPath))
             //    DL.XMLTools.SaveListToXMLSerializer<DO.Bus>(DS.DataSource.ListBuses, busesPath);

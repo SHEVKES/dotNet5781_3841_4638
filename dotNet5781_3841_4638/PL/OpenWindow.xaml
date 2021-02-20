@@ -7,26 +7,36 @@
         xmlns:BO="clr-namespace:BO;assembly=BL" x:Class="PL.OpenWindow"
         mc:Ignorable="d"
         Title="OpenWindow" Height="450" Width="800" >
-
     <Grid>
-        <Grid x:Name="grid1" HorizontalAlignment="Left" Margin="272,164,0,0" VerticalAlignment="Top">
+        <Grid.Background>
+            <ImageBrush ImageSource="2.jpeg" Stretch="UniformToFill" Opacity="0.60"/>
+        </Grid.Background>
+        <Grid x:Name="grid1" HorizontalAlignment="Left" Margin="220,108,0,0" VerticalAlignment="Top" Height="136" Width="405" RenderTransformOrigin="0.506,0.645">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="71.6"/>
+
+                <ColumnDefinition Width="Auto" MinWidth="278.4"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="0"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Content="Password:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
-            <TextBox x:Name="passwordTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="2.6,4,0,0" Grid.Row="1" Text="{Binding Password, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Top" Width="120"/>
-            <Label Content="User Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
-            <TextBox x:Name="userNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding UserName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <Label Content=":סיסמא" Grid.Column="3" HorizontalAlignment="Right" Margin="0,3.2,20.2,10" Grid.Row="2" VerticalAlignment="Center" Height="46" Width="165" FontFamily="Cooper Black" FontWeight="Bold" FontSize="30"/>
+            <TextBox x:Name="passwordTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="2,15.2,0,0" Grid.Row="2" Text="{Binding Password, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" Opacity="0.5"/>
+            <Label Content=":שם משתמש" Grid.Column="3" HorizontalAlignment="Left" Margin="25.4,16,0,19.8" Grid.Row="1" VerticalAlignment="Center" Height="41" Width="185" FontFamily="Cooper Black" FontWeight="Bold" FontSize="30"/>
+            <TextBox x:Name="userNameTextBox" HorizontalAlignment="Left" Height="24" Margin="0.2,30,0,22.8" Grid.Row="1" Text="{Binding UserName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Opacity="0.5" Grid.ColumnSpan="2"/>
         </Grid>
-        <Button HorizontalAlignment="Left" Margin="221,324,0,0" VerticalAlignment="Top" Width="75">
-            <Button Content="צור חשבון" Width="75" Click="Button_Click_SignUp"/>
-        </Button>
-        <Button Content="כניסה" HorizontalAlignment="Left" Margin="376,327,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_SignIn"/>
+        <Button Content="צור חשבון"  Click="Button_Click_SignUp" Margin="115,275,419.6,79"/>
+        <Button Content="כניסה" HorizontalAlignment="Left" Margin="375,272,0,0" VerticalAlignment="Top"  Click="Button_Click_SignIn" Height="72" Width="219"/>
+        <Label Content="ברוכים הבאים" HorizontalAlignment="Left" Margin="222,-3,0,0" VerticalAlignment="Top" Height="69" Width="335" FontFamily="Cooper Black" FontSize="50" Background="{x:Null}" Foreground="Black"/>
+        <Ellipse HorizontalAlignment="Left" Stroke="Black" VerticalAlignment="Top" Margin="694,331,0,0" Opacity="0.8" >
+            <Ellipse.Fill>
+                <ImageBrush ImageSource="לוגו מעודכן סופי 1.jpg" Stretch="UniformToFill"/>
+            </Ellipse.Fill>
+        </Ellipse>
     </Grid>
 
 </Window>

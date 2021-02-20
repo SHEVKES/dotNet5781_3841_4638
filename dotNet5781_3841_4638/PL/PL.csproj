@@ -198,5 +198,23 @@
       <Name>BL</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="WhatsApp Image 2021-02-18 at 16.24.50.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="2.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="לוגו מעודכן סופי.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="1שלט.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="תחנת אוטובוס.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="מושבי אוטובוס.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

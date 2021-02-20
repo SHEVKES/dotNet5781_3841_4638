@@ -177,6 +177,7 @@ namespace DL
         }
         public void AddLine(DO.Line line)
         {
+            line.LineId = DO.Config.LineId++;
             if (DataSource.ListLines.FirstOrDefault(l => l.LineId == line.LineId && l.IsDeleted == false) != null)
                 throw new DO.BadLineIdException(line.LineId, "הקו הינו קיים כבר במערכת");
             DataSource.ListLines.Add(line.Clone());           
