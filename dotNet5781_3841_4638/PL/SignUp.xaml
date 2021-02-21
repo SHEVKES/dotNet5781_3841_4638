@@ -12,7 +12,7 @@
         <Grid.Background>
             <ImageBrush ImageSource="לוגו מעודכן סופי 1.jpg" Opacity="0.20" Stretch="UniformToFill"/>
         </Grid.Background>
-        <Grid x:Name="grid1" VerticalAlignment="Top" Margin="51,102,0,0" HorizontalAlignment="Left"  Height="166" Width="229">
+        <Grid x:Name="grid1" VerticalAlignment="Top" Margin="51,104,0,0" HorizontalAlignment="Left"  Height="166" Width="229">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -24,18 +24,18 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Label VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Admin Access:"/>
-            <CheckBox x:Name="adminAccessCheckBox" VerticalAlignment="Center" Grid.Row="0" Margin="3" IsChecked="{Binding AdminAccess, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Content=""/>
-            <Label VerticalAlignment="Center" Grid.Row="1" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="First Name:"/>
-            <TextBox x:Name="firstNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding FirstName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
-            <Label VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Last Name:"/>
-            <TextBox x:Name="lastNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding LastName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
-            <Label VerticalAlignment="Center" Grid.Row="3" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Password:"/>
-            <TextBox x:Name="passwordTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Password, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="3" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
-            <Label VerticalAlignment="Center" Grid.Row="4" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="User Name:"/>
-            <TextBox x:Name="userNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding UserName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="4" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
+            <Label VerticalAlignment="Center" Grid.Row="4" Margin="46.2,10.4,-4.2,6.4" HorizontalAlignment="Left" Grid.Column="1" Content="?האם אתה מנהל" Grid.RowSpan="1" RenderTransformOrigin="1.029,0.592"/>
+            <CheckBox x:Name="adminAccessCheckBox" VerticalAlignment="Center" Grid.Row="4" Margin="35.2,15.4,0,10.4" IsChecked="{Binding AdminAccess, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Content="" RenderTransformOrigin="-1.44,3.908" Grid.Column="1"/>
+            <Label VerticalAlignment="Bottom" Grid.Row="0" Margin="84.2,0,-2.2,29.2" HorizontalAlignment="Left" Grid.Column="1" Content=":שם פרטי" Grid.RowSpan="2"/>
+            <TextBox x:Name="firstNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding FirstName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="-36,8,0,1" Height="23" HorizontalAlignment="Left"/>
+            <Label VerticalAlignment="Center" Grid.Row="1" Margin="70.2,9,-3.2,29.4" HorizontalAlignment="Left" Grid.Column="1" Content=":שם משפחה" Grid.RowSpan="2"/>
+            <TextBox x:Name="lastNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding LastName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Margin="-36,5,0,3.2" Height="23" HorizontalAlignment="Left"/>
+            <Label VerticalAlignment="Center" Grid.Row="3" Margin="95.2,8.6,-2.2,39.4" HorizontalAlignment="Left" Grid.Column="1" Content=":סיסמא" Grid.RowSpan="2"/>
+            <TextBox x:Name="passwordTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Password, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="3" Margin="-35,4.6,0,3.6" Height="23" HorizontalAlignment="Left" Grid.ColumnSpan="2"/>
+            <Label VerticalAlignment="Center" Grid.Row="2" Margin="68.2,7.8,-4.2,30.6" HorizontalAlignment="Left" Grid.Column="1" Content=":שם משתמש" Grid.RowSpan="2"/>
+            <TextBox x:Name="userNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding UserName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="-36,3.8,0,4.4" Height="23" HorizontalAlignment="Left" Grid.Row="2"/>
         </Grid>
-        <Button Content="הרשמה" HorizontalAlignment="Left" Margin="77,323,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.411,0.507" Click="Button_Click"/>
+        <Button Content="הרשמה" HorizontalAlignment="Left" Margin="64,323,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.411,0.507" Click="Button_Click"/>
 
     </Grid>
 </Window>
