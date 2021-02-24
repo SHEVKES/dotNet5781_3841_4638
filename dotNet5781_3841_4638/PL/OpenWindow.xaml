@@ -25,9 +25,10 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label Content=":סיסמא" Grid.Column="3" HorizontalAlignment="Right" Margin="0,3.2,20.2,10" Grid.Row="2" VerticalAlignment="Center" Height="46" Width="165" FontFamily="Cooper Black" FontWeight="Bold" FontSize="30"/>
-            <TextBox x:Name="passwordTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="2,15.2,0,0" Grid.Row="2" Text="{Binding Password, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" Opacity="0.5"/>
+            <TextBox x:Name="passwordTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="2,15.2,0,0" Grid.Row="2" Text="{Binding Password, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" Opacity="0.01"/>
             <Label Content=":שם משתמש" Grid.Column="3" HorizontalAlignment="Left" Margin="25.4,16,0,19.8" Grid.Row="1" VerticalAlignment="Center" Height="41" Width="185" FontFamily="Cooper Black" FontWeight="Bold" FontSize="30"/>
             <TextBox x:Name="userNameTextBox" HorizontalAlignment="Left" Height="24" Margin="0.2,30,0,22.8" Grid.Row="1" Text="{Binding UserName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Opacity="0.5" Grid.ColumnSpan="2"/>
+            <PasswordBox x:Name="PBPassword" Grid.ColumnSpan="4" HorizontalAlignment="Left" Margin="2,15.2,0,0" Grid.Row="2" VerticalAlignment="Top" Width="120" Height="24" Opacity="0.5"/>
         </Grid>
         <Button Content="צור חשבון"  Click="Button_Click_SignUp" Margin="115,275,419.6,79"/>
         <Button Content="כניסה" HorizontalAlignment="Left" Margin="375,272,0,0" VerticalAlignment="Top"  Click="Button_Click_SignIn" Height="72" Width="219"/>

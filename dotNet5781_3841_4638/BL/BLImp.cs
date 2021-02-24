@@ -11,22 +11,51 @@ namespace BL
     class BLImp : IBL //internal
     {
         IDL dl = DLFactory.GetDL();
-
+        #region singelton
+        static readonly BLImp instance = new BLImp();
+        static BLImp() { }// static ctor to ensure instance init is done just before first usage
+        BLImp() { } // default => private
+        public static BLImp Instance { get => instance; }// The public Instance property to use
+        #endregion
         #region Bus
-            BO.Bus busDoBoAdapter(DO.Bus busDO)
+        BO.Bus busDoBoAdapter(DO.Bus busDO)
             {
                 BO.Bus busBO = new BO.Bus();
                 busDO.CopyPropertiesTo(busBO);
                 return busBO;
             }
-            public void AddBus(BO.Bus bus)
+        private int LengthLicenseNum(int licenseNum)
+        {
+            int counter = 0;
+            while (licenseNum != 0)
+            {
+                licenseNum = licenseNum / 10;
+                counter++;
+            }
+            return counter;
+        }
+        public void AddBus(BO.Bus bus)
             {
                 DO.Bus busDO = new DO.Bus();
                 bus.CopyPropertiesTo(busDO);
                 try
-                {
-                    dl.AddBus(busDO);
-                }
+                {                
+                int length = LengthLicenseNum(bus.LicenseNum);
+                if ((length == 7 && bus.FromDate.Year >= 2018) || ((length == 8 && bus.FromDate.Year < 2018)))
+                    //!(length == 7 && bus.FromDate.Year < 2018) || (length == 8 && bus.FromDate.Year >= 2018))
+                    throw new BO.BadInputException("מספר הרשוי שהקשת אינו תקין");
+                if (bus.FromDate > DateTime.Now)
+                    throw new BO.BadInputException("תאריך התחלת הפעילות שהקשת אינו תקין");
+                if (bus.TotalTrip < 0)
+                    throw new BO.BadInputException("סך הקילומטרים שהקשת אינו תקין");
+                if (bus.FuelRemain < 0 || bus.FuelRemain > 1200)
+                    throw new BO.BadInputException("כמות הדלק שהקשת אינה תקינה");
+                if (bus.DateLastTreat < bus.FromDate || bus.DateLastTreat > DateTime.Now)
+                    throw new BO.BadInputException("התאריך של הטיפול האחרון שהקשת אינו תקין");
+                if (bus.KmLastTreat < 0 || bus.KmLastTreat > bus.TotalTrip)
+                    throw new BO.BadInputException("סך הקילומטרים מאז הטיפול האחרון שהקשת אינו תקין");  
+                dl.AddBus(busDO);
+            }
                 catch (DO.BadLicenseNumException ex)
                 {
 
@@ -95,9 +124,44 @@ namespace BL
                     throw new BO.BadInputException(ex.Message);
                 }
             }
-            #endregion
+        public void RefuelBus(BO.Bus busBO)//refuel the bus
+        {
+            try
+            {
+                DO.Bus busDO = dl.GetBus(busBO.LicenseNum);
+                if (busDO.FuelRemain == 1200)
+                    throw new BO.BadInputException("מיכל הדלק של האוטובוס כבר מלא");
+                busDO.FuelRemain = 1200;
+                busDO.Status = DO.BusStatus.Available;
+                dl.UpdateBus(busDO);
+
+            }
+            catch (DO.BadLicenseNumException ex)
+            {
+                throw new BO.BadLicenseNumException(ex.licenseNum,ex.Message);
+            }
+        }
+        public void TreatmentBus(BO.Bus busBO)//treat the bus
+        {
+            try
+            {
+                DO.Bus busDO = dl.GetBus(busBO.LicenseNum);
+                if (busDO.DateLastTreat.ToShortDateString() == DateTime.Now.ToShortDateString())//if the bus is already treated
+                    throw new BO.BadInputException("האוטובוס כבר עבר טיפול");
+                busDO.DateLastTreat = DateTime.Now;
+                busDO.KmLastTreat = busDO.TotalTrip;
+                dl.UpdateBus(busDO);
+
+            }
+            catch (DO.BadLicenseNumException ex)
+            {
+                throw new BO.BadLicenseNumException(ex.licenseNum,ex.Message);
+            }
+        }
+
+        #endregion
         #region Line
-            BO.Line lineDoBoAdapter(DO.Line lineDO)
+        BO.Line lineDoBoAdapter(DO.Line lineDO)
             {
                 BO.Line lineBO = new BO.Line();
                 int lineId = lineDO.LineId;                      
@@ -452,6 +516,85 @@ namespace BL
 
                 throw new BO.BadStationCodeException(ex.stationCode, ex.Message);
             }
+        }
+        #endregion
+        #region Simulator
+        public IEnumerable<BO.LineTiming> GetLineTimingPerStation(BO.Station stationBO, TimeSpan currentTime)
+        {
+            //list of lines that pass in the station
+            List<BO.Line> listLines = (from l in GetAllLines()
+                                       where l.stations.Find(s => s.StationCode == stationBO.Code) != null
+                                       select l).ToList();
+
+            List<BO.LineTiming> times = new List<BO.LineTiming>();//list of the lines that the function will return
+            TimeSpan hour = new TimeSpan(1, 0, 0);//help to find the times that in the range of one hour from currentTime                           
+            for (int i = 0; i < listLines.Count(); i++)//for all the lines that pass in the station
+            {//calculate the times 
+                TimeSpan tmp;//the current time
+                int currentLineid = listLines[i].LineId;// line id of the current line
+                List<DO.LineTrip> lineSchedual = dl.GetAllLineTripsBy(trip => trip.LineId == currentLineid && trip.IsDeleted == false).ToList();// times of the current Line
+                TimeSpan timeTilStatin = travelTime(stationBO.Code, currentLineid);
+                int numOfTimes = 0;//רוצים רק 3 זמנים לקו כמו שזה במציאות
+                List<int> timesOfCurrentLine = new List<int>();//רשימת הזמנים
+                for (int j = 0; j < lineSchedual.Count && numOfTimes < 3; j++)//for all the times in line sSchedual
+                {
+                    //check if currentTime-LeavingTime-travelTime more than zero and in the range of hour
+                    if (lineSchedual[j].StartAt + timeTilStatin <= currentTime + hour
+                        && lineSchedual[j].StartAt + timeTilStatin >= currentTime)
+                    //check if the bus already passed the statioin   
+                    {
+                        if (currentTime - lineSchedual[j].StartAt >= TimeSpan.Zero)
+                        //if the line already get out from the station
+                        {
+                            tmp = timeTilStatin - (currentTime - lineSchedual[j].StartAt);
+                        }
+                        else//if the line didnt get out from the station
+                            tmp = timeTilStatin + (lineSchedual[j].StartAt - currentTime);
+
+                        timesOfCurrentLine.Add(tmp.Minutes);
+                        //timesString = timesString + tmp.Minutes+ ", ";                                                                                                  
+                        numOfTimes++;
+                    }
+                }
+
+                if (timesOfCurrentLine.Count != 0)//אם יש זמנים לקו בטווח של שעה
+                {
+                    string timesString = "";//the string of times
+                    timesOfCurrentLine = timesOfCurrentLine.OrderBy(s => s).ToList();//order the times in ascending order
+                    for (int k = 0; k < timesOfCurrentLine.Count - 1; k++)
+                    {
+                        timesString = timesString + timesOfCurrentLine[k] + ", ";
+                    }
+                    timesString = timesString + timesOfCurrentLine[timesOfCurrentLine.Count - 1];//add the last one without ","
+                    times.Add(new BO.LineTiming//הוספת הקו לרשימה שהולכים להחזיר
+                    {
+                        LineId = currentLineid,
+                        LineNum = listLines[i].LineNum,
+                        DestinationStation = listLines[i].stations[listLines[i].stations.Count() - 1].Name,
+                        Stringtimes = timesString,
+                    });
+
+                }
+                numOfTimes = 0;//איפוס המונה
+            }
+            times = times.OrderBy(lt => lt.LineNum).ToList();//order the list by the number of the lines in ascending order
+            return times;
+
+        }
+        private TimeSpan travelTime(int stationCode, int lineID)
+        {//func that return the time from first station in line to specific station
+            TimeSpan sumTime = TimeSpan.Zero;
+            BO.Line line = GetLine(lineID);
+            foreach (var s in line.stations)
+            {
+                if (s.StationCode != stationCode)
+                    sumTime += s.Time;
+                else
+                {
+                    break;
+                }
+            }
+            return sumTime;
         }
         #endregion
         #region StationInLine

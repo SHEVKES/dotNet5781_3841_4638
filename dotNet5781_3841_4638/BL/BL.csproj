@@ -54,6 +54,7 @@
     <Compile Include="BO\Line.cs" />
     <Compile Include="BO\LineInStation.cs" />
     <Compile Include="BO\LineStation.cs" />
+    <Compile Include="BO\LineTiming.cs" />
     <Compile Include="BO\Station.cs" />
     <Compile Include="BO\StationInLine.cs" />
     <Compile Include="BO\Tools.cs" />

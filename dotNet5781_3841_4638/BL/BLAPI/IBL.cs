@@ -19,6 +19,8 @@ namespace BLAPI
         void AddBus(BO.Bus bus);
         void UpdateBusDetails(BO.Bus bus);
         void DeleteBus(int licenseNum);
+        void RefuelBus(BO.Bus busBO);
+        void TreatmentBus(BO.Bus busBO);
         #endregion
         #region Line
         IEnumerable<BO.Line> GetAllLines();
@@ -40,6 +42,9 @@ namespace BLAPI
         void AddStation(BO.Station station);
         void DeleteStation(int stationCode);
         void UpdateStation(BO.Station stationBO);
+        #endregion
+        #region Simulator
+        IEnumerable<BO.LineTiming> GetLineTimingPerStation(BO.Station stationBO, TimeSpan currentTime);
         #endregion
         #region StationInLine
         void UpdateTimeAndDistance(BO.StationInLine first, BO.StationInLine second);

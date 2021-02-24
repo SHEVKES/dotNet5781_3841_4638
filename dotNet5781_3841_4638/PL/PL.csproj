@@ -80,6 +80,9 @@
     <Compile Include="SignUp.xaml.cs">
       <DependentUpon>SignUp.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Simulator.xaml.cs">
+      <DependentUpon>Simulator.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Stations.xaml.cs">
       <DependentUpon>Stations.xaml</DependentUpon>
     </Compile>
@@ -143,6 +146,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Simulator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Stations.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -175,6 +182,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\DataSources\BO.Line.datasource" />
+    <None Include="Properties\DataSources\BO.LineTiming.datasource" />
     <None Include="Properties\DataSources\BO.Station.datasource" />
     <None Include="Properties\DataSources\BO.StationInLine.datasource" />
     <None Include="Properties\DataSources\BO.User.datasource" />
@@ -185,9 +193,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="לוגו מעודכן סופי סופי.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="לוגו מעודכן סופי 1.jpg" />
@@ -203,9 +208,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="2.jpeg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="לוגו מעודכן סופי.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="1שלט.jpg" />

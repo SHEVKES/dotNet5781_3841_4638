@@ -28,20 +28,14 @@ namespace PL
             //bl = _bl;
         }
 
-        //private void Window_Loaded(object sender, RoutedEventArgs e)
-        //{
-
-        //    System.Windows.Data.CollectionViewSource userViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("userViewSource")));
-        //    // Load data by setting the CollectionViewSource.Source property:
-        //    // userViewSource.Source = [generic data source]
-        //}
+      
 
         private void Button_Click_SignIn(object sender, RoutedEventArgs e)
         {
             try
             {
                 string userName = userNameTextBox.Text;
-                string password = passwordTextBox.Text;
+                string password = PBPassword.Password;
                 BO.User user = bl.SignIn(userName, password);
                 if (user.AdminAccess)
                 {

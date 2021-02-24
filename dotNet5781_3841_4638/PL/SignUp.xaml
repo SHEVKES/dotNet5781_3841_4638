@@ -7,7 +7,6 @@
         xmlns:BO="clr-namespace:BO;assembly=BL" x:Class="PL.SignUp"
         mc:Ignorable="d"
         Title="SignUp" Height="450" Width="334.634" >
-
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="לוגו מעודכן סופי 1.jpg" Opacity="0.20" Stretch="UniformToFill"/>
@@ -35,7 +34,6 @@
             <Label VerticalAlignment="Center" Grid.Row="2" Margin="68.2,7.8,-4.2,30.6" HorizontalAlignment="Left" Grid.Column="1" Content=":שם משתמש" Grid.RowSpan="2"/>
             <TextBox x:Name="userNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding UserName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="-36,3.8,0,4.4" Height="23" HorizontalAlignment="Left" Grid.Row="2"/>
         </Grid>
-        <Button Content="הרשמה" HorizontalAlignment="Left" Margin="64,323,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.411,0.507" Click="Button_Click"/>
-
+        <Button Content="הרשמה" HorizontalAlignment="Left" Margin="58,334,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.411,0.507" Click="Button_Click"/>
     </Grid>
 </Window>

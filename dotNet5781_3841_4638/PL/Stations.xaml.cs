@@ -108,5 +108,12 @@ namespace PL
             win.ShowDialog();
             RefreshListBoxStations();
         }
+
+        private void Button_Click_simulator(object sender, RoutedEventArgs e)
+        {            
+            BO.Station tmpStation = LbStation.SelectedItem as BO.Station;
+            Simulator win = new Simulator(bl, tmpStation);
+            win.ShowDialog();
+        }
     }
 }
