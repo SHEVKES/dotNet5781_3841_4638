@@ -314,7 +314,8 @@ namespace BL
             try
             {
                 if (IsExistLineStation(LnStDO))
-                    throw new BO.BadLineStationException(LnStDO.LineId, LnStDO.StationCode, "התחנה הינה קיימת כבר במערכת");              
+                    throw new BO.BadLineStationException(LnStDO.LineId, LnStDO.StationCode, "התחנה הינה קיימת כבר במערכת");
+                //Update of all indexes of the following stations on the line
                 List<DO.LineStation> list = (dl.GetAllLineStationsBy(sl => sl.LineId == LnStDO.LineId && sl.IsDeleted == false)).OrderBy(sl => sl.LineStationIndex).ToList();
                 int last = list[list.Count - 1].LineStationIndex;
                 if (LnStDO.LineStationIndex != last + 1) //if the line station is not the last one
@@ -324,6 +325,7 @@ namespace BL
                         list[i - 1].LineStationIndex++;
                     }
                 }
+                //Update previous and next station and also the first and last station of the line entity
                 DO.LineStation prevStation;
                 DO.LineStation nextStation;
                 if(LnStDO.LineStationIndex > 1) //if the station is not the first one
@@ -333,18 +335,32 @@ namespace BL
                     LnStDO.PrevStationCode = prevStation.StationCode;
 
                 }
-                if(LnStDO.LineStationIndex != last+1) //if the station is not the last one
+                else//if its the first station-we need to update the first station in the DO.Line
+                {
+                    DO.Line line = dl.GetLine(LnStDO.LineId);
+                    line.FirstStation = LnStDO.StationCode;
+                    dl.UpdateLine(line);
+                }
+                if (LnStDO.LineStationIndex != last+1) //if the station is not the last one
                 {
                     nextStation = list[LnStDO.LineStationIndex-1];
                     nextStation.PrevStationCode = LnStDO.StationCode;
                     LnStDO.NextStationCode = nextStation.StationCode;
                 }
-                foreach (DO.LineStation item in list)
+                else//if its the last station we need to update the last station in the DO.Line
                 {
+                    DO.Line line = dl.GetLine(LnStDO.LineId);
+                    line.LastStation = LnStDO.StationCode;
+                    dl.UpdateLine(line);
+                }
+                foreach (DO.LineStation item in list) //update the line station list after all the changes
+                {
+                    
                     dl.UpdateLineStation(item);
                 }
                 dl.AddLineStation(LnStDO);
-                List<DO.LineStation> list1= (dl.GetAllLineStationsBy(sl => sl.LineId == LnStDO.LineId && sl.IsDeleted == false)).OrderBy(sl => sl.LineStationIndex).ToList();               
+                    //Treatment of stations following after the addition
+                    List<DO.LineStation> list1= (dl.GetAllLineStationsBy(sl => sl.LineId == LnStDO.LineId && sl.IsDeleted == false)).OrderBy(sl => sl.LineStationIndex).ToList();               
                 if (LnStDO.LineStationIndex != list[list.Count - 1].LineStationIndex) //if the station is not the last station
                 {
                     nextStation = list1[LnStDO.LineStationIndex];
@@ -379,12 +395,12 @@ namespace BL
         {
             try
             {
-                DO.LineStation deleteStation = dl.GetLineStation(lineId, stationCode);
+                DO.LineStation deleteStation = dl.GetLineStation(lineId, stationCode); //the station that we want to delete
                 BO.Line line = GetLine(lineId);
-                if (line.stations.Count <= 2)
+                if (line.stations.Count <= 2) //if there are only 2 station in the line so more stations cannot be deleted
                     throw new BO.BadInputException("קיימות בקו 2 תחנות או פחות, אין אפשרות למחוק את התחנה המבוקשת");
-                //------
-                if(line.stations[0].StationCode != stationCode && line.stations[line.stations.Count-1].StationCode != stationCode) //if the selected station is not the firs or the last one
+                // //Adjacent Station
+                if (line.stations[0].StationCode != stationCode && line.stations[line.stations.Count-1].StationCode != stationCode) //if the selected station is not the firs or the last one
                 {
                     BO.StationInLine prevStation = line.stations[deleteStation.LineStationIndex - 2];
                     BO.StationInLine nextStation = line.stations[deleteStation.LineStationIndex];
@@ -394,7 +410,7 @@ namespace BL
                         dl.AddAdjacentStations(adjacentStations);
                     }
                 }
-                //---------
+                //delete the line station
                 List<DO.LineStation> list = (dl.GetAllLineStationsBy(sl => sl.LineId == deleteStation.LineId && sl.IsDeleted == false)).OrderBy(sl => sl.LineStationIndex).ToList();
                 DO.LineStation next;
                 if(deleteStation.LineStationIndex > 1) //the selcted station is not the first one
@@ -417,7 +433,7 @@ namespace BL
                         next.PrevStationCode = 0;
                     }
                 }
-                //-------
+                //update index
                 if (deleteStation.LineStationIndex != list[list.Count - 1].LineStationIndex) //if the station is not the last one
                 {
                     for (int i = deleteStation.LineStationIndex; i < list.Count; i++) //Rebooting the list of line station
@@ -446,7 +462,7 @@ namespace BL
         }
         #endregion
         #region AdjacentStation
-        public bool IsExistAdjacentStations(int sc1, int sc2)
+        public bool IsExistAdjacentStations(int sc1, int sc2) //A function that checks if there are adjacent stations
         {
             if (dl.IsExistAdjacentStations(sc1, sc2))
                 return true;
@@ -598,7 +614,7 @@ namespace BL
         }
         #endregion
         #region StationInLine
-        public void UpdateTimeAndDistance(BO.StationInLine first, BO.StationInLine second)
+        public void UpdateTimeAndDistance(BO.StationInLine first, BO.StationInLine second) // A function that updates time and distance
         {
             try
             {
@@ -617,7 +633,7 @@ namespace BL
         }
         #endregion
         #region User
-        public void AddUser(BO.User userBO)
+        public void AddUser(BO.User userBO) //Add a new user
         {
             try
             {
@@ -640,6 +656,7 @@ namespace BL
                 DO.User userDO = dl.GetUser(userName);
                 if (password != userDO.Password)
                     throw new BO.BadUserNameException(userName, "שם המשתמש או הסיסמא שהקשת שגויים");
+                userBO = new BO.User();
                 userDO.CopyPropertiesTo(userBO);               
             }
             catch (DO.BadUserNameException ex)
