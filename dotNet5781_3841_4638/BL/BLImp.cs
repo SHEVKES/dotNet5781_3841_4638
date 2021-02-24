@@ -18,13 +18,13 @@ namespace BL
         public static BLImp Instance { get => instance; }// The public Instance property to use
         #endregion
         #region Bus
-        BO.Bus busDoBoAdapter(DO.Bus busDO)
-            {
-                BO.Bus busBO = new BO.Bus();
-                busDO.CopyPropertiesTo(busBO);
-                return busBO;
-            }
-        private int LengthLicenseNum(int licenseNum)
+        BO.Bus busDoBoAdapter(DO.Bus busDO) //turns a DO bus to a BO bus object
+        {
+            BO.Bus busBO = new BO.Bus();
+            busDO.CopyPropertiesTo(busBO);
+            return busBO;
+        }
+        private int LengthLicenseNum(int licenseNum) //returns the length of the license number it gets
         {
             int counter = 0;
             while (licenseNum != 0)
@@ -34,96 +34,88 @@ namespace BL
             }
             return counter;
         }
-        public void AddBus(BO.Bus bus)
+        public void AddBus(BO.Bus bus) //add new bus
+        {
+            DO.Bus busDO = new DO.Bus();
+            bus.CopyPropertiesTo(busDO);
+            try  //check the input
             {
-                DO.Bus busDO = new DO.Bus();
-                bus.CopyPropertiesTo(busDO);
-                try
-                {                
-                int length = LengthLicenseNum(bus.LicenseNum);
+                int length = LengthLicenseNum(busDO.LicenseNum);
                 if ((length == 7 && bus.FromDate.Year >= 2018) || ((length == 8 && bus.FromDate.Year < 2018)))
                     //!(length == 7 && bus.FromDate.Year < 2018) || (length == 8 && bus.FromDate.Year >= 2018))
                     throw new BO.BadInputException("מספר הרשוי שהקשת אינו תקין");
-                if (bus.FromDate > DateTime.Now)
+                if (busDO.FromDate > DateTime.Now)
                     throw new BO.BadInputException("תאריך התחלת הפעילות שהקשת אינו תקין");
-                if (bus.TotalTrip < 0)
+                if (busDO.TotalTrip < 0)
                     throw new BO.BadInputException("סך הקילומטרים שהקשת אינו תקין");
-                if (bus.FuelRemain < 0 || bus.FuelRemain > 1200)
+                if (busDO.FuelRemain < 0 || busDO.FuelRemain > 1200)
                     throw new BO.BadInputException("כמות הדלק שהקשת אינה תקינה");
-                if (bus.DateLastTreat < bus.FromDate || bus.DateLastTreat > DateTime.Now)
+                if (busDO.DateLastTreat < busDO.FromDate || busDO.DateLastTreat > DateTime.Now)
                     throw new BO.BadInputException("התאריך של הטיפול האחרון שהקשת אינו תקין");
-                if (bus.KmLastTreat < 0 || bus.KmLastTreat > bus.TotalTrip)
-                    throw new BO.BadInputException("סך הקילומטרים מאז הטיפול האחרון שהקשת אינו תקין");  
+                if (busDO.KmLastTreat < 0 || busDO.KmLastTreat > busDO.TotalTrip)
+                    throw new BO.BadInputException("סך הקילומטרים מאז הטיפול האחרון שהקשת אינו תקין");
                 dl.AddBus(busDO);
             }
-                catch (DO.BadLicenseNumException ex)
-                {
-
-                    throw new BO.BadLicenseNumException(ex.licenseNum, ex.Message);
-                }
-                catch (DO.BadInputException ex)
-                {
-
-                    throw new BO.BadInputException(ex.Message);
-                }
-            }
-
-            public void DeleteBus(int licenseNum)
+            catch (DO.BadLicenseNumException ex)
             {
-                try
-                {
-                    dl.DeleteBus(licenseNum);
-                }
-                catch (DO.BadLicenseNumException ex)
-                {
-
-                    throw new BO.BadLicenseNumException(ex.licenseNum, ex.Message);
-                }
+                throw new BO.BadLicenseNumException(ex.licenseNum, ex.Message);
             }
-
-            public IEnumerable<BO.Bus> GetAllBuses()
+            catch (DO.BadInputException ex)
             {
-                return from item in dl.GetAllBuses()
-                       select busDoBoAdapter(item);
+                throw new BO.BadInputException(ex.Message);
             }
-
-            public IEnumerable<BO.Bus> GetBusesBy(Predicate<BO.Bus> predicate)
+        }
+        public void DeleteBus(int licenseNum) //The function deletes a bus from the list
+        {
+            try
             {
-                throw new NotImplementedException();
+                dl.DeleteBus(licenseNum); 
             }
-
-            public BO.Bus GetBus(int licenseNum)
+            catch (DO.BadLicenseNumException ex)
             {
-                DO.Bus busDO;
-                try
-                {
-                    busDO = dl.GetBus(licenseNum);
-                }
-                catch (DO.BadLicenseNumException ex)
-                {
-
-                    throw new BO.BadLicenseNumException(ex.licenseNum, ex.Message);
-                }
-                return busDoBoAdapter(busDO);
+                throw new BO.BadLicenseNumException(ex.licenseNum, ex.Message);
             }
-
-            public void UpdateBusDetails(BO.Bus bus)
+        }
+        public IEnumerable<BO.Bus> GetAllBuses()
+        {
+            return from item in dl.GetAllBuses()
+                   select busDoBoAdapter(item);
+        }
+        //public IEnumerable<BO.Bus> GetBusesBy(Predicate<BO.Bus> predicate)
+        //{
+        //    throw new NotImplementedException();
+        //}
+        public BO.Bus GetBus(int licenseNum) //The function returns a single bus according to its license number
+        {
+            DO.Bus busDO;
+            try
             {
-                DO.Bus busDO = new DO.Bus();
-                bus.CopyPropertiesTo(busDO);
-                try
-                {
-                    dl.UpdateBus(busDO);
-                }
-                catch (DO.BadLicenseNumException ex)
-                {
-                    throw new BO.BadLicenseNumException(ex.licenseNum, ex.Message);
-                }
-                catch (DO.BadInputException ex)
-                {
-                    throw new BO.BadInputException(ex.Message);
-                }
+                busDO = dl.GetBus(licenseNum);
             }
+            catch (DO.BadLicenseNumException ex)
+            {
+
+                throw new BO.BadLicenseNumException(ex.licenseNum, ex.Message);
+            }
+            return busDoBoAdapter(busDO);
+        }
+        public void UpdateBusDetails(BO.Bus bus) //Updates details of a particular bus
+        {
+            DO.Bus busDO = new DO.Bus();
+            bus.CopyPropertiesTo(busDO);
+            try
+            {
+                dl.UpdateBus(busDO);
+            }
+            catch (DO.BadLicenseNumException ex)
+            {
+                throw new BO.BadLicenseNumException(ex.licenseNum, ex.Message);
+            }
+            catch (DO.BadInputException ex)
+            {
+                throw new BO.BadInputException(ex.Message);
+            }
+        }
         public void RefuelBus(BO.Bus busBO)//refuel the bus
         {
             try
@@ -161,64 +153,65 @@ namespace BL
 
         #endregion
         #region Line
-        BO.Line lineDoBoAdapter(DO.Line lineDO)
+        BO.Line lineDoBoAdapter(DO.Line lineDO) //adapter of DO.Line=> BO.line
+        {
+            BO.Line lineBO = new BO.Line(); //the BO.line that will return
+            int lineId = lineDO.LineId; //the line id of the DO.Line
+            lineDO.CopyPropertiesTo(lineBO);
+            List<BO.StationInLine> stations = (from stat in dl.GetAllLineStationsBy(stat => stat.LineId == lineId && stat.IsDeleted == false) //Linestation
+                                               let station = dl.GetStation(stat.StationCode) //station
+                                               select station.CopyToStationInLine(stat)).ToList(); 
+            stations = (stations.OrderBy(s => s.LineStationIndex)).ToList(); //the stations of the line order by their index
+            foreach (BO.StationInLine item in stations) //the distance and time between each adjacent stations
             {
-                BO.Line lineBO = new BO.Line();
-                int lineId = lineDO.LineId;                      
-                lineDO.CopyPropertiesTo(lineBO);
-                List<BO.StationInLine> stations = (from stat in dl.GetAllLineStationsBy(stat => stat.LineId == lineId && stat.IsDeleted == false) //Linestation
-                                                   let station = dl.GetStation(stat.StationCode) //station
-                                                   select station.CopyToStationInLine(stat)).ToList();
-                stations = (stations.OrderBy(s => s.LineStationIndex)).ToList();
-                foreach (BO.StationInLine item in stations)
+                if (item.LineStationIndex != stations[stations.Count - 1].LineStationIndex)
                 {
-                    if (item.LineStationIndex != stations[stations.Count - 1].LineStationIndex)
-                    {
-                        int sc1 = item.StationCode;//station code 1
-                        int sc2 = stations[item.LineStationIndex].StationCode;//station code 2
-                        DO.AdjacentStations adjStat = dl.GetAdjacentStations(sc1, sc2);
-                        item.Distance = adjStat.Distance;
-                        item.Time = adjStat.Time;
-                    }
-                }           
-                lineBO.stations = stations;
-                return lineBO;
-            }
-            public IEnumerable<BO.Line> GetAllLines()
-            {
-                return from item in dl.GetAllLines()
-                       select lineDoBoAdapter(item);
-            }
-            //public IEnumerable<BO.Line> GetAllLinesBy(Predicate<BO.Line> predicate)
-            //{
-            //    throw new NotImplementedException();
-            //}
-            public BO.Line GetLine(int lineId)
-            {
-                DO.Line lineDO;
-                try
-                {
-                    lineDO = dl.GetLine(lineId);
+                    int sc1 = item.StationCode;//station code 1
+                    int sc2 = stations[item.LineStationIndex].StationCode;//station code 2
+                    DO.AdjacentStations adjStat = dl.GetAdjacentStations(sc1, sc2);
+                    item.Distance = adjStat.Distance;
+                    item.Time = adjStat.Time;
                 }
-                catch (DO.BadLineIdException ex)
-                {
-
-                    throw new BO.BadLineIdException(ex.ID, ex.Message);
-                }
-                return lineDoBoAdapter(lineDO);
             }
-            public void AddLine(BO.Line lineBo)
+            lineBO.stations = stations; //enter the list of stations with the time and the distance to the BO.Line
+            lineBO.DepTimes = (from lineTrip in dl.GetAllLineTripsBy(lineTrip => lineTrip.LineId == lineId && lineTrip.IsDeleted == false) //line trip
+                               select lineTrip.StartAt).OrderBy(s => s.TotalMinutes).ToList();
+            return lineBO;
+        }
+        public IEnumerable<BO.Line> GetAllLines() //returns a collection of all lines
+        {
+            return from item in dl.GetAllLines()
+                   select lineDoBoAdapter(item);
+        }
+        //public IEnumerable<BO.Line> GetAllLinesBy(Predicate<BO.Line> predicate)
+        //{
+        //    throw new NotImplementedException();
+        //}
+        public BO.Line GetLine(int lineId) //returns a particular line according to its line ID
+        {
+            DO.Line lineDO;
+            try
+            {
+                lineDO = dl.GetLine(lineId);
+            }
+            catch (DO.BadLineIdException ex)
+            {
+                throw new BO.BadLineIdException(ex.ID, ex.Message);
+            }
+            return lineDoBoAdapter(lineDO);
+        }
+        public void AddLine(BO.Line lineBo) //Adds a new line
         {
             DO.Line lineDo = new DO.Line();//the DO.Line
             lineBo.CopyPropertiesTo(lineDo);
             lineDo.FirstStation = lineBo.stations[0].StationCode;//code of the first station
             lineDo.LastStation = lineBo.stations[lineBo.stations.Count - 1].StationCode;//code of the last station
-            //בודק אם יש קו עם אותו מספר עם או תחנה סופית באותו איזור
+            // Checks if there is a line with the same number with or a terminus in the same area
             List<DO.Line> ltemp = dl.GetAllLinesBy(s => s.LineNum == lineDo.LineNum && s.LastStation == lineDo.LastStation && s.Area == lineDo.Area).ToList();
             if (ltemp.Count() != 0)
-                throw new BO.BadInputException($"There is already a line with the number {lineDo.LineNum} in {lineDo.Area} with last station {lineDo.LastStation}");
+                throw new BO.BadInputException($"קיים כבר קו עם המספר {lineDo.LineNum} ב {lineDo.Area} התחנה האחרונה היא {lineDo.LastStation}");
             dl.AddLine(lineDo);//add line
-            //עידכונים של תחנות עוקבות ותחנות קו
+            //Updates to consecutive stations and line stations
             lineDo.LineId = dl.GetAllLinesBy(s => s.LineNum == lineDo.LineNum && s.Area == lineDo.Area).FirstOrDefault().LineId;
             int sc1 = lineBo.stations[0].StationCode;//station Code of the first station
             int sc2 = lineBo.stations[1].StationCode;//station Code of the last station
@@ -239,61 +232,41 @@ namespace BL
             catch (DO.BadTripIdException ex)
             {
                 throw new BO.BadLineIdException(ex.ID, ex.Message);
-
-                //DO.Line lineDO = new DO.Line();
-                //line.CopyPropertiesTo(lineDO);
-                ////lineDO.LineId = DO.Config.LineId++;
-                //int sCode1 = line.stations[0].StationCode; //code of the first station
-                //int sCode2 = line.stations[1].StationCode; //code of the second station
-                //lineDO.FirstStation = sCode1;
-                //lineDO.LastStation = sCode2;
-                //try
-                //{
-                //    if (!dl.IsExistAdjacentStations(sCode1, sCode2))
-                //    {
-                //        DO.AdjacentStations adjacent = new DO.AdjacentStations { StationCode1 = sCode1, StationCode2 = sCode2, Distance = line.stations[0].Distance, Time = line.stations[0].Time, IsDeleted = false };
-                //        dl.AddAdjacentStations(adjacent);
-                //    }
-                //    dl.AddLine(lineDO);
-                //    DO.LineStation line1 = new DO.LineStation { LineId = lineDO.LineId, StationCode = sCode1, LineStationIndex = line.stations[0].LineStationIndex, IsDeleted = false };
-                //    DO.LineStation line2 = new DO.LineStation { LineId = lineDO.LineId, StationCode = sCode2, LineStationIndex = line.stations[1].LineStationIndex, IsDeleted = false };
-                //    dl.AddLineStation(line1);
-                //    dl.AddLineStation(line2);
-                //}
-                //catch (DO.BadLineIdException ex)
-                //{
-
-                //    throw new BO.BadLineIdException(ex.ID, ex.Message);
-                //}
             }
         }
-            public void UpdateLineDetails(BO.Line line)
+        public void UpdateLineDetails(BO.Line line) //Updates the details of the line
+        {
+            DO.Line lineDO = new DO.Line(); 
+            line.CopyPropertiesTo(lineDO);
+            lineDO.FirstStation = line.stations[0].StationCode; //the code of the first station in the line
+            lineDO.LastStation = line.stations[line.stations.Count - 1].StationCode; //the code of the last station in the line
+            try
             {
-                DO.Line lineDO = new DO.Line();
-                line.CopyPropertiesTo(lineDO);
-                try
-                {
-                    dl.UpdateLine(lineDO);
-                }
-                catch (DO.BadLineIdException ex)
-                {
-
-                    throw new BO.BadLineIdException(ex.ID, ex.Message);
-                }
-
+                dl.UpdateLine(lineDO);
             }
-            public void DeleteLine(int lineId)
+            catch (DO.BadLineIdException ex)
             {
-                try
-                {
-                    dl.DeleteLine(lineId);
-                }
-                catch (DO.BadLineIdException ex)
-                {
 
-                    throw new BO.BadLineIdException(ex.ID, ex.Message);
+                throw new BO.BadLineIdException(ex.ID, ex.Message);
+            }
+        } 
+        public void DeleteLine(int lineId) //Deletes the line and also at every station where the line passes deletes the line
+        {
+            try
+            {
+                dl.DeleteLine(lineId);
+                //delete from the line station list
+                List<DO.LineStation> listLineStations = dl.GetAllLineStationsBy(s => s.LineId == lineId).ToList();
+                foreach (DO.LineStation s in listLineStations)
+                {
+                    dl.DeleteLineStation(s.LineId, s.StationCode);
                 }
             }
+            catch (DO.BadLineIdException ex)
+            {
+                throw new BO.BadLineIdException(ex.ID, ex.Message);
+            }
+        }
             #endregion
         #region LineStation
         public bool IsExistLineStation(DO.LineStation lineStation)
@@ -470,27 +443,41 @@ namespace BL
         }
         #endregion
         #region Station
-        public BO.Station StationDoBoAdapter(DO.Station stationDO)
+        public BO.Station StationDoBoAdapter(DO.Station stationDO) //turns a DO station to a BO station object
         {
-            BO.Station stationBO = new BO.Station();
-            int stationCode = stationDO.Code;
+            BO.Station stationBO = new BO.Station(); //station BO
+            int stationCode = stationDO.Code; //station code
             stationDO.CopyPropertiesTo(stationBO);
-            stationBO.Lines = (from item in dl.GetAllLineStationsBy(stat => stat.StationCode == stationCode)
-                               let line = dl.GetLine(item.LineId)
+            stationBO.Lines = (from item in dl.GetAllLineStationsBy(stat => stat.StationCode == stationCode && stat.IsDeleted==false) //line station
+                               let line = dl.GetLine(item.LineId) //line
                                select line.CopyToLineInStation(item)).ToList();
+            foreach (BO.LineInStation item in stationBO.Lines)//restart the last station for each line 
+            {
+                var line = dl.GetLine(item.LineId);
+                var station = dl.GetStation(line.LastStation);
+                item.NameLastStation = station.Name;
+            }
             return stationBO;
 
         }
-        public IEnumerable<BO.Station> GetAllStations()
+        public IEnumerable<BO.Station> GetAllStations() //returns a collection of all stations
         {
             return from item in dl.GetAllStations()
                    select StationDoBoAdapter(item);
         }
-        public void AddStation(BO.Station station)
+        public void AddStation(BO.Station station) //add new station
         {
             DO.Station stationDO = new DO.Station();
             station.CopyPropertiesTo(stationDO);
             stationDO.IsDeleted = false;
+            if (stationDO.Longitude < 31 || stationDO.Longitude > 33.3)//check input
+            {
+                throw new BO.BadInputException("הערך של קו האורך שגוי, עליך להכניס ערך בין 31 עד 33.3");
+            }
+            if (stationDO.Latitude < 34.3 || stationDO.Latitude > 35.5)//check input
+            {
+                throw new BO.BadInputException("הערך של קו הרוחב שגוי, עליך להכניס ערך בין 34.3 עד 35.5");
+            }
             try
             {
                 dl.AddStation(stationDO);
@@ -501,24 +488,28 @@ namespace BL
                 throw new BO.BadStationCodeException(ex.stationCode, ex.Message);
             }
         }
-        public void DeleteStation(int stationCode)
+        public void DeleteStation(int stationCode) //Deletes the station from the list of stations as well as from the list of following stations
         {
             try
             {
                 DO.Station stationDO = dl.GetStation(stationCode);
                 BO.Station stationBO = StationDoBoAdapter(stationDO);
-                if (stationBO.Lines.Count != 0)
+                if (stationBO.Lines.Count != 0) //if there are lines that stop in the station
                     throw new BO.BadStationCodeException(stationCode, "אין אפשרות למחוק את התחנה הנוכחית מכיון שיש קווים נוספים שעוברים בה");
                 dl.DeleteStation(stationCode);
+                List<DO.AdjacentStations> listAdj = dl.GetAllAdjacentStations().ToList();
+                foreach (DO.AdjacentStations s in listAdj)//delete from adjacent Station list
+                {
+                    if (s.StationCode1 == stationCode || s.StationCode2 == stationCode)
+                        dl.DeleteAdjacentStations(s.StationCode1, s.StationCode2);
+                }
             }
             catch (DO.BadStationCodeException ex)
             {
-
                 throw new BO.BadStationCodeException(ex.stationCode, ex.Message);
             }
-
         }
-        public void UpdateStation(BO.Station stationBO)
+        public void UpdateStation(BO.Station stationBO) //Updates station information
         {
             try
             {
@@ -529,7 +520,6 @@ namespace BL
             }
             catch (DO.BadStationCodeException ex)
             {
-
                 throw new BO.BadStationCodeException(ex.stationCode, ex.Message);
             }
         }
