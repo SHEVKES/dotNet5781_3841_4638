@@ -89,4 +89,19 @@ namespace BO
             base(message, innerException) => userName = name;
         public override string ToString() => base.ToString() + $", bad user name: {userName}";
     }
+    public class BadLineTripException : Exception
+    {
+        public int lineId;
+        public TimeSpan depTime;//departure time
+        public BadLineTripException(string message, Exception innerException) :
+         base(message, innerException)
+        {
+            lineId = ((DO.BadLineTripException)innerException).lineId;
+            depTime = ((DO.BadLineTripException)innerException).depTime;
+        }
+        public override string ToString()
+        {
+            return Message;
+        }
+    }
 }

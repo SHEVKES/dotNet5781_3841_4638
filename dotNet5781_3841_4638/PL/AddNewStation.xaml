@@ -6,12 +6,12 @@
         xmlns:local="clr-namespace:PL"
         xmlns:BO="clr-namespace:BO;assembly=BL" x:Class="PL.AddNewStation"
         mc:Ignorable="d"
-        Title="AddNewStation" Height="450" Width="297.86">
+        Title="AddNewStation" Height="408.482" Width="297.86">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="לוגו מעודכן סופי 1.jpg" Opacity="0.20" Stretch="UniformToFill"/>
         </Grid.Background>
-        <Grid x:Name="grid1" VerticalAlignment="Top" Margin="27,61,0,0" HorizontalAlignment="Left">
+        <Grid x:Name="grid1" VerticalAlignment="Top" Margin="46,61,0,0" HorizontalAlignment="Left">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>

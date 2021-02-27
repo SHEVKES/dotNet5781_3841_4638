@@ -53,5 +53,9 @@ namespace BLAPI
         void AddUser(BO.User userBO);
         BO.User SignIn(string userName, string password);
         #endregion
+        #region LineTrip
+        void DeleteDepTime(int lineId, TimeSpan dep);
+        void AddDepTime(int lineId, TimeSpan dep);
+        #endregion
     }
 }

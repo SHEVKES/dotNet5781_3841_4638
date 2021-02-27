@@ -35,6 +35,8 @@ namespace PL
         {
             lines = bl.GetAllLines().ToList();
             LbLines.DataContext = lines;
+
+
         }
         //private void Window_Loaded(object sender, RoutedEventArgs e)
         //{
@@ -47,14 +49,18 @@ namespace PL
         {
             BO.Line tempLine = LbLines.SelectedItem as BO.Line;
             UpdateLine win = new UpdateLine(bl,tempLine);
-            win.Show();
+            win.ShowDialog();
+            RefreshListBoxLines();
         }
         private void LbLines_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            stationInLineDataGrid.Visibility = Visibility.Visible;
+            LBTime.Visibility = Visibility.Visible;
             BO.Line line = (sender as ListBox).SelectedItem as BO.Line;
             if (line == null)
                 return;
             stationInLineDataGrid.DataContext = line.stations;
+            LBTime.DataContext = line.DepTimes;
         }
         private void Button_Click_Delete(object sender, RoutedEventArgs e)
         {           
@@ -78,5 +84,7 @@ namespace PL
             win.ShowDialog();
             RefreshListBoxLines();
         }
+
+        
     }
 }

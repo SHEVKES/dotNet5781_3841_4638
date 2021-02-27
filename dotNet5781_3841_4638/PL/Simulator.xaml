@@ -6,27 +6,27 @@
         xmlns:local="clr-namespace:PL"
         xmlns:BO="clr-namespace:BO;assembly=BL" x:Class="PL.Simulator"
         mc:Ignorable="d"
-        Title="Simulator" Height="450" Width="800">
+        Title="Simulator" Height="450" Width="700.4">
     <Window.Resources>
         <CollectionViewSource x:Key="stationViewSource" d:DesignSource="{d:DesignInstance {x:Type BO:Station}, CreateList=True}"/>
         <DataTemplate x:Key="lineTimingTemplate" DataType="local:lineTiming" x:Name="lineTiming" >
             <Grid HorizontalAlignment="Stretch" Height="Auto" Width="auto" Grid.Row="0" VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Text="{Binding Path=LineNum}"/>
-                <TextBlock Grid.Column="1" Text="{Binding Path=Stringtimes}"/>
-                <TextBlock Grid.Column="2" Text="{Binding Path=DestinationStation}"/>
+                <TextBlock Grid.Column="2" Text="{Binding Path=LineNum}" FontFamily="Cooper Black" FontSize="14" HorizontalAlignment="Right"/>
+                <TextBlock Grid.Column="0" Text="{Binding Path=Stringtimes}" FontFamily="Cooper Black" FontSize="14"/>
+                <TextBlock Grid.Column="1" Text="{Binding Path=DestinationStation}" FontFamily="Cooper Black" FontSize="14"/>
             </Grid>
         </DataTemplate>
     </Window.Resources>
     <Grid DataContext="{StaticResource stationViewSource}">
-        <Grid x:Name="grid1" HorizontalAlignment="Left" Margin="558,143,0,0" VerticalAlignment="Top">
+        <Grid x:Name="grid1" HorizontalAlignment="Left" Margin="475,160,0,0" VerticalAlignment="Top" Height="147" Width="211">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
@@ -37,16 +37,22 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Content="Address:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
-            <TextBlock x:Name="addressTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="0" Text="{Binding Address}" VerticalAlignment="Center"/>
-            <Label Content="Code:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
-            <TextBlock x:Name="codeTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="1" Text="{Binding Code}" VerticalAlignment="Center"/>
-            <Label Content="Disabled Access:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
-            <CheckBox x:Name="disabledAccessCheckBox" Content="" Grid.Column="1" HorizontalAlignment="Left" IsChecked="{Binding DisabledAccess, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
-            <Label Content="Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
-            <TextBlock x:Name="nameTextBlock" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="3" Text="{Binding Name}" VerticalAlignment="Center"/>
+            <Label Content="כתובת" Grid.Column="1" HorizontalAlignment="Right" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+            <TextBlock x:Name="addressTextBlock" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" Text="{Binding Address}" VerticalAlignment="Center"/>
+            <Label Content="קוד תחנה" Grid.Column="1" HorizontalAlignment="Right" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+            <TextBlock x:Name="codeTextBlock" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" Text="{Binding Code}" VerticalAlignment="Center"/>
+            <Label Content="גישת נכים" Grid.Column="1" HorizontalAlignment="Right" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+            <CheckBox x:Name="disabledAccessCheckBox" Content="" Grid.Column="0" HorizontalAlignment="Left" IsChecked="{Binding DisabledAccess, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+            <Label Content="שם תחנה" Grid.Column="1" HorizontalAlignment="Right" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+            <TextBlock x:Name="nameTextBlock" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" Text="{Binding Name}" VerticalAlignment="Center"/>
         </Grid>
-        <ListBox x:Name="LBLineTiming" HorizontalAlignment="Left" Height="255" Margin="22,129,0,0" VerticalAlignment="Top" Width="513" ItemsSource="{Binding}" ItemTemplate="{StaticResource lineTimingTemplate}" />
-        <TextBlock x:Name="TBTimer" HorizontalAlignment="Center" Margin="162,34,147.6,0" TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Top" Height="80" Width="484" FontFamily="Cooper Black" FontSize="30" />
+        <ListBox x:Name="LBLineTiming" HorizontalAlignment="Left" Height="255" Margin="7,157,0,0" VerticalAlignment="Top" Width="455" ItemsSource="{Binding}" ItemTemplate="{StaticResource lineTimingTemplate}" />
+        <TextBlock x:Name="TBTimer" HorizontalAlignment="Center" Margin="112,14,98.4,0" TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Top" Height="80" Width="484" FontFamily="Cooper Black" FontSize="30" />
+        <Label Content="מספר קו" HorizontalAlignment="Left" Margin="372,124,0,0" VerticalAlignment="Top" Width="59"/>
+        <Label Content="תחנה סופית" HorizontalAlignment="Left" Margin="214,125,0,0" VerticalAlignment="Top"/>
+        <Label Content="זמני הגעה" HorizontalAlignment="Left" Margin="54,125,0,0" VerticalAlignment="Top"/>
+        <Grid.Background>
+            <ImageBrush ImageSource="לוגו מעודכן סופי 1.jpg" Opacity="0.20" Stretch="UniformToFill"/>
+        </Grid.Background>
     </Grid>
 </Window>

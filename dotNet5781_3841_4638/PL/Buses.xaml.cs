@@ -103,5 +103,12 @@ namespace PL
                 MessageBox.Show(ex.Message, "הפעולה נכשלה", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void Button_Click_RefulTreat(object sender, RoutedEventArgs e)
+        {
+            RefuelAndTreat win = new RefuelAndTreat(bl);
+            win.ShowDialog();
+            RefreshListBoxBuses();
+        }
     }
 }

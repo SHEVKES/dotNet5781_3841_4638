@@ -105,6 +105,20 @@ namespace BL
             bus.CopyPropertiesTo(busDO);
             try
             {
+                int length = LengthLicenseNum(busDO.LicenseNum);
+                if ((length == 7 && bus.FromDate.Year >= 2018) || ((length == 8 && bus.FromDate.Year < 2018)))
+                    //!(length == 7 && bus.FromDate.Year < 2018) || (length == 8 && bus.FromDate.Year >= 2018))
+                    throw new BO.BadInputException("מספר הרשוי שהקשת אינו תקין");
+                if (busDO.FromDate > DateTime.Now)
+                    throw new BO.BadInputException("תאריך התחלת הפעילות שהקשת אינו תקין");
+                if (busDO.TotalTrip < 0)
+                    throw new BO.BadInputException("סך הקילומטרים שהקשת אינו תקין");
+                if (busDO.FuelRemain < 0 || busDO.FuelRemain > 1200)
+                    throw new BO.BadInputException("כמות הדלק שהקשת אינה תקינה");
+                if (busDO.DateLastTreat < busDO.FromDate || busDO.DateLastTreat > DateTime.Now)
+                    throw new BO.BadInputException("התאריך של הטיפול האחרון שהקשת אינו תקין");
+                if (busDO.KmLastTreat < 0 || busDO.KmLastTreat > busDO.TotalTrip)
+                    throw new BO.BadInputException("סך הקילומטרים מאז הטיפול האחרון שהקשת אינו תקין");
                 dl.UpdateBus(busDO);
             }
             catch (DO.BadLicenseNumException ex)
@@ -246,7 +260,6 @@ namespace BL
             }
             catch (DO.BadLineIdException ex)
             {
-
                 throw new BO.BadLineIdException(ex.ID, ex.Message);
             }
         } 
@@ -260,6 +273,11 @@ namespace BL
                 foreach (DO.LineStation s in listLineStations)
                 {
                     dl.DeleteLineStation(s.LineId, s.StationCode);
+                }
+                List<DO.LineTrip> listLineTrips = dl.GetAllLineTripsBy(s => s.LineId == lineId).ToList();
+                foreach(DO.LineTrip item in listLineTrips)
+                {
+                    dl.DeleteLineTrip(item.LineId, item.StartAt);
                 }
             }
             catch (DO.BadLineIdException ex)
@@ -470,13 +488,13 @@ namespace BL
             DO.Station stationDO = new DO.Station();
             station.CopyPropertiesTo(stationDO);
             stationDO.IsDeleted = false;
-            if (stationDO.Longitude < 31 || stationDO.Longitude > 33.3)//check input
+            if (stationDO.Latitude < 31 || stationDO.Latitude > 33.3)//check input
             {
-                throw new BO.BadInputException("הערך של קו האורך שגוי, עליך להכניס ערך בין 31 עד 33.3");
+                throw new BO.BadInputException("הערך של קו הרוחב שגוי, עליך להכניס ערך בין 31 עד 33.3");
             }
-            if (stationDO.Latitude < 34.3 || stationDO.Latitude > 35.5)//check input
+            if (stationDO.Longitude < 34.3 || stationDO.Longitude > 35.5)//check input
             {
-                throw new BO.BadInputException("הערך של קו הרוחב שגוי, עליך להכניס ערך בין 34.3 עד 35.5");
+                throw new BO.BadInputException("הערך של קו האורך שגוי, עליך להכניס ערך בין 34.3 עד 35.5");
             }
             try
             {
@@ -654,6 +672,30 @@ namespace BL
                 throw new BO.BadUserNameException(ex.userName, ex.Message);
             }
             return userBO;
+        }
+        #endregion
+        #region LineTrip
+        public void DeleteDepTime(int lineId, TimeSpan dep)
+        {
+            try
+            {
+                dl.DeleteLineTrip(lineId, dep);
+            }
+            catch (DO.BadLineTripException ex)
+            {
+                throw new BO.BadLineTripException(ex.Message, ex);
+            }
+        }
+        public void AddDepTime(int lineId, TimeSpan dep)
+        {
+            try
+            {
+                dl.AddLineTrip(new DO.LineTrip() { LineId = lineId, StartAt = dep, IsDeleted = false });
+            }
+            catch (DO.BadLineTripException ex)
+            {
+                throw new BO.BadLineTripException(ex.Message, ex);
+            }
         }
         #endregion
     }

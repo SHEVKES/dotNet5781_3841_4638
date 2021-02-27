@@ -6,9 +6,24 @@
         xmlns:local="clr-namespace:PL"
         xmlns:BO="clr-namespace:BO;assembly=BL" x:Class="PL.UpdateLine"
         mc:Ignorable="d"
-        Title="UpdateLine" Height="519.6" Width="332" >
+        Title="UpdateLine" Height="519.6" Width="626" >
     <Window.Resources>
-
+        <DataTemplate x:Key="frequencyTemplate"
+                  DataType="local:TimeSpan" x:Name="timespan">
+            <Grid HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="50" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"
+                   Text="{Binding}"  />
+                <Image Grid.Column="1"
+                     MouseDown="Delete_Frequency_Button_Click" Name="DeleteFrequencyButton" Margin="13,0,0,0" IsEnabled="True" Source="GARBAGE.jpg"  />
+            </Grid>
+        </DataTemplate>
         <DataTemplate x:Key="stationInLineTemplate"
                       DataType="local:stationInLine" x:Name="stationInLine">
             <Grid>
@@ -16,16 +31,14 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="50" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0"
              Text="{Binding}" />
-                <Button Grid.Column="1"
-             Content="שינוי" Click="UpdateTimeDis_Button_Click" />
-                <Button Grid.Column="2"
-             Content="מחיקה" Click="Delete_Station_Button_Click" />
+                <Image Grid.Column="1" x:Name="IUpdate" MouseDown="UpdateTimeDis_Button_Click" Source="MAP.jpg" Margin="13,0,0,0" />
+                <Image Grid.Column="2" x:Name="IDelete" Source="GARBAGE.jpg" MouseDown="Delete_Station_Button_Click" Margin="13,0,0,0" />
             </Grid>
         </DataTemplate>
     </Window.Resources>
@@ -33,7 +46,7 @@
         <Grid.Background>
             <ImageBrush ImageSource="לוגו מעודכן סופי 1.jpg" Opacity="0.20" Stretch="UniformToFill"/>
         </Grid.Background>
-        <Grid x:Name="grid1" HorizontalAlignment="Left" Margin="40,27,0,0" VerticalAlignment="Top" Height="102" Width="210">
+        <Grid x:Name="grid1" HorizontalAlignment="Left" Margin="385,23,0,0" VerticalAlignment="Top" Height="102" Width="210">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
@@ -56,33 +69,12 @@
             <Label Content="מספר קו" Grid.Column="1" HorizontalAlignment="Left" Margin="28.8,0,-22,11.8" Grid.Row="0" VerticalAlignment="Bottom"/>
             <TextBox x:Name="lineNumTextBox" Grid.Column="0" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding LineNum, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
         </Grid>
-        <ListBox x:Name="LbStationsInLine" HorizontalAlignment="Left" ItemsSource="{Binding}" ItemTemplate="{StaticResource stationInLineTemplate}" Height="221" Margin="48,154,0,0" VerticalAlignment="Top" Width="191"/>
-        <Button Content="הוסף תחנה חדשה" HorizontalAlignment="Left" Margin="49,400,0,0" VerticalAlignment="Top"  Click="Button_Click_Add"/>
-
+        <ListBox x:Name="LbStationsInLine" HorizontalAlignment="Left" ItemsSource="{Binding}" ItemTemplate="{StaticResource stationInLineTemplate}" Height="221" Margin="15,11,0,0" VerticalAlignment="Top" Width="210"/>
+        <Button Content="הוסף תחנה חדשה" HorizontalAlignment="Left" Margin="22,254,0,0" VerticalAlignment="Top"  Click="Button_Click_Add"/>
+        <Button Content="שמירה" HorizontalAlignment="Left" Margin="6,437,0,0" VerticalAlignment="Top" Click="Button_Click_Save" />
+        <TextBox x:Name="TBTime" HorizontalAlignment="Left" Height="23" Margin="481,410,0,0" TextWrapping="Wrap" Text="00:00:00" VerticalAlignment="Top" Width="120"/>
+        <ListBox x:Name="LBTime" HorizontalAlignment="Left" Height="171" Margin="360,215,0,0" VerticalAlignment="Top" Width="200" ItemsSource="{Binding}" ItemTemplate="{StaticResource frequencyTemplate}"/>
+        <Button Content="הוספה" HorizontalAlignment="Left" Margin="258,400,0,0" VerticalAlignment="Top" Click="Button_Click_AddTime" RenderTransformOrigin="-0.392,-0.404" />
+        <Label Content=":זמני הגעת הקו" HorizontalAlignment="Right" Margin="0,174,61.2,0" VerticalAlignment="Top" Height="34" Width="149" FontSize="20"/>
     </Grid>
 </Window>
-<!--<Grid HorizontalAlignment="Left" Height="auto" Grid.Row="0" Margin="44,160,0,0" VerticalAlignment="Top" Width="auto">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    
-                </Grid.ColumnDefinitions>
-            </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="60"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Border Margin="5" BorderBrush="Black" BorderThickness="1">
-                    <Image Source="{Binding Path=Image}" Stretch="Fill" Width="50" Height="50" />
-                </Border>
-                <StackPanel Grid.Column="1" Margin="5">
-                    <StackPanel Orientation="Horizontal" TextBlock.FontWeight="Bold" >
-                        <TextBlock Text="{Binding Path=Firstname, FallbackValue=FirstName}" />
-                        <TextBlock Text="{Binding Path=Lastname, FallbackValue=LastName}" Padding="3,0,0,0"/>
-                    </StackPanel>
-                    <TextBlock Text="{Binding Path=StationCode, FallbackValue=StationCode}" />
-                    <TextBlock Text="{Binding Path=Name, FallbackValue=Name}" />
-                </StackPanel>
-            </Grid>-->

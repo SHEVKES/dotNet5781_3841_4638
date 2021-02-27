@@ -14,7 +14,7 @@
             <ColumnDefinition Width="262*"/>
         </Grid.ColumnDefinitions>
         <ListBox x:Name="LbStation" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="379" Margin="320,20,0,0" VerticalAlignment="Top" Width="197" MouseDoubleClick="LbStation_MouseDoubleClick"/>
-        <Grid x:Name="grid1" HorizontalAlignment="Left" Margin="54,22,0,0" VerticalAlignment="Top" Height="182" Width="198">
+        <Grid x:Name="grid1" HorizontalAlignment="Left" Margin="54,22,0,0" VerticalAlignment="Top" Height="182" Width="198" Visibility="Hidden">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
@@ -40,7 +40,7 @@
             <Label Content="שם תחנה" Grid.Column="1" HorizontalAlignment="Left" Margin="12.6,3.6,-2.6,2.8" Grid.Row="1" VerticalAlignment="Center"/>
             <TextBox x:Name="nameTextBox" Grid.Column="0" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
         </Grid>
-        <DataGrid x:Name="linesDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="48,230,278.2,50" RowDetailsVisibilityMode="VisibleWhenSelected" RenderTransformOrigin="0.5,0.5">
+        <DataGrid x:Name="linesDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="48,230,278.2,50" RowDetailsVisibilityMode="VisibleWhenSelected" RenderTransformOrigin="0.5,0.5" Visibility="Hidden">
             <DataGrid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -55,14 +55,14 @@
                 <DataGridTextColumn x:Name="lineStationIndexColumn" Binding="{Binding LineStationIndex}" Header="Line Station Index" Width="SizeToHeader"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="הוספת תחנה חדשה" HorizontalAlignment="Left" Margin="10.8,52,0,0" VerticalAlignment="Top"  Click="Button_Click_Add" Grid.Column="1"/>
-        <Button Content="עדכון תחנה" HorizontalAlignment="Left" Margin="11.8,129,0,0" VerticalAlignment="Top"  Click="Button_Click_Update" Grid.Column="1"/>
-        <Button Content="מחיקת תחנה" HorizontalAlignment="Left" Margin="11.8,208,0,0" VerticalAlignment="Top"  Click="Button_Click_Delete" Grid.Column="1"/>
-        <Ellipse Grid.Column="1" HorizontalAlignment="Left" Margin="157.8,330,0,0" Stroke="Black" VerticalAlignment="Top">
+        <Button Content="הוספת תחנה חדשה" HorizontalAlignment="Left" Margin="27,30,0,0" VerticalAlignment="Top"  Click="Button_Click_Add" Grid.Column="1"/>
+        <Button Content="עדכון תחנה" HorizontalAlignment="Left" Margin="27,100,0,0" VerticalAlignment="Top"  Click="Button_Click_Update" Grid.Column="1"/>
+        <Button Content="מחיקת תחנה" HorizontalAlignment="Left" Margin="27,170,0,0" VerticalAlignment="Top"  Click="Button_Click_Delete" Grid.Column="1"/>
+        <Ellipse Grid.Column="1" HorizontalAlignment="Left" Margin="155.8,328,0,0" Stroke="Black" VerticalAlignment="Top">
             <Ellipse.Fill>
                 <ImageBrush ImageSource="לוגו מעודכן סופי 1.jpg" Stretch="UniformToFill"/>
             </Ellipse.Fill>
         </Ellipse>
-        <Button Content="סימולציה" Grid.Column="1" HorizontalAlignment="Left" Margin="15.8,282,0,0" VerticalAlignment="Top" Click="Button_Click_simulator"/>
+        <Button Content="סימולציה" Grid.Column="1" HorizontalAlignment="Left" Margin="27,240,0,0" VerticalAlignment="Top" Click="Button_Click_simulator"/>
     </Grid>
 </Window>

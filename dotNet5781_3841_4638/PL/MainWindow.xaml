@@ -25,7 +25,7 @@
                 <ImageBrush ImageSource="מושבי אוטובוס.jpg" Opacity="0.45"/>
             </Grid.Background>
             <Button Content="אוטובוסים" HorizontalAlignment="Left"  VerticalAlignment="Top"  Click="Button_Click_Buses" Margin="24,155,0,0"/>
-            <Ellipse HorizontalAlignment="Left" Margin="166,331,0,0" Stroke="Black" VerticalAlignment="Top">
+            <Ellipse HorizontalAlignment="Left" Margin="160,327,0,0" Stroke="Black" VerticalAlignment="Top">
                 <Ellipse.Fill>
                     <ImageBrush ImageSource="לוגו מעודכן סופי 1.jpg" Stretch="UniformToFill"/>
                 </Ellipse.Fill>
