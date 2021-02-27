@@ -124,7 +124,7 @@ namespace PL
             int length = (int)e.Argument;//how many seconds the thread is active
             for (int i = 1; i <= length; i++)
             {
-                if (worker.CancellationPending == true)//לא כל כך צריך שעון לפרוייקט שלנו
+                if (worker.CancellationPending == true)
                 {
                     e.Cancel = true;
                     e.Result = stopwatch.ElapsedMilliseconds; // Unnecessary
@@ -157,7 +157,7 @@ namespace PL
                 pbRefuel.Visibility = Visibility.Hidden;             
                 //busDetailsGrid.DataContext = bus;
                 //statusComboBox.Text = select.Status.ToString();//to show the current bus status
-                MessageBox.Show("האוטובוס תודלק בהצלחה", "הצלחה", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("האוטובוס תודלק בהצלחה", "מזל טוב", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (BO.BadLicenseNumException ex)
             {
@@ -181,7 +181,7 @@ namespace PL
                 
                //busDetailsGrid.DataContext = bus;//update the grid with the details of the bus after the treatment
                //statusComboBox.Text = bus.Status.ToString();//to show the current bus status
-                MessageBox.Show("האוטובוס טופל בהצלחה", "הצלחה", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("האוטובוס טופל בהצלחה", "מזל טוב", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (BO.BadLicenseNumException ex)
             {

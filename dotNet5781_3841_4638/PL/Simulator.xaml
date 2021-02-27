@@ -6,15 +6,15 @@
         xmlns:local="clr-namespace:PL"
         xmlns:BO="clr-namespace:BO;assembly=BL" x:Class="PL.Simulator"
         mc:Ignorable="d"
-        Title="Simulator" Height="450" Width="700.4">
+        Title="Simulator" Height="493.2" Width="794">
     <Window.Resources>
         <CollectionViewSource x:Key="stationViewSource" d:DesignSource="{d:DesignInstance {x:Type BO:Station}, CreateList=True}"/>
         <DataTemplate x:Key="lineTimingTemplate" DataType="local:lineTiming" x:Name="lineTiming" >
             <Grid HorizontalAlignment="Stretch" Height="Auto" Width="auto" Grid.Row="0" VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="150"/>
-                    <ColumnDefinition Width="150"/>
-                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -26,7 +26,7 @@
         </DataTemplate>
     </Window.Resources>
     <Grid DataContext="{StaticResource stationViewSource}">
-        <Grid x:Name="grid1" HorizontalAlignment="Left" Margin="475,160,0,0" VerticalAlignment="Top" Height="147" Width="211">
+        <Grid x:Name="grid1" HorizontalAlignment="Left" Margin="408,166,0,0" VerticalAlignment="Top" Height="163" Width="313">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
@@ -46,11 +46,11 @@
             <Label Content="שם תחנה" Grid.Column="1" HorizontalAlignment="Right" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
             <TextBlock x:Name="nameTextBlock" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" Text="{Binding Name}" VerticalAlignment="Center"/>
         </Grid>
-        <ListBox x:Name="LBLineTiming" HorizontalAlignment="Left" Height="255" Margin="7,157,0,0" VerticalAlignment="Top" Width="455" ItemsSource="{Binding}" ItemTemplate="{StaticResource lineTimingTemplate}" />
-        <TextBlock x:Name="TBTimer" HorizontalAlignment="Center" Margin="112,14,98.4,0" TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Top" Height="80" Width="484" FontFamily="Cooper Black" FontSize="30" />
-        <Label Content="מספר קו" HorizontalAlignment="Left" Margin="372,124,0,0" VerticalAlignment="Top" Width="59"/>
-        <Label Content="תחנה סופית" HorizontalAlignment="Left" Margin="214,125,0,0" VerticalAlignment="Top"/>
-        <Label Content="זמני הגעה" HorizontalAlignment="Left" Margin="54,125,0,0" VerticalAlignment="Top"/>
+        <ListBox x:Name="LBLineTiming" HorizontalAlignment="Left" Height="254" Margin="7,158,0,0" VerticalAlignment="Top" Width="387" ItemsSource="{Binding}" ItemTemplate="{StaticResource lineTimingTemplate}" />
+        <TextBlock x:Name="TBTimer" HorizontalAlignment="Center" Margin="238,23,265.4,0" TextWrapping="Wrap" Text="{Binding}" VerticalAlignment="Top" Height="92" Width="279" FontFamily="Cooper Black" FontSize="35" />
+        <Label Content="מספר קו" HorizontalAlignment="Left" Margin="314,124,0,0" VerticalAlignment="Top" Width="59"/>
+        <Label Content="תחנה סופית" HorizontalAlignment="Left" Margin="156,125,0,0" VerticalAlignment="Top"/>
+        <Label Content="זמני הגעה" HorizontalAlignment="Left" Margin="16,125,0,0" VerticalAlignment="Top"/>
         <Grid.Background>
             <ImageBrush ImageSource="לוגו מעודכן סופי 1.jpg" Opacity="0.20" Stretch="UniformToFill"/>
         </Grid.Background>

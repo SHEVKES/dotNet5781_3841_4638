@@ -8,7 +8,6 @@
         mc:Ignorable="d"
         Title="Lines" Height="464.4" Width="850.4" >
     <Window.Resources>
-        
         <DataTemplate x:Key="frequencyTemplate"
                   DataType="local:TimeSpan" x:Name="timespan">
             <Grid HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
@@ -33,9 +32,9 @@
                 <DataGridCheckBoxColumn x:Name="disabledAccessColumn1" Binding="{Binding DisabledAccess}" Header="Disabled Access" Width="SizeToHeader"/>
                 <DataGridTextColumn x:Name="distanceColumn1" Binding="{Binding Distance}" Header="Distance" Width="SizeToHeader"/>
                 <DataGridTextColumn x:Name="lineStationIndexColumn1" Binding="{Binding LineStationIndex}" Header="Line Station Index" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="nameColumn1" Binding="{Binding Name}" Header="Name" Width="125"/>
+                <DataGridTextColumn x:Name="nameColumn1" Binding="{Binding Name}" Header="Name" Width="150"/>
                 <DataGridTextColumn x:Name="stationCodeColumn1" Binding="{Binding StationCode}" Header="Station Code" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="timeColumn1" Binding="{Binding Time}" Header="Time" Width="80"/>
+                <DataGridTextColumn x:Name="timeColumn1" Binding="{Binding Time}" Header="Time" Width="50"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="עדכון קו" HorizontalAlignment="Left" Margin="634,20,0,0" VerticalAlignment="Top"  Click="Button_Click_Update"/>
@@ -47,7 +46,5 @@
             </Ellipse.Fill>
         </Ellipse>
         <ListBox x:Name="LBTime" HorizontalAlignment="Left" Height="171" Margin="22,244,0,0" VerticalAlignment="Top" Width="200" ItemsSource="{Binding}" ItemTemplate="{StaticResource frequencyTemplate}" Visibility="Hidden"/>
-       
-
     </Grid>
 </Window>

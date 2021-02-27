@@ -45,11 +45,11 @@ namespace PL
                 }
                 catch (BO.BadLineStationException ex)
                 {
-                    MessageBox.Show(ex.Message + ": " + ex.lineId + " " + ex.stationCode, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);//להוסיף הערה
+                    MessageBox.Show(ex.Message + ": " + ex.lineId + " " + ex.stationCode, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 catch (BO.BadAdjacentStationsException ex)
                 {
-                    MessageBox.Show(ex.Message + ": " + ex.stationCode1 + " " + ex.stationCode2, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);//להוסיף הערה
+                    MessageBox.Show(ex.Message + ": " + ex.stationCode1 + " " + ex.stationCode2, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
                 }              
             }
             else
@@ -68,11 +68,11 @@ namespace PL
                 }
                 catch (BO.BadLineStationException ex)
                 {
-                    MessageBox.Show(ex.Message + ": " + ex.lineId + " " + ex.stationCode, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);//להוסיף הערה
+                    MessageBox.Show(ex.Message + ": " + ex.lineId + " " + ex.stationCode, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 catch (BO.BadAdjacentStationsException ex)
                 {
-                    MessageBox.Show(ex.Message + ": " + ex.stationCode1 + " " + ex.stationCode2, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);//להוסיף הערה
+                    MessageBox.Show(ex.Message + ": " + ex.stationCode1 + " " + ex.stationCode2, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             Close();
