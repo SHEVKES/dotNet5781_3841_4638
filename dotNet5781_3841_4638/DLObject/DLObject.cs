@@ -51,22 +51,25 @@ namespace DL
         public void AddBus(DO.Bus bus)
         {
             if (DataSource.ListBuses.FirstOrDefault(b => b.LicenseNum == bus.LicenseNum && b.IsDeleted == false) != null)
-                throw new DO.BadLicenseNumException(bus.LicenseNum, "האוטובוס הינו קיים כבר במערכת");
-            int length = LengthLicenseNum(bus.LicenseNum);
-            if ((length == 7 && bus.FromDate.Year >= 2018) || ((length == 8 && bus.FromDate.Year < 2018)))
-                //!(length == 7 && bus.FromDate.Year < 2018) || (length == 8 && bus.FromDate.Year >= 2018))
-                throw new DO.BadInputException("מספר הרשוי שהקשת אינו תקין");
-            if (bus.FromDate > DateTime.Now)
-                throw new DO.BadInputException("תאריך התחלת הפעילות שהקשת אינו תקין");
-            if (bus.TotalTrip < 0)
-                throw new DO.BadInputException("סך הקילומטרים שהקשת אינו תקין");
-            if (bus.FuelRemain < 0 || bus.FuelRemain > 1200)
-                throw new DO.BadInputException("כמות הדלק שהקשת אינה תקינה");
-            if (bus.DateLastTreat < bus.FromDate || bus.DateLastTreat > DateTime.Now)
-                throw new DO.BadInputException("התאריך של הטיפול האחרון שהקשת אינו תקין");
-            if (bus.KmLastTreat < 0 || bus.KmLastTreat > bus.TotalTrip)
-                throw new DO.BadInputException("סך הקילומטרים מאז הטיפול האחרון שהקשת אינו תקין");
+                throw new DO.BadLicenseNumException(bus.LicenseNum, "מספר הרישוי שהזנת אינו קיים במערכת");
             DataSource.ListBuses.Add(bus.Clone());
+            //if (DataSource.ListBuses.FirstOrDefault(b => b.LicenseNum == bus.LicenseNum && b.IsDeleted == false) != null)
+            //    throw new DO.BadLicenseNumException(bus.LicenseNum, "האוטובוס הינו קיים כבר במערכת");
+            //int length = LengthLicenseNum(bus.LicenseNum);
+            //if ((length == 7 && bus.FromDate.Year >= 2018) || ((length == 8 && bus.FromDate.Year < 2018)))
+            //    //!(length == 7 && bus.FromDate.Year < 2018) || (length == 8 && bus.FromDate.Year >= 2018))
+            //    throw new DO.BadInputException("מספר הרשוי שהקשת אינו תקין");
+            //if (bus.FromDate > DateTime.Now)
+            //    throw new DO.BadInputException("תאריך התחלת הפעילות שהקשת אינו תקין");
+            //if (bus.TotalTrip < 0)
+            //    throw new DO.BadInputException("סך הקילומטרים שהקשת אינו תקין");
+            //if (bus.FuelRemain < 0 || bus.FuelRemain > 1200)
+            //    throw new DO.BadInputException("כמות הדלק שהקשת אינה תקינה");
+            //if (bus.DateLastTreat < bus.FromDate || bus.DateLastTreat > DateTime.Now)
+            //    throw new DO.BadInputException("התאריך של הטיפול האחרון שהקשת אינו תקין");
+            //if (bus.KmLastTreat < 0 || bus.KmLastTreat > bus.TotalTrip)
+            //    throw new DO.BadInputException("סך הקילומטרים מאז הטיפול האחרון שהקשת אינו תקין");
+            //DataSource.ListBuses.Add(bus.Clone());
         }
         public void UpdateBus(DO.Bus bus)
         {

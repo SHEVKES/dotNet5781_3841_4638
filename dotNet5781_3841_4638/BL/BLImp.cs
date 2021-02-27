@@ -558,8 +558,8 @@ namespace BL
                 int currentLineid = listLines[i].LineId;// line id of the current line
                 List<DO.LineTrip> lineSchedual = dl.GetAllLineTripsBy(trip => trip.LineId == currentLineid && trip.IsDeleted == false).ToList();// times of the current Line
                 TimeSpan timeTilStatin = travelTime(stationBO.Code, currentLineid);
-                int numOfTimes = 0;//רוצים רק 3 זמנים לקו כמו שזה במציאות
-                List<int> timesOfCurrentLine = new List<int>();//רשימת הזמנים
+                int numOfTimes = 0;//Want only 3 times per line as it is in reality
+                List<int> timesOfCurrentLine = new List<int>();//list of times
                 for (int j = 0; j < lineSchedual.Count && numOfTimes < 3; j++)//for all the times in line sSchedual
                 {
                     //check if currentTime-LeavingTime-travelTime more than zero and in the range of hour
@@ -581,7 +581,7 @@ namespace BL
                     }
                 }
 
-                if (timesOfCurrentLine.Count != 0)//אם יש זמנים לקו בטווח של שעה
+                if (timesOfCurrentLine.Count != 0)//If there are times to line within an hour
                 {
                     string timesString = "";//the string of times
                     timesOfCurrentLine = timesOfCurrentLine.OrderBy(s => s).ToList();//order the times in ascending order
@@ -590,7 +590,7 @@ namespace BL
                         timesString = timesString + timesOfCurrentLine[k] + ", ";
                     }
                     timesString = timesString + timesOfCurrentLine[timesOfCurrentLine.Count - 1];//add the last one without ","
-                    times.Add(new BO.LineTiming//הוספת הקו לרשימה שהולכים להחזיר
+                    times.Add(new BO.LineTiming //Add the line to the list that is going to be returned
                     {
                         LineId = currentLineid,
                         LineNum = listLines[i].LineNum,
@@ -599,7 +599,7 @@ namespace BL
                     });
 
                 }
-                numOfTimes = 0;//איפוס המונה
+                numOfTimes = 0;//Reset the counter
             }
             times = times.OrderBy(lt => lt.LineNum).ToList();//order the list by the number of the lines in ascending order
             return times;
@@ -675,7 +675,7 @@ namespace BL
         }
         #endregion
         #region LineTrip
-        public void DeleteDepTime(int lineId, TimeSpan dep)
+        public void DeleteDepTime(int lineId, TimeSpan dep) 
         {
             try
             {

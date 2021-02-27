@@ -20,16 +20,13 @@ namespace PL
     /// </summary>
     public partial class OpenWindow : Window
     {
-        IBL bl = BLFactory.GetBL("1");
+        IBL bl = BLFactory.GetBL();
         //IBL bl;
         public OpenWindow()
         {
             InitializeComponent();
             //bl = _bl;
         }
-
-      
-
         private void Button_Click_SignIn(object sender, RoutedEventArgs e)
         {
             try

@@ -88,7 +88,5 @@ namespace DLAPI
         void UpdateUser(string userName, Action<User> update); //method that knows to updt specific fields in User
         void DeleteUser(string userName);
         #endregion
-
-
     }
 }

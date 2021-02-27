@@ -35,6 +35,7 @@ namespace PL
         {
             List<BO.Bus> buses = bl.GetAllBuses().ToList();
             LBBuses.DataContext = buses;
+            
         }  
         private void refuel_MouseDown_Button(object sender, MouseButtonEventArgs e)
         {       
@@ -43,12 +44,12 @@ namespace PL
                 BO.Bus select = (sender as Image).DataContext as BO.Bus;
                 if (select.FuelRemain == 1200)
                 {
-                    MessageBox.Show("The fuel remain of the bus ia already full", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("האוטובוס כבר מתתודלק באופן מלא", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 if (select.Status != BO.BusStatus.Available)
                 {
-                    MessageBox.Show("The bus does not avaliable", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("האוטובס לא זמין", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 select.Status = BO.BusStatus.REFUELING;//change status
@@ -59,6 +60,8 @@ namespace PL
                 worker.RunWorkerCompleted += Worker_RunWorkerCompleted_Refuel;
                 worker.WorkerReportsProgress = true;//יכול לדווח על שינויים למסך
                 pbRefuel.Visibility = Visibility.Visible;
+                bl.RefuelBus(select);//refuel
+                select = bl.GetBus(select.LicenseNum);
                 worker.RunWorkerAsync(12);// Start the thread.
             }
             catch (BO.BadLicenseNumException ex)
@@ -81,12 +84,12 @@ namespace PL
                 BO.Bus select = (sender as Image).DataContext as BO.Bus;
                 if (select.DateLastTreat.ToShortDateString() == DateTime.Now.ToShortDateString())//if the bus is already treated
                 {
-                    MessageBox.Show("The bus is already treated today", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("האוטובוס כבר עבר טיפול", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 if (select.Status != BO.BusStatus.Available)
                 {
-                    MessageBox.Show("The bus does not avaliable", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("האוטובוס לא זמין", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 select.Status = BO.BusStatus.TREATMENT;//change status
@@ -97,6 +100,8 @@ namespace PL
                 worker.RunWorkerCompleted += Worker_RunWorkerCompleted_Treat;
                 worker.WorkerReportsProgress = true;
                 pbTreat.Visibility = Visibility.Visible;
+                bl.TreatmentBus(select);//treat the bus
+                select = bl.GetBus(select.LicenseNum);
                 worker.RunWorkerAsync(12); // Start the thread.
             }
             catch (BO.BadLicenseNumException ex)
@@ -148,14 +153,11 @@ namespace PL
         private void Worker_RunWorkerCompleted_Refuel(object sender, RunWorkerCompletedEventArgs e)
         {
             try
-            {
-                BO.Bus select = (sender as Image).DataContext as BO.Bus;
-                pbRefuel.Visibility = Visibility.Hidden;
-                bl.RefuelBus(select);//refuel
-                select = bl.GetBus(select.LicenseNum);
+            {              
+                pbRefuel.Visibility = Visibility.Hidden;             
                 //busDetailsGrid.DataContext = bus;
                 //statusComboBox.Text = select.Status.ToString();//to show the current bus status
-                MessageBox.Show("The bus was refuled successfuly", "success", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("האוטובוס תודלק בהצלחה", "הצלחה", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (BO.BadLicenseNumException ex)
             {
@@ -174,13 +176,12 @@ namespace PL
         {
             try
             {
-                BO.Bus select = (sender as Image).DataContext as BO.Bus;
+                
                 pbTreat.Visibility = Visibility.Hidden;
-                bl.TreatmentBus(select);//treat the bus
-                select = bl.GetBus(select.LicenseNum);
+                
                //busDetailsGrid.DataContext = bus;//update the grid with the details of the bus after the treatment
                //statusComboBox.Text = bus.Status.ToString();//to show the current bus status
-                MessageBox.Show("The bus was treated successfuly", "success", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("האוטובוס טופל בהצלחה", "הצלחה", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (BO.BadLicenseNumException ex)
             {

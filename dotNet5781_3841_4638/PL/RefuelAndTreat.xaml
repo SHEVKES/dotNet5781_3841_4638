@@ -29,8 +29,13 @@
         </DataTemplate>
     </Window.Resources>
     <Grid>
-        <ListBox x:Name="LBBuses" HorizontalAlignment="Left" ItemTemplate="{StaticResource busTemplate}" ItemsSource="{Binding}" Height="359" Margin="49,32,0,0" VerticalAlignment="Top" Width="702"/>
-        <ProgressBar Name="pbRefuel" Visibility="Hidden"  HorizontalAlignment="Left" Height="58" Margin="448,170,0,0" VerticalAlignment="Top" Width="176"/>
-        <ProgressBar Name="pbTreat" Visibility="Hidden" HorizontalAlignment="Left" Height="58" Margin="448,267,0,0" VerticalAlignment="Top" Width="176"/>
+        <ListBox x:Name="LBBuses" HorizontalAlignment="Left" ItemTemplate="{StaticResource busTemplate}" ItemsSource="{Binding}" Height="341" Margin="49,58,0,0" VerticalAlignment="Top" Width="687"/>
+        <ProgressBar Name="pbRefuel" Visibility="Hidden"  HorizontalAlignment="Left" Height="58" Margin="448,170,0,0" VerticalAlignment="Top" Width="200"/>
+        <ProgressBar Name="pbTreat" Visibility="Hidden" HorizontalAlignment="Left" Height="58" Margin="448,267,0,0" VerticalAlignment="Top" Width="200"/>
+        <Label Content="מספר רישוי" HorizontalAlignment="Left" Margin="58,27,0,0" VerticalAlignment="Top"/>
+        <Label Content="'קילומטראז" HorizontalAlignment="Left" Margin="219,29,0,0" VerticalAlignment="Top"/>
+        <Grid.Background>
+            <ImageBrush ImageSource="לוגו מעודכן סופי 1.jpg" Opacity="0.20" Stretch="UniformToFill"/>
+        </Grid.Background>
     </Grid>
 </Window>
